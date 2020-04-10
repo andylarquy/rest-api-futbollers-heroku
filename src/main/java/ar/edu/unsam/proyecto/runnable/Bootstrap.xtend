@@ -3,6 +3,7 @@ package ar.edu.unsam.proyecto.runnable
 import ar.edu.unsam.proyecto.domain.Cancha
 import ar.edu.unsam.proyecto.domain.Equipo
 import ar.edu.unsam.proyecto.domain.Usuario
+import ar.edu.unsam.proyecto.repos.RepositorioUsuario
 
 class Bootstrap {
 	
@@ -17,9 +18,12 @@ class Bootstrap {
 
 	private new() {}
 	
+	RepositorioUsuario repoUsuarios = RepositorioUsuario.instance
+	
 	Usuario sebaCapo = new Usuario() => [
 		id = "U1"
 		nombre = "sebaCapo"
+		password = "mandarina"
 		sexo = "M"
 		posicion = "DC"
 		email = "sebassdevita@gmail.com"
@@ -30,6 +34,7 @@ class Bootstrap {
 	Usuario nikoBostero = new Usuario() => [
 		id = "U2"
 		nombre = "nikoBostero"
+		password = "mandarina"
 		sexo = "M"
 		posicion = "ED"
 		email = "niko.bostero.232@gmail.com"
@@ -40,6 +45,7 @@ class Bootstrap {
 	Usuario andy = new Usuario() => [
 		id = "U3"
 		nombre = "andy"
+		password = "mandarina"
 		sexo = "M"
 		posicion = "DFI"
 		email = "andres27059934@gmail.com"
@@ -50,6 +56,7 @@ class Bootstrap {
 	Usuario nabo1 = new Usuario() => [
 		id = "U4"
 		nombre = "nabo1"
+		password = "mandarina"
 		sexo = "M"
 		posicion = "MC"
 		email = "elmaildelnabo1@sarasa.com"
@@ -60,6 +67,7 @@ class Bootstrap {
 	Usuario nabo2 = new Usuario() => [
 		id = "U5"
 		nombre = "nabo2"
+		password = "mandarina"
 		sexo = "F"
 		posicion = "EI"
 		email = "elmaildelnabo2@sarasa.com"
@@ -133,7 +141,11 @@ class Bootstrap {
 	]
 	
 	def runBootstrap(){
-		
+		repoUsuarios.create(sebaCapo)
+		repoUsuarios.create(nikoBostero)
+		repoUsuarios.create(andy)
+		repoUsuarios.create(nabo1)
+		repoUsuarios.create(nabo2)
 	}
 	
 }

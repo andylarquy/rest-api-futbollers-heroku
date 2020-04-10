@@ -55,6 +55,10 @@ class RepositorioUsuario extends Repositorio<Usuario> {
 	def searchById(String cadenaId) {
 		return coleccion.filter[usuario|usuario.id == cadenaId].head
 	}
+	
+	def getUsuarioConCredenciales(String username, String password){
+		coleccion.filter[usuario | usuario.tieneCredenciales(username, password)].head
+	}
 
 	
 }

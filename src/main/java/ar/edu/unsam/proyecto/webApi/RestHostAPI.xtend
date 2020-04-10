@@ -1,16 +1,14 @@
 package ar.edu.unsam.proyecto.webApi
 
 import ar.edu.unsam.proyecto.domain.Usuario
+import ar.edu.unsam.proyecto.exceptions.IncorrectCredentials
+import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsUsuario
 import com.fasterxml.jackson.databind.MapperFeature
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.uqbar.commons.model.exceptions.UserException
-import org.uqbar.xtrest.api.Result
 import org.uqbar.xtrest.api.annotation.Body
 import org.uqbar.xtrest.api.annotation.Controller
-import org.uqbar.xtrest.api.annotation.Delete
 import org.uqbar.xtrest.api.annotation.Get
 import org.uqbar.xtrest.api.annotation.Post
-import org.uqbar.xtrest.api.annotation.Put
 import org.uqbar.xtrest.json.JSONUtils
 
 @Controller
@@ -26,5 +24,31 @@ class RestHostAPI {
 	def getPeticionDePrueba() {
 
 		return ok(restHost.getPeticionDePrueba())
+	}
+	
+	@Post("/usuario/login")
+	def loguearUsuario(@Body String body){
+		
+		val Usuario usuario = body.fromJson(Usuario)
+		//println(usuario.email)
+		try {
+			val usuarioParseado = this.parsearObjeto(
+				restHost.loguearUsuario(usuario.email, usuario.password), ViewsUsuario.CredencialesView)
+			
+			//println("Json del usuario recien logueado: " + usuarioParseado + "\n")
+			return ok(usuarioParseado)
+		} catch (IncorrectCredentials e) {
+			return forbidden('{"status":401, "message":"' + e.message+'"}')
+		}
+	}
+	
+	/* Cosas del "JsonIgnore Dinamico" */
+	def <ViewGeneric> parsearObjeto(Object elementoAParsear, Class<ViewGeneric> customView) {
+
+		var mapper = new ObjectMapper();
+		mapper.disable(MapperFeature.DEFAULT_VIEW_INCLUSION);
+
+		var result = mapper.writerWithView(customView).writeValueAsString(elementoAParsear);
+		return result
 	}
 }

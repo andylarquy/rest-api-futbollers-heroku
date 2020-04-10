@@ -13,6 +13,7 @@ class WebApp {
 		val Bootstrap bootstrap = Bootstrap.getInstance()
 		bootstrap.runBootstrap()
 		val restHost = new RestHost => [
+			
 			/*repoIndividuo = instancias.repoSuperInd
 			 * repoEquipo = instancias.repoEquipo
 			 * repoAmenaza = instancias.repoAmenaza
@@ -20,7 +21,7 @@ class WebApp {
 			// parametros y cosas locas
 		]
 
-		XTRest.startInstance(9001, new RestHostAPI(restHost))
+		XTRest.startInstance(9000, new RestHostAPI(restHost))
 	}
 
 }
