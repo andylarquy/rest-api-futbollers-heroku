@@ -2,7 +2,7 @@ package ar.edu.unsam.proyecto.webApi.jsonViews
 
 //CHEATSHEET
 /*
-class ViewsIndividuos{         
+class ViewsUsuario{         
 
     static class DefaultView {}
 	static class CredencialesView extends DefaultView {}
