@@ -38,6 +38,12 @@ class RepositorioUsuario extends Repositorio<Usuario> {
 			this.create(usuario)
 		}
 	}
+	
+	def existeUsuarioConMail(String email){
+		
+		coleccion.exists[usuario | usuario.tieneEsteMail(email)]
+		
+	}
 
 	def asignarIdUsuario(Usuario usuario) {
 		usuario.id = 'U' + idAutoincremental.toString

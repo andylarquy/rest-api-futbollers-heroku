@@ -23,5 +23,11 @@ class Usuario {
 	def tieneCredenciales(String email_, String password_){
 		email.equals(email_) && password.equals(password_)
 	}
+	
+	def tieneEsteMail(String email) {
+		
+		this.email.equals(email)
+		
+	}
 
 }

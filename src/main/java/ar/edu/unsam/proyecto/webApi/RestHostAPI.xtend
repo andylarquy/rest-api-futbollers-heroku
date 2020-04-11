@@ -25,23 +25,40 @@ class RestHostAPI {
 
 		return ok(restHost.getPeticionDePrueba())
 	}
-	
+
 	@Post("/usuario/login")
-	def loguearUsuario(@Body String body){
-		
+	def loguearUsuario(@Body String body) {
+
 		val Usuario usuario = body.fromJson(Usuario)
-		//println(usuario.email)
+		// println(usuario.email)
 		try {
-			val usuarioParseado = this.parsearObjeto(
-				restHost.loguearUsuario(usuario.email, usuario.password), ViewsUsuario.CredencialesView)
-			
-			//println("Json del usuario recien logueado: " + usuarioParseado + "\n")
+			val usuarioParseado = this.parsearObjeto(restHost.loguearUsuario(usuario.email, usuario.password),
+				ViewsUsuario.CredencialesView)
+
+			// println("Json del usuario recien logueado: " + usuarioParseado + "\n")
 			return ok(usuarioParseado)
 		} catch (IncorrectCredentials e) {
-			return forbidden('{"status":401, "message":"' + e.message+'"}')
+			return forbidden('{"status":401, "message":"' + e.message + '"}')
 		}
 	}
-	
+
+	@Post("/usuario")
+	def signUpUsuario(@Body String body) {
+
+		val Usuario usuario = body.fromJson(Usuario)
+		
+		println(body)
+		
+		try {
+			restHost.signUpUsuario(usuario)
+
+			return ok('{"status": 200}')
+
+		} catch (IncorrectCredentials e) {
+			return badRequest('{"status":400, "message":"' + e.message + '"}')
+		}
+	}
+
 	/* Cosas del "JsonIgnore Dinamico" */
 	def <ViewGeneric> parsearObjeto(Object elementoAParsear, Class<ViewGeneric> customView) {
 
