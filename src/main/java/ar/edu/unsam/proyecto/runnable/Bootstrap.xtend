@@ -1,12 +1,18 @@
 package ar.edu.unsam.proyecto.runnable
 
 import ar.edu.unsam.proyecto.domain.Cancha
+import ar.edu.unsam.proyecto.domain.Empresa
 import ar.edu.unsam.proyecto.domain.Equipo
+import ar.edu.unsam.proyecto.domain.Partido
 import ar.edu.unsam.proyecto.domain.Usuario
+import ar.edu.unsam.proyecto.repos.RepositorioPartido
 import ar.edu.unsam.proyecto.repos.RepositorioUsuario
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 class Bootstrap {
-	
+
 	public static Bootstrap bootstrap
 
 	static def Bootstrap getInstance() {
@@ -16,10 +22,12 @@ class Bootstrap {
 		bootstrap
 	}
 
-	private new() {}
-	
+	private new() {
+	}
+
 	RepositorioUsuario repoUsuarios = RepositorioUsuario.instance
-	
+	RepositorioPartido repoPartido = RepositorioPartido.instance
+
 	Usuario sebaCapo = new Usuario() => [
 		id = "U1"
 		nombre = "sebaCapo"
@@ -30,7 +38,7 @@ class Bootstrap {
 		lat = -34.5677486
 		lon = -58.489429
 	]
-	
+
 	Usuario nikoBostero = new Usuario() => [
 		id = "U2"
 		nombre = "nikoBostero"
@@ -41,7 +49,7 @@ class Bootstrap {
 		lat = -34.6344499
 		lon = -58.3672355
 	]
-	
+
 	Usuario andy = new Usuario() => [
 		id = "U3"
 		nombre = "andy"
@@ -52,10 +60,10 @@ class Bootstrap {
 		lat = -34.6016244
 		lon = -58.4420183
 	]
-	
-	Usuario nabo1 = new Usuario() => [
+
+	Usuario jugador1 = new Usuario() => [
 		id = "U4"
-		nombre = "nabo1"
+		nombre = "Jugador 1"
 		password = "mandarina"
 		sexo = "M"
 		posicion = "MC"
@@ -63,10 +71,10 @@ class Bootstrap {
 		lat = -34.6029831
 		lon = -58.4408178
 	]
-	
-	Usuario nabo2 = new Usuario() => [
+
+	Usuario jugador2 = new Usuario() => [
 		id = "U5"
-		nombre = "nabo2"
+		nombre = "Jugador 2"
 		password = "mandarina"
 		sexo = "F"
 		posicion = "EI"
@@ -74,78 +82,163 @@ class Bootstrap {
 		lat = -34.5768884
 		lon = -58.4904551
 	]
-	
-	Equipo equipazo = new Equipo() =>[
+
+	Usuario jugador3 = new Usuario() => [
+		id = "U6"
+		nombre = "Jugador 3"
+		password = "mandarina"
+		sexo = "M"
+		posicion = "MC"
+		email = "elmaildelnabo3@sarasa.com"
+		lat = -34.6029831
+		lon = -58.4408178
+	]
+
+	Usuario jugador4 = new Usuario() => [
+		id = "U7"
+		nombre = "Jugador 4"
+		password = "mandarina"
+		sexo = "F"
+		posicion = "EI"
+		email = "elmaildelnabo4@sarasa.com"
+		lat = -34.5768884
+		lon = -58.4904551
+	]
+
+	Equipo equipazo = new Equipo() => [
 		id = "E1"
 		nombre = "El equipazo"
 		owner = sebaCapo
-		integrantes = #[sebaCapo, nikoBostero, andy ,nabo1, nabo2]
-		maximoDeIntegrantes = 5
+		integrantes = #[sebaCapo, nikoBostero, andy, jugador1, jugador2]
 	]
-	
-	Equipo equipoIncompleto = new Equipo() =>[
+
+	Equipo equipoMalo = new Equipo() => [
+		id = "E1"
+		nombre = "El equipo malo"
+		owner = sebaCapo
+		integrantes = #[jugador1, jugador2, jugador3, jugador4, andy]
+	]
+
+	Equipo equipoIncompleto = new Equipo() => [
 		id = "E2"
 		nombre = "Equipo incompleto"
 		owner = nikoBostero
 		integrantes = #[sebaCapo, nikoBostero, andy]
-		maximoDeIntegrantes = 6
 	]
-	
-	Cancha urquiza1 = new Cancha() =>[
+
+	Cancha urquiza1 = new Cancha() => [
 		id = "C1"
 		nombre = "Cancha 1 Urquiza"
 		cesped = "sintetico"
 		cantidadJugadores = 10
 	]
-	
-	Cancha urquiza2 = new Cancha() =>[
+
+	Cancha urquiza2 = new Cancha() => [ 
 		id = "C2"
 		nombre = "Cancha 2 Urquiza"
 		cesped = "sintetico"
 		cantidadJugadores = 10
 	]
-	
-	Cancha vicLop1 = new Cancha() =>[
+
+	Cancha vicLop1 = new Cancha() => [
 		id = "C3"
 		nombre = "Cancha chica 1 Vic Lop"
 		cesped = "sintetico"
 		cantidadJugadores = 10
 	]
-	
-	Cancha vicLop2 = new Cancha() =>[
+
+	Cancha vicLop2 = new Cancha() => [
 		id = "C4"
 		nombre = "Cancha chica 2 Vic Lop"
 		cesped = "sintetico"
 		cantidadJugadores = 10
 	]
-	
-	Cancha vicLop3 = new Cancha() =>[
+
+	Cancha vicLop3 = new Cancha() => [
 		id = "C5"
 		nombre = "Cancha grande Vic Lop"
 		cesped = "cemento"
 		cantidadJugadores = 14
 	]
-	
-	Cancha argen1 = new Cancha() =>[
+
+	Cancha argen1 = new Cancha() => [
 		id = "C6"
 		nombre = "Cancha Chica Argentinos"
 		cesped = "cemento"
 		cantidadJugadores = 8
 	]
-	
-	Cancha argen2 = new Cancha() =>[
+
+	Cancha argen2 = new Cancha() => [
 		id = "C7"
 		nombre = "Cancha Grande Argentinos"
 		cesped = "cemento"
 		cantidadJugadores = 12
 	]
+
+	Empresa empresaUrquiza = new Empresa => [
+		id = "E1"
+		nombre = "Aguante uqz"
+		lat = -34.5748777
+		lon = -58.4903939
+		canchas = #[urquiza1, urquiza2]
+		nombreDuenio = "Tito Bara"
+		email = "aguanteUqz@vieja.com"
+		direccion = "Roosevelt 5110"
+		foto = "https://lh5.googleusercontent.com/p/AF1QipPF3MOS4J-Ou0mvOreYT8l3sIfHQu8_i1pQFbqI=w408-h509-k-no"
+	]
+
+	Empresa empresaVicenteLopez = new Empresa => [
+		id = "E2"
+		nombre = "Queda en la loma del orto"
+		lat = -34.5141931
+		lon = -58.5315329
+		canchas = #[vicLop1, vicLop2, vicLop3]
+		nombreDuenio = "Jorge"
+		email = "miraSiVaATenerMail@dePedoTieneAgua.com"
+		direccion = "Mitre 3847"
+		foto = "https://i.imgur.com/gYYrLrM.jpg"
+	]
+
+	Empresa empresaArgentinos = new Empresa => [
+		id = "E3"
+		nombre = "Argentinos :)"
+		lat = -34.6078057
+		lon = -58.4763221
+		canchas = #[argen1, argen2]
+		nombreDuenio = "No se mi nombre"
+		email = "niIdea@noSe.com"
+		direccion = "Sarasa 123"
+	]
+
+	Partido partido1 = new Partido() => [
+		id = "P1"
+		owner = sebaCapo
+		equipo1 = equipazo
+		equipo2 = equipoMalo
+		empresa = empresaUrquiza
+		canchaReservada = urquiza1
+		fechaDeReserva = LocalDateTime.of(LocalDate.of(2020, 5, 27), LocalTime.of(20, 00))
+	]
 	
-	def runBootstrap(){
+	Partido partido2 = new Partido() => [
+		id = "P2"
+		owner = andy
+		equipo1 = equipazo
+		equipo2 = equipoIncompleto
+		empresa = empresaVicenteLopez
+		canchaReservada = vicLop2
+		fechaDeReserva = LocalDateTime.of(LocalDate.of(2020, 4, 24), LocalTime.of(17, 00))
+	]
+
+	def runBootstrap() {
 		repoUsuarios.create(sebaCapo)
 		repoUsuarios.create(nikoBostero)
 		repoUsuarios.create(andy)
-		repoUsuarios.create(nabo1)
-		repoUsuarios.create(nabo2)
+		repoUsuarios.create(jugador1)
+		repoUsuarios.create(jugador2)
+		
+		repoPartido.create(partido1)
+		repoPartido.create(partido2)
 	}
-	
+
 }

@@ -46,9 +46,8 @@ class RestHostAPI {
 	def signUpUsuario(@Body String body) {
 
 		val Usuario usuario = body.fromJson(Usuario)
-		
+
 		println(body)
-		
 		try {
 			restHost.signUpUsuario(usuario)
 
@@ -58,6 +57,20 @@ class RestHostAPI {
 			return badRequest('{"status":400, "message":"' + e.message + '"}')
 		}
 	}
+
+	@Get("/partidos/:idUsuario")
+	def getPartidos() {
+
+		try {
+			return ok(restHost.getPartidosDelUsuario(idUsuario).toJson)
+		} catch (Exception e) {
+			return badRequest('{"status":400, "message":"' + e.message + '"}')
+		}
+
+	}
+	
+	
+	
 
 	/* Cosas del "JsonIgnore Dinamico" */
 	def <ViewGeneric> parsearObjeto(Object elementoAParsear, Class<ViewGeneric> customView) {
