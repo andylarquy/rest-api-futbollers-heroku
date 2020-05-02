@@ -6,7 +6,7 @@ import org.uqbar.xtrest.api.XTRest
 class WebApp {
 
 	def static void main(String[] args) {
-
+	val port = Integer.parseInt(System.getenv("PORT"))
 		// CHEATSHEET
 		// Para no usar helper method delego en una nueva clase
 		// las instanciacion y uso los objetos acá
@@ -21,7 +21,7 @@ class WebApp {
 			// parametros y cosas locas
 		]
 
-		XTRest.startInstance(9000, new RestHostAPI(restHost))
+		XTRest.startInstance(port, new RestHostAPI(restHost))
 	}
 
 }
