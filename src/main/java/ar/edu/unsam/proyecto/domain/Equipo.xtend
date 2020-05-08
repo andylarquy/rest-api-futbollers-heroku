@@ -49,4 +49,8 @@ class Equipo {
 		usuario == owner
 	}
 	
+	def idDeIntegrantes() {
+		integrantes.map[id].toList
+	}
+	
 }

@@ -5,11 +5,11 @@ import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
 @Accessors
-class Repositorio <T>{
+abstract class Repositorio <T>{
 	List<T> coleccion = new ArrayList
 	
-	def create(T objeto){
-		coleccion.add(objeto)
+	def create(T object){
+		coleccion.add(object)
 	}
 	
 	def delete(T object){

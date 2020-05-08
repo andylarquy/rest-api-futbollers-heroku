@@ -6,6 +6,7 @@ import ar.edu.unsam.proyecto.repos.RepositorioEquipo
 import ar.edu.unsam.proyecto.repos.RepositorioPartido
 import ar.edu.unsam.proyecto.repos.RepositorioUsuario
 import org.eclipse.xtend.lib.annotations.Accessors
+import ar.edu.unsam.proyecto.domain.Equipo
 
 @Accessors
 class RestHost {
@@ -46,6 +47,10 @@ class RestHost {
 	def getEquiposDelUsuario(String idUsuario) {
 		val usuarioPosta = repoUsuario.searchById(idUsuario)
 		repoEquipo.getEquiposDelUsuario(usuarioPosta)
+	}
+	
+	def crearNuevoEquipo(Equipo equipo) {
+		repoEquipo.crearNuevoEquipo(equipo)
 	}
 
 }

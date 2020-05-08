@@ -6,11 +6,13 @@ import ar.edu.unsam.proyecto.domain.Equipo
 import ar.edu.unsam.proyecto.domain.Partido
 import ar.edu.unsam.proyecto.domain.Usuario
 import ar.edu.unsam.proyecto.exceptions.IncorrectCredentials
+import ar.edu.unsam.proyecto.exceptions.ObjectAlreadyExists
 import ar.edu.unsam.proyecto.exceptions.UserDoesntExist
 import ar.edu.unsam.proyecto.repos.RepositorioEquipo
 import ar.edu.unsam.proyecto.repos.RepositorioPartido
 import ar.edu.unsam.proyecto.repos.RepositorioUsuario
 import ar.edu.unsam.proyecto.webApi.RestHost
+import ar.edu.unsam.proyecto.webApi.RestHostAPI
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -27,12 +29,7 @@ class TestLlamadasApiRest {
 	RepositorioPartido repoPartido = RepositorioPartido.instance
 	RepositorioEquipo repoEquipo = RepositorioEquipo.instance
 	RestHost restHost = new RestHost
-	
-	
-	LocalDateTime fechaDeReservaPartido1 = LocalDateTime.of(LocalDate.of(2020, 5, 27), LocalTime.of(20, 00))
-	LocalDateTime fechaDeReservaPartido2 = LocalDateTime.of(LocalDate.of(2020, 4, 24), LocalTime.of(17, 00))
-	LocalDateTime fechaDeReservaPartido3 = LocalDateTime.of(LocalDate.of(2020, 4, 26), LocalTime.of(17, 30))
-	LocalDateTime fechaDeReservaPartido4 = LocalDateTime.of(LocalDate.of(2020, 4, 24), LocalTime.of(16, 00))
+	RestHostAPI restHostApi = new RestHostAPI(restHost)
 	
 	Usuario sebaCapo = new Usuario() => [
 		id = "U1"
@@ -194,6 +191,14 @@ class TestLlamadasApiRest {
 		owner = mastropiero
 		foto = "https://i.redd.it/kvq6bvmcask31.jpg"
 		integrantes = new ArrayList(Arrays.asList(mastropiero, warrenSanchez, andy, jugador1, sebaCapo))
+	]
+	
+	Equipo equipoNuevo = new Equipo() =>[
+		id = "E5"
+		nombre = "Equipo Nuevo"
+		owner = andy
+		foto = "https://i.redd.it/1qy5y3wkidx41.jpg"
+		integrantes = new ArrayList(Arrays.asList(andy, nikoBostero, sebaCapo, jugador1, jugador2))
 	]
 
 	Cancha urquiza1 = new Cancha() => [
@@ -441,6 +446,8 @@ class TestLlamadasApiRest {
 
 
 	// <<<< TEST - EQUIPOS DEL USUARIO >>>>
+	
+	// <<<< GET EQUIPOS DEL USUARIO >>>>
 	@Test
 	def void getEquiposDeSebaCapo() {
 		Assert.assertEquals(#[equipazo, equipoIncompleto,  equipoLesLuthier],  restHost.getEquiposDelUsuario("U1"))
@@ -470,9 +477,31 @@ class TestLlamadasApiRest {
 	def void getEquiposUsuarioErroneo2() {
 		restHost.getEquiposDelUsuario("IdSuperErroneo")
 	}
+	// <<<</ GET EQUIPOS DEL USUARIO >>>>
+	
+	
+	// <<<< CREAR NUEVO EQUIPO >>>>
+	@Test
+	def void crearNuevoEquipo() {
+		restHost.crearNuevoEquipo(equipoNuevo)
+		Assert.assertEquals(#[equipazo, equipoMalo, equipoIncompleto,  equipoLesLuthier, equipoNuevo], repoEquipo.coleccion )
+	}
+	
+	@Test(expected = ObjectAlreadyExists)
+	def void crearEquipoDosVecesArrojaError() {
+	restHost.crearNuevoEquipo(equipoNuevo)
+	restHost.crearNuevoEquipo(equipoNuevo)
+	}
+	
+	@Test(expected = ObjectAlreadyExists)
+	def void crearEquipoQueYaExisteArrojaError() {
+	restHost.crearNuevoEquipo(equipazo)
+	}
+	
+	// <<<</ CREAR NUEVO EQUIPO >>>>
+	
+
 	// <<<</ TEST - EQUIPOS DEL USUARIO >>>>
-
-
 
 
 
@@ -511,5 +540,7 @@ class TestLlamadasApiRest {
 		restHost.getPartidosDelUsuario("IdSuperErroneo")
 	}
 	// <<<</ TEST - PARTIDOS DEL USUARIO >>>>
+	
+	
 
 }

@@ -88,6 +88,22 @@
 			<version>1.1.4</version>
 		</dependency>
 
+		<!-- JSON Support para Java -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20190722</version>
+		</dependency>
+
+		<!-- Agrego Gson porque me cae bien, es un tipo educado -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.6</version>
+		</dependency>
+
+
+
 	</dependencies>
 
 	<repositories>
