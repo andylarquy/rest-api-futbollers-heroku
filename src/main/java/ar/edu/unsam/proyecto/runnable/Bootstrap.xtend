@@ -243,6 +243,10 @@ class Bootstrap {
 	]
 
 	def runBootstrap() {
+		
+		//Es para suprimir el warning nomas
+		empresaArgentinos = empresaArgentinos
+		
 		repoUsuarios.create(sebaCapo)
 		repoUsuarios.create(nikoBostero)
 		repoUsuarios.create(andy)
@@ -257,6 +261,8 @@ class Bootstrap {
 		repoEquipo.create(equipazo)
 		repoEquipo.create(equipoMalo)
 		repoEquipo.create(equipoIncompleto)
+		
+		
 	}
 
 }

@@ -1,6 +1,7 @@
 package ar.edu.unsam.proyecto.webApi
 
 import ar.edu.unsam.proyecto.domain.Equipo
+import ar.edu.unsam.proyecto.domain.Partido
 import ar.edu.unsam.proyecto.domain.Usuario
 import ar.edu.unsam.proyecto.exceptions.IncorrectCredentials
 import ar.edu.unsam.proyecto.exceptions.ObjectAlreadyExists
@@ -11,14 +12,15 @@ import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsPartido
 import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsUsuario
 import com.fasterxml.jackson.databind.MapperFeature
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.google.gson.Gson
+import java.time.LocalDateTime
+import org.json.JSONArray
 import org.json.JSONObject
 import org.uqbar.xtrest.api.annotation.Body
 import org.uqbar.xtrest.api.annotation.Controller
 import org.uqbar.xtrest.api.annotation.Get
 import org.uqbar.xtrest.api.annotation.Post
 import org.uqbar.xtrest.json.JSONUtils
-import com.google.gson.Gson
-import org.json.JSONArray
 
 @Controller
 class RestHostAPI {
@@ -95,7 +97,44 @@ class RestHostAPI {
 		catch (Exception e) {
 			badRequest('{"status":400, "message":"' + e.message + '"}')
 		}
-
+	}
+	
+	//TODO: Terminar y testear
+	@Post("/partidos")
+	def postPartidos(@Body String body){
+		try{
+			
+			val jsonBody = new JSONObject(body)
+			
+			//TODO: Delegar en un metodo abajo de todo bien escondido
+			val LocalDateTime fechaDeReservaAsLocalDate = LocalDateTime.parse(jsonBody.get("fechaDeReserva").toString)
+			jsonBody.remove("fechaDeReserva")
+			
+			//TODO: Rellenar con campo parseado al partido
+			jsonBody.remove("owner")
+			
+			//TODO: Rellenar con campo parseado al partido
+			jsonBody.remove("equipo1")
+			
+			//TODO: Rellenar con campo parseado al partido
+			jsonBody.remove("equipo2")
+			
+			//TODO: Rellenar con campo parseado al partido
+			jsonBody.remove("empresa")
+			
+			//TODO: Rellenar con campo parseado al partido
+			jsonBody.remove("canchaReservada")
+			
+			
+			val partidoPosta = jsonBody.toString.fromJson(Partido)
+			partidoPosta.fechaDeReserva = fechaDeReservaAsLocalDate
+			
+			println("\n[DEBUG]: El partido "+partidoPosta+"\n[DEBUG]: Fue parseado con ID: "+partidoPosta.id+"\n[DEBUG]: Y con fecha de reserva: "+partidoPosta.fechaDeReserva+"\n")
+			
+			ok('{"status":200, "message":"ok", "debug":"Todo joya, ahora falta que la API haga algo, porque no estan ni parseados los campos"}')
+		}catch(Exception e){
+			throw e
+		}
 	}
 	
 	@Get("/equipos/:idUsuario")

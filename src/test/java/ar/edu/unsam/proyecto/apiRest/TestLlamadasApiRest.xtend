@@ -12,7 +12,6 @@ import ar.edu.unsam.proyecto.repos.RepositorioEquipo
 import ar.edu.unsam.proyecto.repos.RepositorioPartido
 import ar.edu.unsam.proyecto.repos.RepositorioUsuario
 import ar.edu.unsam.proyecto.webApi.RestHost
-import ar.edu.unsam.proyecto.webApi.RestHostAPI
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -29,7 +28,6 @@ class TestLlamadasApiRest {
 	RepositorioPartido repoPartido = RepositorioPartido.instance
 	RepositorioEquipo repoEquipo = RepositorioEquipo.instance
 	RestHost restHost = new RestHost
-	RestHostAPI restHostApi = new RestHostAPI(restHost)
 	
 	Usuario sebaCapo = new Usuario() => [
 		id = "U1"
@@ -331,6 +329,9 @@ class TestLlamadasApiRest {
 
 	@Before
 	def void init() {
+
+		//Es para suprimir el warning nomas
+		empresaArgentinos = empresaArgentinos
 
 		repoUsuarios.create(sebaCapo)
 		repoUsuarios.create(nikoBostero)

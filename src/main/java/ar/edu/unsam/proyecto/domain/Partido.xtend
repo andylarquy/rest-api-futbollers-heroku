@@ -26,7 +26,7 @@ class Partido {
 	@JsonView(ViewsPartido.DetallesView) 
 	Cancha canchaReservada
 	
-	@JsonView(ViewsPartido.DetallesView) 
+	@JsonView(ViewsPartido.DetallesView)
 	LocalDateTime fechaDeReserva
 	
 	def validar(){
