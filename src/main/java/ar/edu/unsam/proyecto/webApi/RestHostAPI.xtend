@@ -119,19 +119,42 @@ class RestHostAPI {
 	def postEquipos(@Body String body) {
 		
 		//Si lo entendes en menos de 5 segundos te regalo una galletita
-
-
-		val jsonBody = new JSONObject(body)
 		
-		//Recibo esto integrantes :["U1", "U2"...] lo parseo a una lista de javaObjects con los datos del back
-		val integrantesPosta = jsonBody.getJSONArray("integrantes").map[repoUsuario.searchById(it.toString)].toList
+		/* 
+		 * 
+		 * El bardo es que vos recibis un equipo asi
+		 * 
+		 * {
+		 * 	id:E4
+		 * 	nombre: "Los capos"
+		 * 	integrantes: ["U1", "U2"...]
+		 * 	owner: "U4"
+		 * }
+		 * 
+		 * Y cuando queres parsear eso a un equipo te caga a pedos
+		 * porque la lista de integrantes no es una lista que 
+		 * se pueda parsear de una, te faltan todos los datos del usuario.
+		 * Entonces los tenes q ir a buscar al repo usando su ID
+		 * 
+		 * Lo mismo pasa con el owner, por eso la movida
+		 * 
+		 */
+		
+		
+		val jsonBody = new JSONObject(body)
+		val idIntegrantes = jsonBody.getJSONArray("integrantes")
+		
+		// Con el ID de los integrantes voy al back 
+		// y obtengo  una lista de objetos de java
+		val integrantesPosta = idIntegrantes.map[repoUsuario.searchById(it.toString)].toList
 		
 		//Esa lista de java objects la vuelvo a parsear a JSON y se la paso al body
 		jsonBody.remove("integrantes")
 		jsonBody.put("integrantes", new JSONArray(integrantesPosta.toJson))
 		
 		//Repito la operacion con el owner
-		val ownerPosta = repoUsuario.searchById(jsonBody.get("owner").toString)
+		val idOwner = jsonBody.get("owner").toString
+		val ownerPosta = repoUsuario.searchById(idOwner)
 		
 		jsonBody.remove("owner")
 		jsonBody.put("owner", new JSONObject(ownerPosta.toJson))
@@ -139,7 +162,7 @@ class RestHostAPI {
 		//Parseo ahora si el body		
 		val equipo = new Gson().fromJson(jsonBody.toString, Equipo)
 
-		//TODO: Hacer esto bien
+		//TODO: Si es posible mejorar esto
 		
 		try {
 			restHost.crearNuevoEquipo(equipo)
