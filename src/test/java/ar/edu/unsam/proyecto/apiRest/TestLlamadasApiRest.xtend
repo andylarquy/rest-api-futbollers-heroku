@@ -34,7 +34,7 @@ class TestLlamadasApiRest {
 	RepositorioEquipo repoEquipo = RepositorioEquipo.instance
 	RestHost restHost = new RestHost
 	
-	Dotenv dotenv = Dotenv.load()
+	Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load()
 	
 	Usuario sebaCapo = new Usuario() => [
 		id = "U1"
@@ -198,10 +198,16 @@ class TestLlamadasApiRest {
 		integrantes = new ArrayList(Arrays.asList(mastropiero, warrenSanchez, andy, jugador1, sebaCapo))
 	]
 	
-	Equipo equipoNuevo = new Equipo() =>[
-		id = "E5"
-		nombre = "Equipo Nuevo"
+	Equipo equipoNuevo1 = new Equipo() =>[
+		nombre = "Equipo Nuevo 1"
 		owner = andy
+		foto = "https://i.redd.it/1qy5y3wkidx41.jpg"
+		integrantes = new ArrayList(Arrays.asList(andy, nikoBostero, sebaCapo, jugador1, jugador2))
+	]
+	
+	Equipo equipoNuevo2 = new Equipo() =>[
+		nombre = "Equipo Nuevo 2"
+		owner = sebaCapo
 		foto = "https://i.redd.it/1qy5y3wkidx41.jpg"
 		integrantes = new ArrayList(Arrays.asList(andy, nikoBostero, sebaCapo, jugador1, jugador2))
 	]
@@ -489,21 +495,24 @@ class TestLlamadasApiRest {
 	
 	
 	// <<<< CREAR NUEVO EQUIPO >>>>
+	//TODO: Testear con equipoNuevo2
 	@Test
 	def void crearNuevoEquipo() {
-		restHost.crearNuevoEquipo(equipoNuevo)
-		Assert.assertEquals(#[equipazo, equipoMalo, equipoIncompleto,  equipoLesLuthier, equipoNuevo], repoEquipo.coleccion )
+		restHost.crearNuevoEquipo(equipoNuevo1)
+		Assert.assertEquals(#[equipazo, equipoMalo, equipoIncompleto,  equipoLesLuthier, equipoNuevo1], repoEquipo.coleccion )
 	}
 	
-	@Test(expected = ObjectAlreadyExists)
-	def void crearEquipoDosVecesArrojaError() {
-	restHost.crearNuevoEquipo(equipoNuevo)
-	restHost.crearNuevoEquipo(equipoNuevo)
+	def void crearNuevoEquipoDosVecesFunciona() {
+		restHost.crearNuevoEquipo(equipoNuevo1)
+		restHost.crearNuevoEquipo(equipoNuevo1)
+		Assert.assertEquals(#[equipazo, equipoMalo, equipoIncompleto,  equipoLesLuthier, equipoNuevo1, equipoNuevo1], repoEquipo.coleccion )
 	}
 	
-	@Test(expected = ObjectAlreadyExists)
-	def void crearEquipoQueYaExisteArrojaError() {
-	restHost.crearNuevoEquipo(equipazo)
+	def void crearNuevoEquipoDosVecesLesAsignaIDsDistintos() {
+		restHost.crearNuevoEquipo(equipoNuevo1)
+		restHost.crearNuevoEquipo(equipoNuevo2)
+		Assert.assertEquals(equipoNuevo1.id, "E5")
+		Assert.assertEquals(equipoNuevo2.id, "E6")
 	}
 	
 	// <<<</ CREAR NUEVO EQUIPO >>>>

@@ -29,7 +29,7 @@ class TestDominioBienFormado {
 	RepositorioPartido repoPartido = RepositorioPartido.instance
 	RepositorioEquipo repoEquipo = RepositorioEquipo.instance
 	
-	Dotenv dotenv = Dotenv.load()
+	Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load()
 	
 	LocalDateTime fechaDeReservaPartido1 = LocalDateTime.of(LocalDate.of(2020, 5, 27), LocalTime.of(20, 00))
 	LocalDateTime fechaDeReservaPartido2 = LocalDateTime.of(LocalDate.of(2020, 4, 24), LocalTime.of(17, 00))

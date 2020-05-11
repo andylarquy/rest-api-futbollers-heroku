@@ -8,10 +8,9 @@ class WebApp {
 
 	def static void main(String[] args) {
 		var int port 
-		
-		val dotenv = Dotenv.load()
-		
-			
+		var Dotenv dotenv
+	
+		dotenv = Dotenv.configure().ignoreIfMissing().load()
 		
 		try {
 			port = Integer.parseInt(dotenv.get("PORT"))

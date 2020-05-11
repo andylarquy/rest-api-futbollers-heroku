@@ -9,5 +9,10 @@ class Cancha {
 	String id
 	String nombre
 	String cesped
+
+	//TODO: Esto
+	def validar(){
+		true
+	}
 	
 }

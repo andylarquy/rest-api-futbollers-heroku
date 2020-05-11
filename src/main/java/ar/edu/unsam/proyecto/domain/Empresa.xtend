@@ -52,5 +52,10 @@ class Empresa {
 		canchas.remove(cancha)
 	}
 	
+	//TODO: Esto
+	def validar(){
+		true
+	}
+	
 	
 }

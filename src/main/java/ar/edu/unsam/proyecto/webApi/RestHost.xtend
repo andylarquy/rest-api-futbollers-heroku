@@ -7,15 +7,14 @@ import ar.edu.unsam.proyecto.repos.RepositorioPartido
 import ar.edu.unsam.proyecto.repos.RepositorioUsuario
 import org.eclipse.xtend.lib.annotations.Accessors
 import ar.edu.unsam.proyecto.domain.Equipo
+import ar.edu.unsam.proyecto.domain.Partido
 
 @Accessors
 class RestHost {
 	RepositorioUsuario repoUsuario = RepositorioUsuario.instance
 	RepositorioPartido repoPartidos = RepositorioPartido.instance
 	RepositorioEquipo repoEquipo = RepositorioEquipo.instance
-	/* RepositorioSuperIndividuo repoIndividuo
-	RepositorioItem repoItem
-	RepositorioAmenaza repoAmenaza*/
+	RepositorioPartido repoPartido = RepositorioPartido.instance
 	
 	def getPeticionDePrueba() {
 		return '{ "message": "La API Rest esta funcionando!! :)" }'
@@ -51,6 +50,10 @@ class RestHost {
 	
 	def crearNuevoEquipo(Equipo equipo) {
 		repoEquipo.crearNuevoEquipo(equipo)
+	}
+	
+	def crearNuevoPartido(Partido partido) {
+		repoPartido.crearNuevoPartido(partido)
 	}
 
 }

@@ -39,9 +39,6 @@ class Equipo {
 	}
 	
 	def participaUsuario(Usuario usuario){
-		println(usuario.id)
-		println(owner.id)
-		println(integrantes.map[id])
 		esOwner(usuario) || integrantes.contains(usuario)
 	}
 	

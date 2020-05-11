@@ -4,18 +4,22 @@ import ar.edu.unsam.proyecto.domain.Equipo
 import ar.edu.unsam.proyecto.domain.Partido
 import ar.edu.unsam.proyecto.domain.Usuario
 import ar.edu.unsam.proyecto.exceptions.IncorrectCredentials
-import ar.edu.unsam.proyecto.exceptions.ObjectAlreadyExists
 import ar.edu.unsam.proyecto.exceptions.UserDoesntExist
+import ar.edu.unsam.proyecto.repos.RepositorioCancha
+import ar.edu.unsam.proyecto.repos.RepositorioEmpresa
+import ar.edu.unsam.proyecto.repos.RepositorioEquipo
 import ar.edu.unsam.proyecto.repos.RepositorioUsuario
 import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsEquipo
 import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsPartido
 import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsUsuario
+
 import com.fasterxml.jackson.databind.MapperFeature
 import com.fasterxml.jackson.databind.ObjectMapper
+
 import com.google.gson.Gson
 import java.time.LocalDateTime
-import org.json.JSONArray
 import org.json.JSONObject
+
 import org.uqbar.xtrest.api.annotation.Body
 import org.uqbar.xtrest.api.annotation.Controller
 import org.uqbar.xtrest.api.annotation.Get
@@ -28,6 +32,9 @@ class RestHostAPI {
 	RestHost restHost
 	
 	RepositorioUsuario repoUsuario = RepositorioUsuario.instance
+	RepositorioEquipo repoEquipo = RepositorioEquipo.instance
+	RepositorioEmpresa repoEmpresa = RepositorioEmpresa.instance
+	RepositorioCancha repoCancha = RepositorioCancha.instance
 
 	new(RestHost restHost) {
 		this.restHost = restHost
@@ -48,12 +55,10 @@ class RestHostAPI {
 	def loguearUsuario(@Body String body) {
 
 		val Usuario usuario = body.fromJson(Usuario)
-		// println(usuario.email)
 		try {
 			val usuarioParseado = this.parsearObjeto(restHost.loguearUsuario(usuario.email, usuario.password),
 				ViewsUsuario.CredencialesView)
 
-			// println("Json del usuario recien logueado: " + usuarioParseado + "\n")
 			ok(usuarioParseado)
 		} 
 		catch (IncorrectCredentials e) {
@@ -69,7 +74,6 @@ class RestHostAPI {
 
 		val Usuario usuario = body.fromJson(Usuario)
 
-		println(body)
 		try {
 			restHost.signUpUsuario(usuario)
 			ok('{"status": 200}')
@@ -86,7 +90,6 @@ class RestHostAPI {
 	def getPartidos() {
 
 		try {
-			println(restHost.getPartidosDelUsuario(idUsuario).map[it.equipo1].map[nombre])
 			var partidoParseado = this.parsearObjeto(restHost.getPartidosDelUsuario(idUsuario),
 				ViewsPartido.ListView)
 			ok(partidoParseado)	
@@ -110,30 +113,36 @@ class RestHostAPI {
 			val LocalDateTime fechaDeReservaAsLocalDate = LocalDateTime.parse(jsonBody.get("fechaDeReserva").toString)
 			jsonBody.remove("fechaDeReserva")
 			
-			//TODO: Rellenar con campo parseado al partido
+			val ownerPosta = repoUsuario.searchById(jsonBody.get("owner").toString)
 			jsonBody.remove("owner")
 			
-			//TODO: Rellenar con campo parseado al partido
+			val equipo1Posta = repoEquipo.searchById(jsonBody.get("equipo1").toString)
 			jsonBody.remove("equipo1")
 			
-			//TODO: Rellenar con campo parseado al partido
+			val equipo2Posta = repoEquipo.searchById(jsonBody.get("equipo2").toString)
 			jsonBody.remove("equipo2")
 			
-			//TODO: Rellenar con campo parseado al partido
+			val empresaPosta = repoEmpresa.searchById(jsonBody.get("empresa").toString)
 			jsonBody.remove("empresa")
 			
-			//TODO: Rellenar con campo parseado al partido
+			val canchaPosta = repoCancha.searchById(jsonBody.get("canchaReservada").toString)
 			jsonBody.remove("canchaReservada")
-			
 			
 			val partidoPosta = jsonBody.toString.fromJson(Partido)
 			partidoPosta.fechaDeReserva = fechaDeReservaAsLocalDate
+			partidoPosta.owner = ownerPosta
+			partidoPosta.equipo1 = equipo1Posta
+			partidoPosta.equipo2 = equipo2Posta
+			partidoPosta.empresa = empresaPosta
+			partidoPosta.canchaReservada = canchaPosta
 			
 			println("\n[DEBUG]: El partido "+partidoPosta+"\n[DEBUG]: Fue parseado con ID: "+partidoPosta.id+"\n[DEBUG]: Y con fecha de reserva: "+partidoPosta.fechaDeReserva+"\n")
 			
-			ok('{"status":200, "message":"ok", "debug":"Todo joya, ahora falta que la API haga algo, porque no estan ni parseados los campos"}')
+			restHost.crearNuevoPartido(partidoPosta)
+			
+			ok('{"status":200, "message":"ok"}')
 		}catch(Exception e){
-			throw e
+			badRequest('{"status":400, "message":"' + e.message + '"}')
 		}
 	}
 	
@@ -157,61 +166,32 @@ class RestHostAPI {
 	@Post("/equipos")
 	def postEquipos(@Body String body) {
 		
-		//Si lo entendes en menos de 5 segundos te regalo una galletita
-		
-		/* 
-		 * 
-		 * El bardo es que vos recibis un equipo asi
-		 * 
-		 * {
-		 * 	id:E4
-		 * 	nombre: "Los capos"
-		 * 	integrantes: ["U1", "U2"...]
-		 * 	owner: "U4"
-		 * }
-		 * 
-		 * Y cuando queres parsear eso a un equipo te caga a pedos
-		 * porque la lista de integrantes no es una lista que 
-		 * se pueda parsear de una, te faltan todos los datos del usuario.
-		 * Entonces los tenes q ir a buscar al repo usando su ID
-		 * 
-		 * Lo mismo pasa con el owner, por eso la movida
-		 * 
-		 */
-		
+		//Si lo entendes en menos de 15 segundos te regalo una galletita
 		
 		val jsonBody = new JSONObject(body)
 		val idIntegrantes = jsonBody.getJSONArray("integrantes")
 		
-		// Con el ID de los integrantes voy al back 
-		// y obtengo  una lista de objetos de java
+		// Con el ID de los integrantes voy al back y obtengo  una lista de objetos de java
 		val integrantesPosta = idIntegrantes.map[repoUsuario.searchById(it.toString)].toList
-		
-		//Esa lista de java objects la vuelvo a parsear a JSON y se la paso al body
+
+		//Elimino la lista de integrantes. Despues de parsear el partido se la paso
 		jsonBody.remove("integrantes")
-		jsonBody.put("integrantes", new JSONArray(integrantesPosta.toJson))
+		
 		
 		//Repito la operacion con el owner
-		val idOwner = jsonBody.get("owner").toString
-		val ownerPosta = repoUsuario.searchById(idOwner)
-		
+		val ownerPosta = repoUsuario.searchById(jsonBody.get("owner").toString)
 		jsonBody.remove("owner")
-		jsonBody.put("owner", new JSONObject(ownerPosta.toJson))
 		
 		//Parseo ahora si el body		
-		val equipo = new Gson().fromJson(jsonBody.toString, Equipo)
-
-		//TODO: Si es posible mejorar esto
+		val equipoPosta = new Gson().fromJson(jsonBody.toString, Equipo)
 		
+		equipoPosta.integrantes = integrantesPosta
+		equipoPosta.owner = ownerPosta
+
 		try {
-			restHost.crearNuevoEquipo(equipo)
+			restHost.crearNuevoEquipo(equipoPosta)
 			ok('{"status":200, "message":"ok"}')
-		}
-		catch (ObjectAlreadyExists e) {
-			println("Object")
-			badRequest('{"status":404, "message":"' + e.message + '"}')
-		}  
-		catch (Exception e) {
+		} catch (Exception e) {
 			badRequest('{"status":400, "message":"' + e.message + '"}')
 			throw e
 		}

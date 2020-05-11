@@ -48,16 +48,17 @@ class RepositorioPartido extends Repositorio<Partido> {
 		//searchById(superIndividuo.id).amigos = superIndividuo.amigos
 		println("Tengo actualizar un partido... no se como hacerlo")
 	}
+	
+	def crearNuevoPartido(Partido partido){
+		create(partido)
+		println("[DEBUG]: Se ha creado un nuevo partido con ID: "+partido.id+"\n")
+	}
 
 	def searchById(String cadenaId) {
-		return coleccion.filter[partido|partido.id == cadenaId].head
+		return coleccion.filter[partido|partido.id.equals(cadenaId)].head
 	}
 	
 	def getPartidosDelUsuario(Usuario usuario){
-		println("Integrantes:")
-		println(coleccion.map[owner].map[nombre])
-		println("\n")
-		
 		coleccion.filter[it.participaUsuario(usuario)].toList
 		
 	}

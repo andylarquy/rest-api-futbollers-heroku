@@ -2,7 +2,6 @@ package ar.edu.unsam.proyecto.repos
 
 import ar.edu.unsam.proyecto.domain.Equipo
 import ar.edu.unsam.proyecto.domain.Usuario
-import ar.edu.unsam.proyecto.exceptions.ObjectAlreadyExists
 
 class RepositorioEquipo extends Repositorio<Equipo> {
 	public static RepositorioEquipo repoEquipo
@@ -50,24 +49,20 @@ class RepositorioEquipo extends Repositorio<Equipo> {
 	}
 
 	def getEquiposDelUsuario(Usuario usuario) {
-		val temp = coleccion.filter[it.participaUsuario(usuario)].toList
-
-		println(temp)
-		temp
+		coleccion.filter[it.participaUsuario(usuario)].toList
 	}
 	
 	def crearNuevoEquipo(Equipo equipo){
-		println("ID!!: "+equipo.id)
-		println("ID OWNER!!: "+equipo.owner.id)
-		if(noExisteEquipoConId(equipo.id)){
 			create(equipo)
-		}else{
-			throw new ObjectAlreadyExists("El equipo que se esta intentando agregar ya existe en el sistema")
-		}
+			println("[DEBUG]: Se ha creado un nuevo equipo con ID: "+equipo.id+"\n")
 	}
 	
 	def noExisteEquipoConId(String idEquipo) {
 		!coleccion.exists[it.id.equals(idEquipo)]
+	}
+	
+	def searchEquipoById(String idBuscado){
+		coleccion.filter[it.id.equals(idBuscado)].head
 	}
 	
 }

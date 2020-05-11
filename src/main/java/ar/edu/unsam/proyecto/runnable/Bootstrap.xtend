@@ -5,9 +5,12 @@ import ar.edu.unsam.proyecto.domain.Empresa
 import ar.edu.unsam.proyecto.domain.Equipo
 import ar.edu.unsam.proyecto.domain.Partido
 import ar.edu.unsam.proyecto.domain.Usuario
+import ar.edu.unsam.proyecto.repos.RepositorioCancha
+import ar.edu.unsam.proyecto.repos.RepositorioEmpresa
 import ar.edu.unsam.proyecto.repos.RepositorioEquipo
 import ar.edu.unsam.proyecto.repos.RepositorioPartido
 import ar.edu.unsam.proyecto.repos.RepositorioUsuario
+
 
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -26,13 +29,15 @@ class Bootstrap {
 		bootstrap
 	}
 	
-	Dotenv dotenv = Dotenv.load()
+	Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load()
 
 	private new() {}
 
 	RepositorioUsuario repoUsuarios = RepositorioUsuario.instance
 	RepositorioPartido repoPartido = RepositorioPartido.instance
 	RepositorioEquipo repoEquipo = RepositorioEquipo.instance
+	RepositorioEmpresa repoEmpresa = RepositorioEmpresa.instance
+	RepositorioCancha repoCancha = RepositorioCancha.instance
 
 	Usuario sebaCapo = new Usuario() => [
 		id = "U1"
@@ -259,14 +264,25 @@ class Bootstrap {
 		repoUsuarios.create(jugador3)
 		repoUsuarios.create(jugador4)
 
-		repoPartido.create(partido1)
-		repoPartido.create(partido2)
-
 		repoEquipo.create(equipazo)
 		repoEquipo.create(equipoMalo)
 		repoEquipo.create(equipoIncompleto)
 		
+		repoCancha.create(urquiza1)
+		repoCancha.create(urquiza2)
+		repoCancha.create(vicLop1)
+		repoCancha.create(vicLop2)
+		repoCancha.create(vicLop3)
+		repoCancha.create(argen1)
+		repoCancha.create(argen2)
+
+		repoEmpresa.create(empresaUrquiza)
+		repoEmpresa.create(empresaVicenteLopez)
+		repoEmpresa.create(empresaArgentinos)
 		
+		repoPartido.create(partido1)
+		repoPartido.create(partido2)
+
 	}
 
 }
