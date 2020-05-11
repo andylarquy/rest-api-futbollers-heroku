@@ -5,3 +5,5 @@
 bin
 generated*
 .settings
+*/.env
+.env

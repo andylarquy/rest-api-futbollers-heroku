@@ -8,9 +8,12 @@ import ar.edu.unsam.proyecto.domain.Usuario
 import ar.edu.unsam.proyecto.repos.RepositorioEquipo
 import ar.edu.unsam.proyecto.repos.RepositorioPartido
 import ar.edu.unsam.proyecto.repos.RepositorioUsuario
+
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+
+import io.github.cdimascio.dotenv.Dotenv
 
 class Bootstrap {
 
@@ -22,9 +25,10 @@ class Bootstrap {
 		}
 		bootstrap
 	}
+	
+	Dotenv dotenv = Dotenv.load()
 
-	private new() {
-	}
+	private new() {}
 
 	RepositorioUsuario repoUsuarios = RepositorioUsuario.instance
 	RepositorioPartido repoPartido = RepositorioPartido.instance
@@ -33,11 +37,11 @@ class Bootstrap {
 	Usuario sebaCapo = new Usuario() => [
 		id = "U1"
 		nombre = "sebaCapo"
-		password = "mandarina"
+		password = dotenv.get("PASSWORD")
 		sexo = "M"
 		posicion = "DC"
 		foto = "https://i.imgur.com/gF6Q26G.jpg"
-		email = "sebassdevita@gmail.com"
+		email = dotenv.get("EMAIL_SEBA")
 		lat = -34.5677486
 		lon = -58.489429
 	]
@@ -45,11 +49,11 @@ class Bootstrap {
 	Usuario nikoBostero = new Usuario() => [
 		id = "U2"
 		nombre = "nikoBostero"
-		password = "mandarina"
+		password = dotenv.get("PASSWORD")
 		sexo = "M"
 		posicion = "ED"
 		foto = "https://i.imgur.com/a0UL9YQ.png"
-		email = "niko.bostero.232@gmail.com"
+		email = dotenv.get("EMAIL_NIKO")
 		lat = -34.6344499
 		lon = -58.3672355
 	]
@@ -57,11 +61,11 @@ class Bootstrap {
 	Usuario andy = new Usuario() => [
 		id = "U3"
 		nombre = "andy"
-		password = "mandarina"
+		password = dotenv.get("PASSWORD")
 		sexo = "M"
 		posicion = "DFI"
 		foto = "https://i.imgur.com/tBUGRSa.jpg"
-		email = "andres27059934@gmail.com"
+		email = dotenv.get("EMAIL_ANDY")
 		lat = -34.6016244
 		lon = -58.4420183
 	]
@@ -69,7 +73,7 @@ class Bootstrap {
 	Usuario jugador1 = new Usuario() => [
 		id = "U4"
 		nombre = "Jugador 1"
-		password = "mandarina"
+		password = dotenv.get("PASSWORD")
 		sexo = "M"
 		posicion = "MC"
 		foto = "https://i.imgur.com/DyYpkmS.jpg"
@@ -81,7 +85,7 @@ class Bootstrap {
 	Usuario jugador2 = new Usuario() => [
 		id = "U5"
 		nombre = "Jugador 2"
-		password = "mandarina"
+		password = dotenv.get("PASSWORD")
 		sexo = "F"
 		posicion = "EI"
 		foto = "https://i.imgur.com/AofDmoH.jpg"
@@ -93,7 +97,7 @@ class Bootstrap {
 	Usuario jugador3 = new Usuario() => [
 		id = "U6"
 		nombre = "Jugador 3"
-		password = "mandarina"
+		password = dotenv.get("PASSWORD")
 		sexo = "M"
 		posicion = "MC"
 		foto = "https://i.imgur.com/mUPUwOS.jpg"
@@ -105,7 +109,7 @@ class Bootstrap {
 	Usuario jugador4 = new Usuario() => [
 		id = "U7"
 		nombre = "Jugador 4"
-		password = "mandarina"
+		password = dotenv.get("PASSWORD")
 		sexo = "F"
 		posicion = "EI"
 		foto = "https://i.imgur.com/kzeiAar.jpg"

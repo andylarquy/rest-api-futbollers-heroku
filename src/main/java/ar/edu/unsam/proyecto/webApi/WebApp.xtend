@@ -1,17 +1,22 @@
 package ar.edu.unsam.proyecto.webApi
 
 import ar.edu.unsam.proyecto.runnable.Bootstrap
+import io.github.cdimascio.dotenv.Dotenv
 import org.uqbar.xtrest.api.XTRest
 
 class WebApp {
 
 	def static void main(String[] args) {
 		var int port 
+		
+		val dotenv = Dotenv.load()
+		
+			
+		
 		try {
-			port = Integer.parseInt(System.getenv("PORT"))
+			port = Integer.parseInt(dotenv.get("PORT"))
 		} catch (NumberFormatException e) {
-			println("Probablemente te olvidaste de cambiar el PORT")
-			println("GIF Explicativo: https://i.imgur.com/5m4o9xg.gif")
+			println("Probablemente te falta el archivo .env!!")
 			throw e
 		}
 		

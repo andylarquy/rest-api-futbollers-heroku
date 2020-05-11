@@ -12,15 +12,20 @@ import ar.edu.unsam.proyecto.repos.RepositorioEquipo
 import ar.edu.unsam.proyecto.repos.RepositorioPartido
 import ar.edu.unsam.proyecto.repos.RepositorioUsuario
 import ar.edu.unsam.proyecto.webApi.RestHost
+
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+
 import java.util.ArrayList
 import java.util.Arrays
+
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
+
+import io.github.cdimascio.dotenv.Dotenv
 
 class TestLlamadasApiRest {
 
@@ -29,14 +34,16 @@ class TestLlamadasApiRest {
 	RepositorioEquipo repoEquipo = RepositorioEquipo.instance
 	RestHost restHost = new RestHost
 	
+	Dotenv dotenv = Dotenv.load()
+	
 	Usuario sebaCapo = new Usuario() => [
 		id = "U1"
 		nombre = "sebaCapo"
-		password = "mandarina"
+		password = dotenv.get("PASSWORD")
 		sexo = "M"
 		posicion = "DC"
 		foto = "https://i.imgur.com/gF6Q26G.jpg"
-		email = "sebassdevita@gmail.com"
+		email = dotenv.get("EMAIL_SEBA")
 		lat = -34.5677486
 		lon = -58.489429
 	]
@@ -44,11 +51,11 @@ class TestLlamadasApiRest {
 	Usuario nikoBostero = new Usuario() => [
 		id = "U2"
 		nombre = "nikoBostero"
-		password = "mandarina"
+		password = dotenv.get("PASSWORD")
 		sexo = "M"
 		posicion = "ED"
 		foto = "https://i.imgur.com/a0UL9YQ.png"
-		email = "niko.bostero.232@gmail.com"
+		email = dotenv.get("EMAIL_NIKO")
 		lat = -34.6344499
 		lon = -58.3672355
 	]
@@ -56,11 +63,11 @@ class TestLlamadasApiRest {
 	Usuario andy = new Usuario() => [
 		id = "U3"
 		nombre = "andy"
-		password = "mandarina"
+		password = dotenv.get("PASSWORD")
 		sexo = "M"
 		posicion = "DFI"
 		foto = "https://i.imgur.com/tBUGRSa.jpg"
-		email = "andres27059934@gmail.com"
+		email = dotenv.get("EMAIL_ANDY")
 		lat = -34.6016244
 		lon = -58.4420183
 	]
@@ -68,7 +75,7 @@ class TestLlamadasApiRest {
 	Usuario jugador1 = new Usuario() => [
 		id = "U4"
 		nombre = "Jugador 1"
-		password = "mandarina"
+		password = dotenv.get("PASSWORD")
 		sexo = "M"
 		posicion = "MC"
 		foto = "https://i.imgur.com/DyYpkmS.jpg"
@@ -80,7 +87,7 @@ class TestLlamadasApiRest {
 	Usuario jugador2 = new Usuario() => [
 		id = "U5"
 		nombre = "Jugador 2"
-		password = "mandarina"
+		password = dotenv.get("PASSWORD")
 		sexo = "F"
 		posicion = "EI"
 		foto = "https://i.imgur.com/AofDmoH.jpg"
@@ -92,7 +99,7 @@ class TestLlamadasApiRest {
 	Usuario jugador3 = new Usuario() => [
 		id = "U6"
 		nombre = "Jugador 3"
-		password = "mandarina"
+		password = dotenv.get("PASSWORD")
 		sexo = "M"
 		posicion = "MC"
 		foto = "https://i.imgur.com/mUPUwOS.jpg"
@@ -104,7 +111,7 @@ class TestLlamadasApiRest {
 	Usuario jugador4 = new Usuario() => [
 		id = "U7"
 		nombre = "Jugador 4"
-		password = "mandarina"
+		password = dotenv.get("PASSWORD")
 		sexo = "F"
 		posicion = "EI"
 		foto = "https://i.imgur.com/kzeiAar.jpg"
@@ -116,7 +123,7 @@ class TestLlamadasApiRest {
 	Usuario warrenSanchez = new Usuario() => [
 		id = "U8"
 		nombre = "Warren Sanchez"
-		password = "mandarina"
+		password = dotenv.get("PASSWORD")
 		sexo = "H"
 		posicion = "Arquero"
 		foto = "https://i.imgur.com/eKKFfS2.jpg"
@@ -128,7 +135,7 @@ class TestLlamadasApiRest {
 	Usuario mastropiero = new Usuario() => [
 		id = "U9"
 		nombre = "Johan Sebastian Mastropiero"
-		password = "mandarina"
+		password = dotenv.get("PASSWORD")
 		sexo = "H"
 		posicion = "Delantero"
 		foto = "https://i.imgur.com/TTaaxVH.jpg"
@@ -139,7 +146,7 @@ class TestLlamadasApiRest {
 	
 	Usuario usuarioNuevoValido = new Usuario() => [
 		nombre = "Cosme fulanito"
-		password = "mandarina"
+		password = dotenv.get("PASSWORD")
 		sexo = "H"
 		posicion = "Defensor"
 		foto = "https://i.imgur.com/ubhtccK.png"
@@ -150,7 +157,7 @@ class TestLlamadasApiRest {
 	
 	Usuario usuarioNuevoInValido = new Usuario() => [
 		nombre = "Le robo la cuenta a andres"
-		password = "mandarina"
+		password = dotenv.get("PASSWORD")
 		sexo = "H"
 		posicion = "Defensor"
 		foto = "https://i.imgur.com/Rb7sxbv.jpg"
@@ -375,37 +382,37 @@ class TestLlamadasApiRest {
 	// <<<< TEST - LOGUEAR USUARIOS >>>>
 	@Test
 	def void loginSebaCapo() {
-		Assert.assertEquals(sebaCapo, restHost.loguearUsuario("sebassdevita@gmail.com", "mandarina"))
+		Assert.assertEquals(sebaCapo, restHost.loguearUsuario("sebassdevita@gmail.com", dotenv.get("PASSWORD")))
 	}
 	
 	@Test
 	def void loginNikoBostero() {
-		Assert.assertEquals(nikoBostero, restHost.loguearUsuario("niko.bostero.232@gmail.com", "mandarina"))
+		Assert.assertEquals(nikoBostero, restHost.loguearUsuario("niko.bostero.232@gmail.com", dotenv.get("PASSWORD")))
 	}
 	
 	@Test
 	def void loginAndy() {
-		Assert.assertEquals(andy, restHost.loguearUsuario("andres27059934@gmail.com","mandarina"))
+		Assert.assertEquals(andy, restHost.loguearUsuario("andres27059934@gmail.com",dotenv.get("PASSWORD")))
 	}
 	
 	@Test
 	def void loginWarrenSanchez() {
-		Assert.assertEquals(warrenSanchez, restHost.loguearUsuario("elhalldelteatro@warren.com","mandarina"))
+		Assert.assertEquals(warrenSanchez, restHost.loguearUsuario("elhalldelteatro@warren.com",dotenv.get("PASSWORD")))
 	}
 	
 	@Test
 	def void loginMastropiero() {
-		Assert.assertEquals(mastropiero, restHost.loguearUsuario("muchasGracias@DeNada.com","mandarina"))
+		Assert.assertEquals(mastropiero, restHost.loguearUsuario("muchasGracias@DeNada.com",dotenv.get("PASSWORD")))
 	}
 	
 	@Test(expected = IncorrectCredentials)
 	def void loginConCredencialesInvalidasSebaCapo() {
-		restHost.loguearUsuario("esteMailEsIncorrecto@gmail.com", "mandarina")
+		restHost.loguearUsuario("esteMailEsIncorrecto@gmail.com", dotenv.get("PASSWORD"))
 	}
 	
 	@Test(expected = IncorrectCredentials)
 	def void loginConCredencialesInvalidasAndy() {
-		restHost.loguearUsuario("esteMailEsIncorrecto@gmail.com", "mandarina")
+		restHost.loguearUsuario("esteMailEsIncorrecto@gmail.com", dotenv.get("PASSWORD"))
 	}
 	
 	@Test(expected = IncorrectCredentials)

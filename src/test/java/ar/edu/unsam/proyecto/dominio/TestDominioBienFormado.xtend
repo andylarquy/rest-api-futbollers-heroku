@@ -8,21 +8,28 @@ import ar.edu.unsam.proyecto.domain.Usuario
 import ar.edu.unsam.proyecto.repos.RepositorioEquipo
 import ar.edu.unsam.proyecto.repos.RepositorioPartido
 import ar.edu.unsam.proyecto.repos.RepositorioUsuario
+
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+
 import java.util.ArrayList
 import java.util.Arrays
+
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
+
+import io.github.cdimascio.dotenv.Dotenv
 
 class TestDominioBienFormado {
 
 	RepositorioUsuario repoUsuarios = RepositorioUsuario.instance
 	RepositorioPartido repoPartido = RepositorioPartido.instance
 	RepositorioEquipo repoEquipo = RepositorioEquipo.instance
+	
+	Dotenv dotenv = Dotenv.load()
 	
 	LocalDateTime fechaDeReservaPartido1 = LocalDateTime.of(LocalDate.of(2020, 5, 27), LocalTime.of(20, 00))
 	LocalDateTime fechaDeReservaPartido2 = LocalDateTime.of(LocalDate.of(2020, 4, 24), LocalTime.of(17, 00))
@@ -32,19 +39,19 @@ class TestDominioBienFormado {
 	Usuario sebaCapo = new Usuario() => [
 		id = "U1"
 		nombre = "sebaCapo"
-		password = "mandarina"
+		password = dotenv.get("PASSWORD")
 		sexo = "M"
 		posicion = "DC"
 		foto = "https://i.imgur.com/gF6Q26G.jpg"
-		email = "sebassdevita@gmail.com"
+		email = dotenv.get("EMAIL_SEBA")
 		lat = -34.5677486
 		lon = -58.489429
 	]
 
 	Usuario nikoBostero = new Usuario() => [
 		id = "U2"
-		nombre = "nikoBostero"
-		password = "mandarina"
+		nombre = dotenv.get("EMAIL_NIKO")
+		password = dotenv.get("PASSWORD")
 		sexo = "M"
 		posicion = "ED"
 		foto = "https://i.imgur.com/a0UL9YQ.png"
@@ -56,7 +63,7 @@ class TestDominioBienFormado {
 	Usuario andy = new Usuario() => [
 		id = "U3"
 		nombre = "andy"
-		password = "mandarina"
+		password = dotenv.get("EMAIL_ANDY")
 		sexo = "M"
 		posicion = "DFI"
 		foto = "https://i.imgur.com/tBUGRSa.jpg"
@@ -68,7 +75,7 @@ class TestDominioBienFormado {
 	Usuario jugador1 = new Usuario() => [
 		id = "U4"
 		nombre = "Jugador 1"
-		password = "mandarina"
+		password = dotenv.get("PASSWORD")
 		sexo = "M"
 		posicion = "MC"
 		foto = "https://i.imgur.com/DyYpkmS.jpg"
@@ -80,7 +87,7 @@ class TestDominioBienFormado {
 	Usuario jugador2 = new Usuario() => [
 		id = "U5"
 		nombre = "Jugador 2"
-		password = "mandarina"
+		password = dotenv.get("PASSWORD")
 		sexo = "F"
 		posicion = "EI"
 		foto = "https://i.imgur.com/AofDmoH.jpg"
@@ -92,7 +99,7 @@ class TestDominioBienFormado {
 	Usuario jugador3 = new Usuario() => [
 		id = "U6"
 		nombre = "Jugador 3"
-		password = "mandarina"
+		password = dotenv.get("PASSWORD")
 		sexo = "M"
 		posicion = "MC"
 		foto = "https://i.imgur.com/mUPUwOS.jpg"
@@ -104,7 +111,7 @@ class TestDominioBienFormado {
 	Usuario jugador4 = new Usuario() => [
 		id = "U7"
 		nombre = "Jugador 4"
-		password = "mandarina"
+		password = dotenv.get("PASSWORD")
 		sexo = "F"
 		posicion = "EI"
 		foto = "https://i.imgur.com/kzeiAar.jpg"
@@ -116,7 +123,7 @@ class TestDominioBienFormado {
 	Usuario warrenSanchez = new Usuario() => [
 		id = "U8"
 		nombre = "Warren Sanchez"
-		password = "mandarina"
+		password = dotenv.get("PASSWORD")
 		sexo = "H"
 		posicion = "Arquero"
 		foto = "https://i.imgur.com/eKKFfS2.jpg"
@@ -128,7 +135,7 @@ class TestDominioBienFormado {
 	Usuario mastropiero = new Usuario() => [
 		id = "U9"
 		nombre = "Johan Sebastian Mastropiero"
-		password = "mandarina"
+		password = dotenv.get("PASSWORD")
 		sexo = "H"
 		posicion = "Delantero"
 		foto = "https://i.imgur.com/TTaaxVH.jpg"
@@ -334,42 +341,6 @@ class TestDominioBienFormado {
 	}
 	
 	
-	// <<<< TEST - CREDENCIALES DE USUARIOS >>>>
-	@Test
-	def void sebaCapoTieneCredenciales() {
-		Assert.assertTrue(sebaCapo.tieneCredenciales("sebassdevita@gmail.com","mandarina"))
-	}
-	
-	@Test
-	def void nikoBosteroTieneCredenciales() {
-		Assert.assertTrue(nikoBostero.tieneCredenciales("niko.bostero.232@gmail.com","mandarina"))
-	}
-	
-	@Test
-	def void andyTieneCredenciales() {
-		Assert.assertTrue(andy.tieneCredenciales("andres27059934@gmail.com","mandarina"))
-	}
-	
-	@Test
-	def void jugador1TieneCredenciales() {
-		Assert.assertTrue(jugador1.tieneCredenciales("elmaildelnabo1@sarasa.com","mandarina"))
-	}
-	
-	@Test
-	def void jugador2TieneCredenciales() {
-		Assert.assertTrue(jugador2.tieneCredenciales("elmaildelnabo2@sarasa.com","mandarina"))
-	}
-	
-	@Test
-	def void jugador3TieneCredenciales() {
-		Assert.assertTrue(jugador3.tieneCredenciales("elmaildelnabo3@sarasa.com","mandarina"))
-	}
-	
-	@Test
-	def void jugador4TieneCredenciales() {
-		Assert.assertTrue(jugador4.tieneCredenciales("elmaildelnabo4@sarasa.com","mandarina"))
-	}
-	// <<<</ TEST - CREDENCIALES DE USUARIOS >>>>
 
 
 
