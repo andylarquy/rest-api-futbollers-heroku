@@ -57,7 +57,7 @@ class RepositorioUsuario extends Repositorio<Usuario> {
 
 	def searchById(String cadenaId) {
 		val usuario = coleccion.filter[usuario|usuario.id.equals(cadenaId)].head
-		return (usuario !== null) ? usuario : throw new UserDoesntExist("No existe un usuario con ese ID")
+		return (usuario !== null) ? usuario : throw new UserDoesntExist("No existe un usuario con el ID: "+cadenaId)
 	}
 	
 	def getUsuarioConCredenciales(String username, String password){

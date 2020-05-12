@@ -8,7 +8,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 @Accessors
 class Partido {
 	
-	@JsonView(ViewsPartido.DefaultView) 
+	@JsonView(ViewsPartido.ListView) 
 	String id
 	
 	@JsonView(ViewsPartido.DefaultView) 

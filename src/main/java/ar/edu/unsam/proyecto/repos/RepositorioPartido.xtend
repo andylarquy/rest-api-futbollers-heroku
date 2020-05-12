@@ -50,6 +50,7 @@ class RepositorioPartido extends Repositorio<Partido> {
 	}
 	
 	def crearNuevoPartido(Partido partido){
+		this.asignarIdPartido(partido)
 		create(partido)
 		println("[DEBUG]: Se ha creado un nuevo partido con ID: "+partido.id+"\n")
 	}

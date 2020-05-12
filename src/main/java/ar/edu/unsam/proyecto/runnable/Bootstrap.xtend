@@ -264,9 +264,9 @@ class Bootstrap {
 		repoUsuarios.create(jugador3)
 		repoUsuarios.create(jugador4)
 
-		repoEquipo.create(equipazo)
-		repoEquipo.create(equipoMalo)
-		repoEquipo.create(equipoIncompleto)
+		repoEquipo.crearNuevoEquipo(equipazo)
+		repoEquipo.crearNuevoEquipo(equipoMalo)
+		repoEquipo.crearNuevoEquipo(equipoIncompleto)
 		
 		repoCancha.create(urquiza1)
 		repoCancha.create(urquiza2)
@@ -280,8 +280,8 @@ class Bootstrap {
 		repoEmpresa.create(empresaVicenteLopez)
 		repoEmpresa.create(empresaArgentinos)
 		
-		repoPartido.create(partido1)
-		repoPartido.create(partido2)
+		repoPartido.crearNuevoPartido(partido1)
+		repoPartido.crearNuevoPartido(partido2)
 
 	}
 

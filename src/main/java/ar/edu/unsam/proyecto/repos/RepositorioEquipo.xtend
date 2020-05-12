@@ -27,13 +27,13 @@ class RepositorioEquipo extends Repositorio<Equipo> {
 		if (equipo.id !== null) {
 			this.update(equipo)
 		} else {
-			this.asignarIdPartido(equipo)
+			this.asignarIdEquipo(equipo)
 			this.create(equipo)
 		}
 	}
 
-	def asignarIdPartido(Equipo equipo) {
-		equipo.id = 'P' + idAutoincremental.toString
+	def asignarIdEquipo(Equipo equipo) {
+		equipo.id = 'E' + idAutoincremental.toString
 		idAutoincremental++
 	}
 
@@ -53,6 +53,7 @@ class RepositorioEquipo extends Repositorio<Equipo> {
 	}
 	
 	def crearNuevoEquipo(Equipo equipo){
+			this.asignarIdEquipo(equipo)
 			create(equipo)
 			println("[DEBUG]: Se ha creado un nuevo equipo con ID: "+equipo.id+"\n")
 	}
