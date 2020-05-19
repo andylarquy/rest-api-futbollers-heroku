@@ -1,0 +1,11 @@
+dist: trusty
+
+language: java
+jdk:
+  - oraclejdk8
+
+notifications:
+  email:
+    - andres27059934@gmail.com
+    - sebassdevita@gmail.com
+    - niko.bostero.232@gmail.com
