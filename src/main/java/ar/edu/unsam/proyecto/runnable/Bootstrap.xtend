@@ -149,63 +149,63 @@ class Bootstrap {
 
 	Cancha urquiza1 = new Cancha() => [
 		id = "C1"
-		nombre = "Cancha 1 Urquiza"
-		cesped = "sintetico"
+		foto = "https://i.imgur.com/jrziFQc.png"
+		setSuperficie = "sintetico"
 		cantidadJugadores = 10
 	]
 
 	Cancha urquiza2 = new Cancha() => [
 		id = "C2"
-		nombre = "Cancha 2 Urquiza"
-		cesped = "sintetico"
+		foto = "https://i.imgur.com/iUBWJAL.jpg"
+		setSuperficie = "sintetico"
 		cantidadJugadores = 10
 	]
 
 	Cancha vicLop1 = new Cancha() => [
 		id = "C3"
-		nombre = "Cancha chica 1 Vic Lop"
-		cesped = "sintetico"
+		foto = "https://i.imgur.com/J29IXSA.png"
+		setSuperficie = "sintetico"
 		cantidadJugadores = 10
 	]
 
 	Cancha vicLop2 = new Cancha() => [
 		id = "C4"
-		nombre = "Cancha chica 2 Vic Lop"
-		cesped = "sintetico"
+		foto = "https://i.imgur.com/OO24aMM.jpg"
+		setSuperficie = "sintetico"
 		cantidadJugadores = 10
 	]
 
 	Cancha vicLop3 = new Cancha() => [
 		id = "C5"
-		nombre = "Cancha grande Vic Lop"
-		cesped = "cemento"
+		foto = "https://i.imgur.com/k14oJiW.jpg"
+		setSuperficie = "cemento"
 		cantidadJugadores = 14
 	]
 
 	Cancha argen1 = new Cancha() => [
 		id = "C6"
-		nombre = "Cancha Chica Argentinos"
-		cesped = "cemento"
+		foto = "https://i.imgur.com/1eIVVny.jpg"
+		setSuperficie = "cemento"
 		cantidadJugadores = 8
 	]
 
 	Cancha argen2 = new Cancha() => [
 		id = "C7"
-		nombre = "Cancha Grande Argentinos"
-		cesped = "cemento"
+		foto = "https://i.imgur.com/2yZN1T5.jpg"
+		setSuperficie = "cemento"
 		cantidadJugadores = 12
 	]
 
 	Empresa empresaUrquiza = new Empresa => [
 		id = "E1"
-		nombre = "Aguante uqz"
+		nombre = "Futbol Urquiza"
 		lat = -34.5748777
 		lon = -58.4903939
 		canchas = #[urquiza1, urquiza2]
 		nombreDuenio = "Tito Bara"
-		email = "aguanteUqz@vieja.com"
+		email = "futbolUrquiza@gmail.com"
 		direccion = "Roosevelt 5110"
-		foto = "https://lh5.googleusercontent.com/p/AF1QipPF3MOS4J-Ou0mvOreYT8l3sIfHQu8_i1pQFbqI=w408-h509-k-no"
+		foto = "https://i.imgur.com/uBq4qBV.jpg"
 	]
 
 	Empresa empresaVicenteLopez = new Empresa => [
@@ -217,7 +217,7 @@ class Bootstrap {
 		nombreDuenio = "Jorge"
 		email = "miraSiVaATenerMail@dePedoTieneAgua.com"
 		direccion = "Mitre 3847"
-		foto = "https://i.imgur.com/0R5wqI5.jpg"
+		foto = "https://i.imgur.com/9QfoGNr.png"
 	]
 
 	Empresa empresaArgentinos = new Empresa => [
@@ -229,6 +229,7 @@ class Bootstrap {
 		nombreDuenio = "No se mi nombre"
 		email = "niIdea@noSe.com"
 		direccion = "Sarasa 123"
+		foto = "https://i.imgur.com/RUOAmuX.png"
 	]
 
 	Partido partido1 = new Partido() => [

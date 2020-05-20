@@ -213,50 +213,50 @@ class TestLlamadasApiRest {
 
 	Cancha urquiza1 = new Cancha() => [
 		id = "C1"
-		nombre = "Cancha 1 Urquiza"
-		cesped = "sintetico"
+		foto = "https://i.imgur.com/jrziFQc.png"
+		setSuperficie = "sintetico"
 		cantidadJugadores = 10
 	]
 
 	Cancha urquiza2 = new Cancha() => [
 		id = "C2"
-		nombre = "Cancha 2 Urquiza"
-		cesped = "sintetico"
+		foto = "https://i.imgur.com/iUBWJAL.jpg"
+		setSuperficie = "sintetico"
 		cantidadJugadores = 10
 	]
 
 	Cancha vicLop1 = new Cancha() => [
 		id = "C3"
-		nombre = "Cancha chica 1 Vic Lop"
-		cesped = "sintetico"
+		foto = "https://i.imgur.com/J29IXSA.png"
+		setSuperficie = "sintetico"
 		cantidadJugadores = 10
 	]
 
 	Cancha vicLop2 = new Cancha() => [
 		id = "C4"
-		nombre = "Cancha chica 2 Vic Lop"
-		cesped = "sintetico"
+		foto = "https://i.imgur.com/OO24aMM.jpg"
+		setSuperficie = "sintetico"
 		cantidadJugadores = 10
 	]
 
 	Cancha vicLop3 = new Cancha() => [
 		id = "C5"
-		nombre = "Cancha grande Vic Lop"
-		cesped = "cemento"
+		foto = "https://i.imgur.com/k14oJiW.jpg"
+		setSuperficie = "cemento"
 		cantidadJugadores = 14
 	]
 
 	Cancha argen1 = new Cancha() => [
 		id = "C6"
-		nombre = "Cancha Chica Argentinos"
-		cesped = "cemento"
+		foto = "https://i.imgur.com/1eIVVny.jpg"
+		setSuperficie = "cemento"
 		cantidadJugadores = 8
 	]
 
 	Cancha argen2 = new Cancha() => [
 		id = "C7"
-		nombre = "Cancha Grande Argentinos"
-		cesped = "cemento"
+		foto = "https://i.imgur.com/2yZN1T5.jpg"
+		setSuperficie = "cemento"
 		cantidadJugadores = 12
 	]
 
@@ -269,7 +269,7 @@ class TestLlamadasApiRest {
 		nombreDuenio = "Tito Bara"
 		email = "aguanteUqz@vieja.com"
 		direccion = "Roosevelt 5110"
-		foto = "https://lh5.googleusercontent.com/p/AF1QipPF3MOS4J-Ou0mvOreYT8l3sIfHQu8_i1pQFbqI=w408-h509-k-no"
+		foto = "https://i.imgur.com/uBq4qBV.jpg"
 	]
 
 	Empresa empresaVicenteLopez = new Empresa => [
@@ -281,7 +281,7 @@ class TestLlamadasApiRest {
 		nombreDuenio = "Jorge"
 		email = "miraSiVaATenerMail@dePedoTieneAgua.com"
 		direccion = "Mitre 3847"
-		foto = "https://i.imgur.com/0R5wqI5.jpg"
+		foto = "https://i.imgur.com/9QfoGNr.png"
 	]
 
 	Empresa empresaArgentinos = new Empresa => [
@@ -293,6 +293,7 @@ class TestLlamadasApiRest {
 		nombreDuenio = "No se mi nombre"
 		email = "niIdea@noSe.com"
 		direccion = "Sarasa 123"
+		foto = "https://i.imgur.com/RUOAmuX.png"
 	]
 
 	Partido partido1 = new Partido() => [
@@ -332,8 +333,29 @@ class TestLlamadasApiRest {
 		equipo2 = equipazo
 		empresa = empresaUrquiza
 		canchaReservada = urquiza1
-		fechaDeReserva = LocalDateTime.of(LocalDate.of(2020, 4, 24), LocalTime.of(16, 00))
+		fechaDeReserva = LocalDateTime.of(LocalDate.of(2020, 4, 24), LocalTime.of(16,00))
 	]
+	
+	Partido partidoNuevo1 = new Partido() => [
+		id = "P5"
+		owner = andy
+		equipo1 = equipoIncompleto
+		equipo2 = equipazo
+		empresa = empresaUrquiza
+		canchaReservada = urquiza2
+		fechaDeReserva = LocalDateTime.of(LocalDate.of(2020, 5, 14), LocalTime.of(15, 00))
+	]
+	
+	Partido partidoNuevo2 = new Partido() => [
+		id = "P6"
+		owner = jugador3
+		equipo1 = equipoMalo
+		equipo2 = equipazo
+		empresa = empresaArgentinos
+		canchaReservada = argen2
+		fechaDeReserva = LocalDateTime.of(LocalDate.of(2020, 10, 18), LocalTime.of(14, 30))
+	]
+
 
 
 
@@ -494,11 +516,16 @@ class TestLlamadasApiRest {
 	
 	
 	// <<<< CREAR NUEVO EQUIPO >>>>
-	//TODO: Testear con equipoNuevo2
 	@Test
-	def void crearNuevoEquipo() {
+	def void crearNuevoEquipo1() {
 		restHost.crearNuevoEquipo(equipoNuevo1)
 		Assert.assertEquals(#[equipazo, equipoMalo, equipoIncompleto,  equipoLesLuthier, equipoNuevo1], repoEquipo.coleccion )
+	}
+	
+	@Test
+	def void crearNuevoEquipo2() {
+		restHost.crearNuevoEquipo(equipoNuevo2)
+		Assert.assertEquals(#[equipazo, equipoMalo, equipoIncompleto,  equipoLesLuthier, equipoNuevo2], repoEquipo.coleccion )
 	}
 	
 	def void crearNuevoEquipoDosVecesFunciona() {
@@ -526,6 +553,8 @@ class TestLlamadasApiRest {
 
 
 	// <<<< TEST - PARTIDOS DEL USUARIO >>>>
+	
+	// <<<< GET PARTIDOS DEL USUARIO >>>>
 	@Test
 	def void getPartidosDeSebaCapo() {
 		Assert.assertEquals(#[partido1, partido2, partido3, partido4],  restHost.getPartidosDelUsuario("U1"))
@@ -555,6 +584,35 @@ class TestLlamadasApiRest {
 	def void getPartidosUsuarioErroneo2() {
 		restHost.getPartidosDelUsuario("IdSuperErroneo")
 	}
+	// <<<</ GET PARTIDOS DEL USUARIO >>>>
+	
+	// <<<< CREAR NUEVO PARTIDO >>>>
+	@Test
+	def void crearNuevoPartido1() {
+		restHost.crearNuevoPartido(partidoNuevo1)
+		Assert.assertEquals(#[partido1, partido2, partido3,  partido4, partidoNuevo1], repoPartido.coleccion )
+	}
+	
+	@Test
+	def void crearNuevoPartido2() {
+		restHost.crearNuevoPartido(partidoNuevo2)
+		Assert.assertEquals(#[partido1, partido2, partido3,  partido4, partidoNuevo2], repoPartido.coleccion )
+	}
+	
+	def void crearNuevoPartidoDosVecesFunciona() {
+		restHost.crearNuevoPartido(partidoNuevo1)
+		restHost.crearNuevoPartido(partidoNuevo1)
+		Assert.assertEquals(#[partido1, partido2, partido3,  partido4, partidoNuevo1, partidoNuevo1], repoEquipo.coleccion )
+	}
+	
+	def void crearNuevoPartidoDosVecesLesAsignaIDsDistintos() {
+		restHost.crearNuevoPartido(partidoNuevo1)
+		restHost.crearNuevoPartido(partidoNuevo2)
+		Assert.assertEquals(partidoNuevo1.id, "P7")
+		Assert.assertEquals(partidoNuevo2.id, "P8")
+	}
+	// <<<</ CREAR NUEVO PARTIDO >>>>
+	
 	// <<<</ TEST - PARTIDOS DEL USUARIO >>>>
 	
 	
