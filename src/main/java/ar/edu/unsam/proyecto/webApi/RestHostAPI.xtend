@@ -46,10 +46,9 @@ class RestHostAPI {
 	@Get("/index")
 	def getPeticionDePrueba() {
 
-		try{
+		try {
 			ok(restHost.getPeticionDePrueba())
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			badRequest('{"status":400, "message":"' + e.message + '"}')
 		}
 	}
@@ -63,11 +62,9 @@ class RestHostAPI {
 				ViewsUsuario.CredencialesView)
 
 			ok(usuarioParseado)
-		} 
-		catch (IncorrectCredentials e) {
+		} catch (IncorrectCredentials e) {
 			forbidden('{"status":401, "message":"' + e.message + '"}')
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			badRequest('{"status":400, "message":"' + e.message + '"}')
 		}
 	}
@@ -80,11 +77,9 @@ class RestHostAPI {
 		try {
 			restHost.signUpUsuario(usuario)
 			ok('{"status": 200}')
-		} 
-		catch (IncorrectCredentials e) {
+		} catch (IncorrectCredentials e) {
 			badRequest('{"status":400, "message":"' + e.message + '"}')
-		} 
-		catch (Exception e) {
+		} catch (Exception e) {
 			badRequest('{"status":400, "message":"' + e.message + '"}')
 		}
 	}
@@ -93,70 +88,59 @@ class RestHostAPI {
 	def getPartidos() {
 
 		try {
-			var partidoParseado = this.parsearObjeto(restHost.getPartidosDelUsuario(idUsuario),
-				ViewsPartido.ListView)
-			ok(partidoParseado)	
-		} 
-		catch (UserDoesntExist e) {
+			var partidoParseado = this.parsearObjeto(restHost.getPartidosDelUsuario(idUsuario), ViewsPartido.ListView)
+			ok(partidoParseado)
+		} catch (UserDoesntExist e) {
 			notFound('{"status":404, "message":"' + e.message + '"}')
-		} 
-		catch (Exception e) {
+		} catch (Exception e) {
 			badRequest('{"status":400, "message":"' + e.message + '"}')
 		}
 	}
-	
-	//TODO: Testear
+
 	@Post("/partidos")
-	def postPartidos(@Body String body){
-		try{
-			//Seteo los adapter de ID a javaObject
-			val gson = new GsonBuilder()
-        	.registerTypeAdapter(LocalDateTime, new LocalDateAdapter())
-        	.registerTypeAdapter(Usuario, new UsuarioAdapter())
-        	.registerTypeAdapter(Equipo, new EquiposAdapter())
-        	.registerTypeAdapter(Empresa, new EmpresaAdapter())
-        	.registerTypeAdapter(Cancha, new CanchaAdapter())
-        	.create()			
-			
+	def postPartidos(@Body String body) {
+		try {
+			// Seteo los adapter de ID a javaObject
+			val gson = new GsonBuilder().registerTypeAdapter(LocalDateTime, new LocalDateAdapter()).
+				registerTypeAdapter(Usuario, new UsuarioAdapter()).registerTypeAdapter(Equipo, new EquiposAdapter()).
+				registerTypeAdapter(Empresa, new EmpresaAdapter()).registerTypeAdapter(Cancha, new CanchaAdapter()).
+				create()
+
 			val partido = gson.fromJson(body.toString, Partido)
-			
-			println("\n[DEBUG]: El partido "+partido)
-			println("[DEBUG]: Fue parseado con ID: "+partido.id)
-			println("[DEBUG]: Y con fecha de reserva: "+partido.fechaDeReserva)
-			
+
+			println("\n[DEBUG]: El partido " + partido)
+			println("[DEBUG]: Fue parseado con ID: " + partido.id)
+			println("[DEBUG]: Y con fecha de reserva: " + partido.fechaDeReserva)
+
 			restHost.crearNuevoPartido(partido)
-			
+
 			ok('{"status":200, "message":"ok"}')
-		}catch(Exception e){
+		} catch (Exception e) {
 			badRequest('{"status":400, "message":"' + e.message + '"}')
 		}
 	}
-	
+
 	@Get("/equipos/:idUsuario")
 	def getEquipos() {
 
 		try {
-			var partidoParseado = this.parsearObjeto(restHost.getEquiposDelUsuario(idUsuario),ViewsEquipo.ListView)
+			var partidoParseado = this.parsearObjeto(restHost.getEquiposDelUsuario(idUsuario), ViewsEquipo.ListView)
 			ok(partidoParseado)
-		}
-		catch (UserDoesntExist e) {
+		} catch (UserDoesntExist e) {
 			notFound('{"status":404, "message":"' + e.message + '"}')
-		}  
-		catch (Exception e) {
+		} catch (Exception e) {
 			badRequest('{"status":400, "message":"' + e.message + '"}')
 		}
 
 	}
-	
+
 	@Post("/equipos")
 	def postEquipos(@Body String body) {
-		
+
 		try {
-			val gson = new GsonBuilder()
-			.registerTypeAdapter(Usuario, new UsuarioAdapter)
-			.registerTypeAdapter(List, new UsuarioListAdapter())
-        	.create()
-		
+			val gson = new GsonBuilder().registerTypeAdapter(Usuario, new UsuarioAdapter).registerTypeAdapter(List,
+				new UsuarioListAdapter()).create()
+
 			val equipo = gson.fromJson(body, Equipo)
 
 			restHost.crearNuevoEquipo(equipo)
@@ -167,10 +151,18 @@ class RestHostAPI {
 
 	}
 
+	@Get("/canchas")
+	def getCanchas() {
+		try {
+			var canchasParseadas = restHost.getCanchas().toJson
+			ok(canchasParseadas)
+		} catch (Exception e) {
+			badRequest('{"status":400, "message":"' + e.message + '"}')
+		}
+	}
 
 	/* Auxiliares para pareo de JSONS (<3 Gracias Java, sos una verga) */
 	/* TODO: Capaz podes mandar todo a un archivo auxiliar y separar esta logica de mierda */
-
 	/* Cosas del "JsonIgnore Dinamico" con Jackson*/
 	def <ViewGeneric> parsearObjeto(Object elementoAParsear, Class<ViewGeneric> customView) {
 
@@ -180,60 +172,59 @@ class RestHostAPI {
 		var result = mapper.writerWithView(customView).writeValueAsString(elementoAParsear);
 		return result
 	}
-	
-	// GSON ADAPTERS SARASA
+
+// GSON ADAPTERS SARASA
 	static class LocalDateAdapter implements JsonDeserializer<LocalDateTime> {
-    	override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
-    		println(json)
-       	 LocalDateTime.parse(json.getAsJsonPrimitive().getAsString())
-    	}
- 	}
- 	
-    static class UsuarioAdapter implements JsonDeserializer<Usuario> {
-    	val repoUsuario = RepositorioUsuario.instance
-    	
-    	override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
-    		val idUsuario = json.getAsJsonPrimitive().getAsString()
+		override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
+			println(json)
+			LocalDateTime.parse(json.getAsJsonPrimitive().getAsString())
+		}
+	}
+
+	static class UsuarioAdapter implements JsonDeserializer<Usuario> {
+		val repoUsuario = RepositorioUsuario.instance
+
+		override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
+			val idUsuario = json.getAsJsonPrimitive().getAsString()
 			repoUsuario.searchById(idUsuario)
-    	}
-    }
-    
-    static class UsuarioListAdapter implements JsonDeserializer<List<Usuario>> {
-    	val repoUsuario = RepositorioUsuario.instance
-    	
-    	override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
-    		val idUsuarios = json.getAsJsonArray()
+		}
+	}
+
+	static class UsuarioListAdapter implements JsonDeserializer<List<Usuario>> {
+		val repoUsuario = RepositorioUsuario.instance
+
+		override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
+			val idUsuarios = json.getAsJsonArray()
 			val idUsuariosSinQuotes = idUsuarios.map[it.getAsJsonPrimitive().getAsString()]
 			idUsuariosSinQuotes.map[repoUsuario.searchById(it)].toList
-    	}
-    }
-    
-    static class EquiposAdapter implements JsonDeserializer<Equipo> {
-    	val repoEquipo = RepositorioEquipo.instance
-    	
-    	override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
-       		val idEquipo = json.getAsJsonPrimitive().getAsString()
-    		return repoEquipo.searchById(idEquipo)
-    	}
-    }
-    
-    static class EmpresaAdapter implements JsonDeserializer<Empresa> {
-    	val repoEmpresa = RepositorioEmpresa.instance
-    	
-    	override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
-       		val idEmpresa = json.getAsJsonPrimitive().getAsString()
-    		return repoEmpresa.searchById(idEmpresa)
-    	}	
-    }
-    
-    static class CanchaAdapter implements JsonDeserializer<Cancha> {
-    	val repoCancha = RepositorioCancha.instance
-    	
-    	override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
-       		val idCancha = json.getAsJsonPrimitive().getAsString()
-    		return repoCancha.searchById(idCancha)
-    	}	
-    }
-    
+		}
+	}
+
+	static class EquiposAdapter implements JsonDeserializer<Equipo> {
+		val repoEquipo = RepositorioEquipo.instance
+
+		override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
+			val idEquipo = json.getAsJsonPrimitive().getAsString()
+			return repoEquipo.searchById(idEquipo)
+		}
+	}
+
+	static class EmpresaAdapter implements JsonDeserializer<Empresa> {
+		val repoEmpresa = RepositorioEmpresa.instance
+
+		override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
+			val idEmpresa = json.getAsJsonPrimitive().getAsString()
+			return repoEmpresa.searchById(idEmpresa)
+		}
+	}
+
+	static class CanchaAdapter implements JsonDeserializer<Cancha> {
+		val repoCancha = RepositorioCancha.instance
+
+		override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
+			val idCancha = json.getAsJsonPrimitive().getAsString()
+			return repoCancha.searchById(idCancha)
+		}
+	}
+
 }
-				

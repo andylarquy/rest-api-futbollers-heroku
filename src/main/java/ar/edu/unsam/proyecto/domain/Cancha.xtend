@@ -5,8 +5,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
 @Accessors
 class Cancha {
 	
-	int cantidadJugadores
 	String id
+	int cantidadJugadores
 	String foto
 	String superficie
 
