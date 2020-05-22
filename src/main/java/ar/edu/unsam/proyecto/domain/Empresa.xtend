@@ -28,18 +28,17 @@ class Empresa {
 	@JsonView(ViewsEmpresa.DetallesView)
 	String nombreDuenio
 	 
-	@JsonView(ViewsEmpresa.DetallesView) 
+	@JsonView(ViewsEmpresa.ListView, ViewsEmpresa.DetallesView) 
 	String email
 	
 	@JsonView(ViewsEmpresa.DetallesView) 
 	Point lugar
 	
-	@JsonView(ViewsEquipo.ListView, ViewsEmpresa.DefaultView, ViewsPartido.ListView) 
+	@JsonView(ViewsEmpresa.ListView, ViewsEquipo.ListView, ViewsEmpresa.DefaultView, ViewsPartido.ListView) 
 	String direccion
 	
-	@JsonView(ViewsEmpresa.DefaultView, ViewsEquipo.ListView, ViewsPartido.ListView) 
+	@JsonView(ViewsEmpresa.ListView, ViewsEmpresa.DefaultView, ViewsEquipo.ListView, ViewsPartido.ListView) 
 	String foto
-	
 	
 	@JsonView(ViewsEmpresa.DetallesView) 
 	List<Cancha> canchas

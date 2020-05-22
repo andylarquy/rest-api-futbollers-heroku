@@ -53,7 +53,7 @@ class RestHostAPI {
 		}
 	}
 
-	@Post("/usuario/login")
+	@Post("/login")
 	def loguearUsuario(@Body String body) {
 
 		val Usuario usuario = body.fromJson(Usuario)
@@ -101,10 +101,13 @@ class RestHostAPI {
 	def postPartidos(@Body String body) {
 		try {
 			// Seteo los adapter de ID a javaObject
-			val gson = new GsonBuilder().registerTypeAdapter(LocalDateTime, new LocalDateAdapter()).
-				registerTypeAdapter(Usuario, new UsuarioAdapter()).registerTypeAdapter(Equipo, new EquiposAdapter()).
-				registerTypeAdapter(Empresa, new EmpresaAdapter()).registerTypeAdapter(Cancha, new CanchaAdapter()).
-				create()
+			val gson = new GsonBuilder()
+			.registerTypeAdapter(LocalDateTime, new LocalDateAdapter())
+			.registerTypeAdapter(Usuario, new UsuarioAdapter())
+			.registerTypeAdapter(Equipo, new EquiposAdapter())
+			.registerTypeAdapter(Empresa, new EmpresaAdapter())
+			.registerTypeAdapter(Cancha, new CanchaAdapter())
+			.create()
 
 			val partido = gson.fromJson(body.toString, Partido)
 
@@ -151,11 +154,23 @@ class RestHostAPI {
 
 	}
 
+	//TODO: Testear GET /canchas
 	@Get("/canchas")
 	def getCanchas() {
 		try {
 			var canchasParseadas = restHost.getCanchas().toJson
 			ok(canchasParseadas)
+		} catch (Exception e) {
+			badRequest('{"status":400, "message":"' + e.message + '"}')
+		}
+	}
+	
+	//TODO: Testear GET /empresas
+	@Get("/empresas")
+	def getEmpresas() {
+		try {
+			var empresaParseada = this.parsearObjeto(restHost.getEmpresas(), ViewsEquipo.ListView)
+			ok(empresaParseada)
 		} catch (Exception e) {
 			badRequest('{"status":400, "message":"' + e.message + '"}')
 		}

@@ -9,15 +9,15 @@ import ar.edu.unsam.proyecto.repos.RepositorioEquipo
 import ar.edu.unsam.proyecto.repos.RepositorioPartido
 import ar.edu.unsam.proyecto.repos.RepositorioUsuario
 import org.eclipse.xtend.lib.annotations.Accessors
+import ar.edu.unsam.proyecto.repos.RepositorioEmpresa
 
 @Accessors
 class RestHost {
 	RepositorioUsuario repoUsuario = RepositorioUsuario.instance
-	//TODO Revisar doble repopartido y repopartidos
-	RepositorioPartido repoPartidos = RepositorioPartido.instance
 	RepositorioEquipo repoEquipo = RepositorioEquipo.instance
 	RepositorioPartido repoPartido = RepositorioPartido.instance
-	RepositorioCancha repoCanchas = RepositorioCancha.instance
+	RepositorioCancha repoCancha = RepositorioCancha.instance
+	RepositorioEmpresa repoEmpresa = RepositorioEmpresa.instance
 	
 	def getPeticionDePrueba() {
 		return '{ "message": "La API Rest esta funcionando!! :)" }'
@@ -42,7 +42,7 @@ class RestHost {
 	
 	def getPartidosDelUsuario(String idUsuario) {
 		val usuarioPosta = repoUsuario.searchById(idUsuario)
-		repoPartidos.getPartidosDelUsuario(usuarioPosta)
+		repoPartido.getPartidosDelUsuario(usuarioPosta)
 
 	}
 	
@@ -60,7 +60,11 @@ class RestHost {
 	}
 	
 	def getCanchas(){
-		repoCanchas.coleccion
+		repoCancha.coleccion
+	}
+	
+	def getEmpresas(){
+		repoEmpresa.coleccion
 	}
 
 }
