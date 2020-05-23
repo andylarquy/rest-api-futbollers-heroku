@@ -66,5 +66,9 @@ class RestHost {
 	def getEmpresas(){
 		repoEmpresa.coleccion
 	}
+	
+	def getEmpresaById(String idEmpresa){
+		repoEmpresa.getEmpresaById(idEmpresa)
+	}
 
 }

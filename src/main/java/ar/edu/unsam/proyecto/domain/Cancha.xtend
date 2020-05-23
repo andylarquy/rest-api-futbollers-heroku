@@ -1,10 +1,13 @@
 package ar.edu.unsam.proyecto.domain
 
 import org.eclipse.xtend.lib.annotations.Accessors
+import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsEmpresa
+import com.fasterxml.jackson.annotation.JsonView
 
 @Accessors
 class Cancha {
 	
+	@JsonView(ViewsEmpresa.SetupView)
 	String id
 	int cantidadJugadores
 	String foto

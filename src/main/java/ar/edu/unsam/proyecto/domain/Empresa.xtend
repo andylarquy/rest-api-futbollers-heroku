@@ -56,5 +56,9 @@ class Empresa {
 		true
 	}
 	
+	def tieneId(String idBuscado) {
+		id.equals(idBuscado)
+	}
+	
 	
 }

@@ -8,7 +8,7 @@ class IncorrectCredentials extends Exception{
 	}
 }
 
-class UserDoesntExist extends Exception{
+class ObjectDoesntExists extends Exception{
 	new(String errorMessage){
 		super(errorMessage)
 	}

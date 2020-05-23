@@ -6,7 +6,6 @@ import ar.edu.unsam.proyecto.domain.Equipo
 import ar.edu.unsam.proyecto.domain.Partido
 import ar.edu.unsam.proyecto.domain.Usuario
 import ar.edu.unsam.proyecto.exceptions.IncorrectCredentials
-import ar.edu.unsam.proyecto.exceptions.UserDoesntExist
 import ar.edu.unsam.proyecto.repos.RepositorioEquipo
 import ar.edu.unsam.proyecto.repos.RepositorioPartido
 import ar.edu.unsam.proyecto.repos.RepositorioUsuario
@@ -25,6 +24,7 @@ import org.junit.Before
 import org.junit.Test
 
 import io.github.cdimascio.dotenv.Dotenv
+import ar.edu.unsam.proyecto.exceptions.ObjectDoesntExists
 
 class TestLlamadasApiRest {
 
@@ -503,12 +503,12 @@ class TestLlamadasApiRest {
 		Assert.assertEquals(#[equipoLesLuthier],  restHost.getEquiposDelUsuario("U9"))
 	}
 	
-	@Test(expected = UserDoesntExist)
+	@Test(expected = ObjectDoesntExists)
 	def void getEquiposUsuarioErroneo1() {
 		restHost.getEquiposDelUsuario("U42")
 	}
 	
-	@Test(expected = UserDoesntExist)
+	@Test(expected = ObjectDoesntExists)
 	def void getEquiposUsuarioErroneo2() {
 		restHost.getEquiposDelUsuario("IdSuperErroneo")
 	}
@@ -575,12 +575,12 @@ class TestLlamadasApiRest {
 		Assert.assertEquals(#[partido3],  restHost.getPartidosDelUsuario("U9"))
 	}
 	
-	@Test(expected = UserDoesntExist)
+	@Test(expected = ObjectDoesntExists)
 	def void getPartidosUsuarioErroneo1() {
 		restHost.getPartidosDelUsuario("U42")
 	}
 	
-	@Test(expected = UserDoesntExist)
+	@Test(expected = ObjectDoesntExists)
 	def void getPartidosUsuarioErroneo2() {
 		restHost.getPartidosDelUsuario("IdSuperErroneo")
 	}

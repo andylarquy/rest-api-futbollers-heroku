@@ -6,7 +6,6 @@ import ar.edu.unsam.proyecto.domain.Equipo
 import ar.edu.unsam.proyecto.domain.Partido
 import ar.edu.unsam.proyecto.domain.Usuario
 import ar.edu.unsam.proyecto.exceptions.IncorrectCredentials
-import ar.edu.unsam.proyecto.exceptions.UserDoesntExist
 import ar.edu.unsam.proyecto.repos.RepositorioCancha
 import ar.edu.unsam.proyecto.repos.RepositorioEmpresa
 import ar.edu.unsam.proyecto.repos.RepositorioEquipo
@@ -33,6 +32,8 @@ import org.uqbar.xtrest.api.annotation.Get
 import org.uqbar.xtrest.api.annotation.Post
 
 import org.uqbar.xtrest.json.JSONUtils
+import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsEmpresa
+import ar.edu.unsam.proyecto.exceptions.ObjectDoesntExists
 
 @Controller
 class RestHostAPI {
@@ -90,7 +91,7 @@ class RestHostAPI {
 		try {
 			var partidoParseado = this.parsearObjeto(restHost.getPartidosDelUsuario(idUsuario), ViewsPartido.ListView)
 			ok(partidoParseado)
-		} catch (UserDoesntExist e) {
+		} catch (ObjectDoesntExists e) {
 			notFound('{"status":404, "message":"' + e.message + '"}')
 		} catch (Exception e) {
 			badRequest('{"status":400, "message":"' + e.message + '"}')
@@ -124,12 +125,12 @@ class RestHostAPI {
 	}
 
 	@Get("/equipos/:idUsuario")
-	def getEquipos() {
+	def getEquiposById() {
 
 		try {
 			var partidoParseado = this.parsearObjeto(restHost.getEquiposDelUsuario(idUsuario), ViewsEquipo.ListView)
 			ok(partidoParseado)
-		} catch (UserDoesntExist e) {
+		} catch (ObjectDoesntExists e) {
 			notFound('{"status":404, "message":"' + e.message + '"}')
 		} catch (Exception e) {
 			badRequest('{"status":400, "message":"' + e.message + '"}')
@@ -176,6 +177,20 @@ class RestHostAPI {
 		}
 	}
 
+	//TODO: Testear GET /empresas:idEmpresa
+@Get("/empresas/:idEmpresa")
+	def getEmpresaById() {
+		try {
+			var empresaParseada = this.parsearObjeto(restHost.getEmpresaById(idEmpresa), ViewsEmpresa.SetupView)
+			ok(empresaParseada)
+		
+		} catch (ObjectDoesntExists e) {
+			notFound('{"status":404, "message":"' + e.message + '"}') 
+		
+		} catch (Exception e) {
+			badRequest('{"status":400, "message":"' + e.message + '"}')
+		}
+	}
 	/* Auxiliares para pareo de JSONS (<3 Gracias Java, sos una verga) */
 	/* TODO: Capaz podes mandar todo a un archivo auxiliar y separar esta logica de mierda */
 	/* Cosas del "JsonIgnore Dinamico" con Jackson*/
