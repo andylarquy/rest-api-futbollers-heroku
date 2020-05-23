@@ -3,14 +3,21 @@ package ar.edu.unsam.proyecto.domain
 import org.eclipse.xtend.lib.annotations.Accessors
 import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsEmpresa
 import com.fasterxml.jackson.annotation.JsonView
+import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsCancha
 
 @Accessors
 class Cancha {
 	
-	@JsonView(ViewsEmpresa.SetupView)
+	@JsonView(ViewsEmpresa.SetupView, ViewsCancha.DefaultView)
 	String id
+	
+	@JsonView(ViewsCancha.DefaultView)
 	int cantidadJugadores
+	
+	@JsonView(ViewsCancha.DefaultView)
 	String foto
+	
+	@JsonView(ViewsCancha.DefaultView)
 	String superficie
 
 	def validar(){

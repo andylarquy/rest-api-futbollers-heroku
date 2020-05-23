@@ -34,6 +34,7 @@ import org.uqbar.xtrest.api.annotation.Post
 import org.uqbar.xtrest.json.JSONUtils
 import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsEmpresa
 import ar.edu.unsam.proyecto.exceptions.ObjectDoesntExists
+import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsCancha
 
 @Controller
 class RestHostAPI {
@@ -177,8 +178,8 @@ class RestHostAPI {
 		}
 	}
 
-	//TODO: Testear GET /empresas:idEmpresa
-@Get("/empresas/:idEmpresa")
+	//TODO: Testear GET /empresas/:idEmpresa
+	@Get("/empresas/:idEmpresa")
 	def getEmpresaById() {
 		try {
 			var empresaParseada = this.parsearObjeto(restHost.getEmpresaById(idEmpresa), ViewsEmpresa.SetupView)
@@ -191,6 +192,24 @@ class RestHostAPI {
 			badRequest('{"status":400, "message":"' + e.message + '"}')
 		}
 	}
+	
+	//TODO: Testear GET /empresas-canchas/:idEmpresa
+	@Get("/empresas-canchas/:idEmpresa")
+	def getCanchasDeLaEmpresaById() {
+		try {
+			var canchasParseadas = this.parsearObjeto(restHost.getCanchasDeLaEmpresaById(idEmpresa), ViewsCancha.DefaultView)
+			ok(canchasParseadas)
+		
+		} catch (ObjectDoesntExists e) {
+			notFound('{"status":404, "message":"' + e.message + '"}') 
+		
+		} catch (Exception e) {
+			badRequest('{"status":400, "message":"' + e.message + '"}')
+		}
+	}
+	
+	
+	
 	/* Auxiliares para pareo de JSONS (<3 Gracias Java, sos una verga) */
 	/* TODO: Capaz podes mandar todo a un archivo auxiliar y separar esta logica de mierda */
 	/* Cosas del "JsonIgnore Dinamico" con Jackson*/

@@ -185,14 +185,14 @@ class Bootstrap {
 	Cancha argen1 = new Cancha() => [
 		id = "C6"
 		foto = "https://i.imgur.com/1eIVVny.jpg"
-		setSuperficie = "cemento"
+		setSuperficie = "sintetico"
 		cantidadJugadores = 8
 	]
 
 	Cancha argen2 = new Cancha() => [
 		id = "C7"
 		foto = "https://i.imgur.com/2yZN1T5.jpg"
-		setSuperficie = "cemento"
+		setSuperficie = "sintetico"
 		cantidadJugadores = 12
 	]
 
