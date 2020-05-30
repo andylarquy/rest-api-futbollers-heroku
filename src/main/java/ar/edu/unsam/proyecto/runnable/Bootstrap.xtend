@@ -17,6 +17,8 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 
 import io.github.cdimascio.dotenv.Dotenv
+import ar.edu.unsam.proyecto.domain.Promocion
+import ar.edu.unsam.proyecto.repos.RepositorioPromocion
 
 class Bootstrap {
 
@@ -38,6 +40,7 @@ class Bootstrap {
 	RepositorioEquipo repoEquipo = RepositorioEquipo.instance
 	RepositorioEmpresa repoEmpresa = RepositorioEmpresa.instance
 	RepositorioCancha repoCancha = RepositorioCancha.instance
+	RepositorioPromocion repoPromocion = RepositorioPromocion.instance
 
 	Usuario sebaCapo = new Usuario() => [
 		id = "U1"
@@ -259,6 +262,20 @@ class Bootstrap {
 		fechaDeReserva = LocalDateTime.of(LocalDate.of(2020, 4, 24), LocalTime.of(17, 00))
 	]
 
+	Promocion promo1 = new Promocion() => [
+		idPromocion = "P1"
+		codigo = "cocacola"
+		descripcion = "Aguante Coca-Cola"
+		porcentajeDescuento = 25
+	]
+	
+	Promocion promo2 = new Promocion() => [
+		idPromocion = "P2"
+		codigo = "asd"
+		descripcion = "[DEBUG]"
+		porcentajeDescuento = 50
+	]
+
 	def runBootstrap() {
 		
 		//Es para suprimir el warning nomas
@@ -290,6 +307,9 @@ class Bootstrap {
 		
 		repoPartido.crearNuevoPartido(partido1)
 		repoPartido.crearNuevoPartido(partido2)
+		
+		repoPromocion.create(promo1)
+		repoPromocion.create(promo2)
 
 	}
 

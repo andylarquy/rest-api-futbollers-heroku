@@ -10,6 +10,8 @@ import ar.edu.unsam.proyecto.repos.RepositorioPartido
 import ar.edu.unsam.proyecto.repos.RepositorioUsuario
 import org.eclipse.xtend.lib.annotations.Accessors
 import ar.edu.unsam.proyecto.repos.RepositorioEmpresa
+import ar.edu.unsam.proyecto.repos.RepositorioPromocion
+import ar.edu.unsam.proyecto.exceptions.ObjectDoesntExists
 
 @Accessors
 class RestHost {
@@ -18,6 +20,7 @@ class RestHost {
 	RepositorioPartido repoPartido = RepositorioPartido.instance
 	RepositorioCancha repoCancha = RepositorioCancha.instance
 	RepositorioEmpresa repoEmpresa = RepositorioEmpresa.instance
+	RepositorioPromocion repoPromociones = RepositorioPromocion.instance
 	
 	def getPeticionDePrueba() {
 		return '{ "message": "La API Rest esta funcionando!! :)" }'
@@ -73,6 +76,13 @@ class RestHost {
 	
 	def getCanchasDeLaEmpresaById(String idEmpresa){
 		getEmpresaById(idEmpresa).canchas
+	}
+	
+	def getPromocionByCodigo(String codigo){
+		
+		val promocion = repoPromociones.searchByCodigo(codigo)
+		promocion !== null ? return promocion : throw new ObjectDoesntExists('No existe ese codigo promocional')
+		
 	}
 
 }

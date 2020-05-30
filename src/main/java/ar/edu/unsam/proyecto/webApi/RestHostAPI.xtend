@@ -6,35 +6,30 @@ import ar.edu.unsam.proyecto.domain.Equipo
 import ar.edu.unsam.proyecto.domain.Partido
 import ar.edu.unsam.proyecto.domain.Usuario
 import ar.edu.unsam.proyecto.exceptions.IncorrectCredentials
+import ar.edu.unsam.proyecto.exceptions.ObjectDoesntExists
 import ar.edu.unsam.proyecto.repos.RepositorioCancha
 import ar.edu.unsam.proyecto.repos.RepositorioEmpresa
 import ar.edu.unsam.proyecto.repos.RepositorioEquipo
 import ar.edu.unsam.proyecto.repos.RepositorioUsuario
+import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsCancha
+import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsEmpresa
 import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsEquipo
 import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsPartido
 import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsUsuario
-
 import com.fasterxml.jackson.databind.MapperFeature
 import com.fasterxml.jackson.databind.ObjectMapper
-
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
-
 import java.lang.reflect.Type
 import java.time.LocalDateTime
 import java.util.List
-
 import org.uqbar.xtrest.api.annotation.Body
 import org.uqbar.xtrest.api.annotation.Controller
 import org.uqbar.xtrest.api.annotation.Get
 import org.uqbar.xtrest.api.annotation.Post
-
 import org.uqbar.xtrest.json.JSONUtils
-import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsEmpresa
-import ar.edu.unsam.proyecto.exceptions.ObjectDoesntExists
-import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsCancha
 
 @Controller
 class RestHostAPI {
@@ -103,13 +98,10 @@ class RestHostAPI {
 	def postPartidos(@Body String body) {
 		try {
 			// Seteo los adapter de ID a javaObject
-			val gson = new GsonBuilder()
-			.registerTypeAdapter(LocalDateTime, new LocalDateAdapter())
-			.registerTypeAdapter(Usuario, new UsuarioAdapter())
-			.registerTypeAdapter(Equipo, new EquiposAdapter())
-			.registerTypeAdapter(Empresa, new EmpresaAdapter())
-			.registerTypeAdapter(Cancha, new CanchaAdapter())
-			.create()
+			val gson = new GsonBuilder().registerTypeAdapter(LocalDateTime, new LocalDateAdapter()).
+				registerTypeAdapter(Usuario, new UsuarioAdapter()).registerTypeAdapter(Equipo, new EquiposAdapter()).
+				registerTypeAdapter(Empresa, new EmpresaAdapter()).registerTypeAdapter(Cancha, new CanchaAdapter()).
+				create()
 
 			val partido = gson.fromJson(body.toString, Partido)
 
@@ -156,7 +148,7 @@ class RestHostAPI {
 
 	}
 
-	//TODO: Testear GET /canchas
+	// TODO: Testear GET /canchas
 	@Get("/canchas")
 	def getCanchas() {
 		try {
@@ -166,8 +158,8 @@ class RestHostAPI {
 			badRequest('{"status":400, "message":"' + e.message + '"}')
 		}
 	}
-	
-	//TODO: Testear GET /empresas
+
+	// TODO: Testear GET /empresas
 	@Get("/empresas")
 	def getEmpresas() {
 		try {
@@ -178,38 +170,56 @@ class RestHostAPI {
 		}
 	}
 
-	//TODO: Testear GET /empresas/:idEmpresa
+	// TODO: Testear GET /empresas/:idEmpresa
 	@Get("/empresas/:idEmpresa")
 	def getEmpresaById() {
 		try {
 			var empresaParseada = this.parsearObjeto(restHost.getEmpresaById(idEmpresa), ViewsEmpresa.SetupView)
 			ok(empresaParseada)
-		
+
 		} catch (ObjectDoesntExists e) {
-			notFound('{"status":404, "message":"' + e.message + '"}') 
-		
+			notFound('{"status":404, "message":"' + e.message + '"}')
+
 		} catch (Exception e) {
 			badRequest('{"status":400, "message":"' + e.message + '"}')
 		}
+
 	}
-	
-	//TODO: Testear GET /empresas-canchas/:idEmpresa
+
+	// TODO: Testear GET /empresas-canchas/:idEmpresa
 	@Get("/empresas-canchas/:idEmpresa")
 	def getCanchasDeLaEmpresaById() {
 		try {
-			var canchasParseadas = this.parsearObjeto(restHost.getCanchasDeLaEmpresaById(idEmpresa), ViewsCancha.DefaultView)
+			var canchasParseadas = this.parsearObjeto(restHost.getCanchasDeLaEmpresaById(idEmpresa),
+				ViewsCancha.DefaultView)
 			ok(canchasParseadas)
-		
+
 		} catch (ObjectDoesntExists e) {
-			notFound('{"status":404, "message":"' + e.message + '"}') 
-		
+			notFound('{"status":404, "message":"' + e.message + '"}')
+
 		} catch (Exception e) {
 			badRequest('{"status":400, "message":"' + e.message + '"}')
 		}
 	}
-	
-	
-	
+
+	// TODO: Testear GET /promocion/:codigo
+	@Get("/promocion/:codigo")
+	def getPromocionByCodigo() {
+		try {
+
+			val promocion = restHost.getPromocionByCodigo(codigo)
+			val promocionParseada = promocion.toJson
+
+			ok(promocionParseada)
+
+		} catch (ObjectDoesntExists e) {
+			notFound('{"status":404, "message":"' + e.message + '"}')
+
+		} catch (Exception e) {
+			badRequest('{"status":400, "message":"' + e.message + '"}')
+		}
+	}
+
 	/* Auxiliares para pareo de JSONS (<3 Gracias Java, sos una verga) */
 	/* TODO: Capaz podes mandar todo a un archivo auxiliar y separar esta logica de mierda */
 	/* Cosas del "JsonIgnore Dinamico" con Jackson*/

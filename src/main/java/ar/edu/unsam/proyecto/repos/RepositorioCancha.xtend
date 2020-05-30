@@ -17,8 +17,7 @@ class RepositorioCancha extends Repositorio<Cancha> {
 		repoCancha = null
 	}
 
-	private new() {
-	}
+	private new() {}
 
 	int idAutoincremental = 1
 
