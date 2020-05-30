@@ -19,6 +19,9 @@ class Cancha {
 	
 	@JsonView(ViewsCancha.DefaultView)
 	String superficie
+	
+	@JsonView(ViewsCancha.DefaultView)
+	Double precio
 
 	def validar(){
 		if (id === null){

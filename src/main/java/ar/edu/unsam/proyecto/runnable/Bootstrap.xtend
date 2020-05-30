@@ -152,6 +152,7 @@ class Bootstrap {
 		foto = "https://i.imgur.com/jrziFQc.png"
 		setSuperficie = "sintetico"
 		cantidadJugadores = 10
+		precio = 2000.0
 	]
 
 	Cancha urquiza2 = new Cancha() => [
@@ -159,6 +160,7 @@ class Bootstrap {
 		foto = "https://i.imgur.com/iUBWJAL.jpg"
 		setSuperficie = "sintetico"
 		cantidadJugadores = 10
+		precio = 2000.0
 	]
 
 	Cancha vicLop1 = new Cancha() => [
@@ -166,6 +168,7 @@ class Bootstrap {
 		foto = "https://i.imgur.com/J29IXSA.png"
 		setSuperficie = "sintetico"
 		cantidadJugadores = 10
+		precio = 1500.0
 	]
 
 	Cancha vicLop2 = new Cancha() => [
@@ -173,6 +176,7 @@ class Bootstrap {
 		foto = "https://i.imgur.com/OO24aMM.jpg"
 		setSuperficie = "sintetico"
 		cantidadJugadores = 10
+		precio = 1500.0
 	]
 
 	Cancha vicLop3 = new Cancha() => [
@@ -180,6 +184,7 @@ class Bootstrap {
 		foto = "https://i.imgur.com/k14oJiW.jpg"
 		setSuperficie = "cemento"
 		cantidadJugadores = 14
+		precio = 2100.0
 	]
 
 	Cancha argen1 = new Cancha() => [
@@ -187,6 +192,7 @@ class Bootstrap {
 		foto = "https://i.imgur.com/1eIVVny.jpg"
 		setSuperficie = "sintetico"
 		cantidadJugadores = 8
+		precio = 1800.0
 	]
 
 	Cancha argen2 = new Cancha() => [
@@ -194,6 +200,7 @@ class Bootstrap {
 		foto = "https://i.imgur.com/2yZN1T5.jpg"
 		setSuperficie = "sintetico"
 		cantidadJugadores = 12
+		precio = 2500.0
 	]
 
 	Empresa empresaUrquiza = new Empresa => [
@@ -210,7 +217,7 @@ class Bootstrap {
 
 	Empresa empresaVicenteLopez = new Empresa => [
 		id = "E2"
-		nombre = "Queda en la loma del orto"
+		nombre = "Futbol Mitre"
 		lat = -34.5141931
 		lon = -58.5315329
 		canchas = #[vicLop1, vicLop2, vicLop3]

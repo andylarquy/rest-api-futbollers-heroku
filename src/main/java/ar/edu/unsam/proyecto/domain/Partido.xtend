@@ -28,6 +28,17 @@ class Partido {
 
 	@JsonView(ViewsPartido.DetallesView)
 	LocalDateTime fechaDeReserva
+	
+	@JsonView(ViewsPartido.DetallesView)
+	Promocion promocion
+	
+	def precioTotal(){
+		canchaReservada.precio * (1 - porcentajeDescuento / 100)
+	}
+	
+	def porcentajeDescuento(){
+		promocion !== null ? promocion.porcentajeDescuento : return 0
+	}
 
 	def validar() {
 		
