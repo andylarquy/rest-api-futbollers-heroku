@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.ManyToOne
 import org.eclipse.xtend.lib.annotations.Accessors
-import javax.persistence.ManyToMany
 
 @Accessors
 @Entity
@@ -24,9 +23,9 @@ class Partido {
 	Long idPartido
 	
 	
-	//TODO - Pensar que hacer con el owner del partido, si existe o no
-	@JsonView(ViewsPartido.DefaultView)
-	transient Usuario owner
+//TODO - En principio parece que no hace falta pero lo dejamos por las dudas
+//	@JsonView(ViewsPartido.DefaultView)
+//	transient Usuario owner
 
 	@JsonView(ViewsPartido.ListView)
 	@ManyToOne
@@ -37,7 +36,8 @@ class Partido {
 	Equipo equipo2
 
 	@JsonView(ViewsPartido.DefaultView)
-	transient Empresa empresa
+	@ManyToOne
+	Empresa empresa
 
 	@JsonView(ViewsPartido.DetallesView)
 	@ManyToOne
@@ -71,7 +71,6 @@ class Partido {
 		
 		equipo1.validar
 		equipo2.validar
-		owner.validar
 		empresa.validar
 		canchaReservada.validar
 	}
@@ -79,7 +78,7 @@ class Partido {
 
 	// TODO: Separar en equipo y equipo completo
 	def participaUsuario(Usuario usuario) {
-		usuario == owner || equipo1.participaUsuario(usuario) || equipo2.participaUsuario(usuario)
+		equipo1.participaUsuario(usuario) || equipo2.participaUsuario(usuario)
 	}
 	
 	def validarFechaEstaLibre(LocalDateTime fecha) {

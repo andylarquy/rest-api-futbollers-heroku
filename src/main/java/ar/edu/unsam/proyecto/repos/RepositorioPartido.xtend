@@ -25,8 +25,6 @@ class RepositorioPartido extends Repositorio<Partido> {
 
 	private new() {}
 	
-	int idAutoincremental = 1
-
 	def searchById(String cadenaId) {
 		return coleccion.filter[partido|partido.getIdPartido.equals(cadenaId)].head
 	}

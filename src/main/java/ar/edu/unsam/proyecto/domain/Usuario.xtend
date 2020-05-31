@@ -4,10 +4,12 @@ import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsEquipo
 import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsPartido
 import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsUsuario
 import com.fasterxml.jackson.annotation.JsonView
+import java.util.List
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
+import javax.persistence.ManyToMany
 import org.eclipse.xtend.lib.annotations.Accessors
 
 @Accessors
@@ -16,7 +18,7 @@ class Usuario {
 
 	@JsonView(ViewsUsuario.IdView, ViewsPartido.DefaultView, ViewsEquipo.ListView)
 	@Id @GeneratedValue
-	Long idUsario
+	Long idUsuario
 
 	@JsonView(ViewsUsuario.DefaultView)
 	@Column()
@@ -49,9 +51,12 @@ class Usuario {
 	@JsonView(ViewsUsuario.UbicacionView)
 	@Column()
 	Double lon
+	
+	@ManyToMany
+	List<Partido> partidos 
 
 	def validar() {
-		if (idUsario === null){
+		if (idUsuario === null){
 			throw new Exception('El usuario debe tener un ID')
 		}
 		
@@ -59,7 +64,7 @@ class Usuario {
 			throw new Exception('El usuario debe tener un nombre')
 		}
 		
-		if (idUsario === null){
+		if (idUsuario === null){
 			throw new Exception('El usuario debe tener un ID')
 		}
 		

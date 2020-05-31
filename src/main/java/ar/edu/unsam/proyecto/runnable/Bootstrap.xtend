@@ -223,7 +223,6 @@ class Bootstrap {
 	]
 
 	Partido partido1 = new Partido() => [
-		owner = sebaCapo
 		equipo1 = equipazo
 		equipo2 = equipoMalo
 		empresa = empresaUrquiza
@@ -232,7 +231,6 @@ class Bootstrap {
 	]
 
 	Partido partido2 = new Partido() => [
-		owner = andy
 		equipo1 = equipazo
 		equipo2 = equipoIncompleto
 		empresa = empresaVicenteLopez

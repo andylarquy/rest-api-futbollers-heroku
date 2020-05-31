@@ -5,7 +5,7 @@ import ar.edu.unsam.proyecto.domain.Promocion
 class RepositorioPromocion extends Repositorio<Promocion> {
 
 	public static RepositorioPromocion repoPromocion
-
+	
 	static def RepositorioPromocion getInstance() {
 		if (repoPromocion === null) {
 			repoPromocion = new RepositorioPromocion()

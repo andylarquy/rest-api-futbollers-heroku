@@ -33,7 +33,7 @@ class RepositorioUsuario extends Repositorio<Usuario> {
 
 
 	def searchById(String cadenaId) {
-		val usuario = coleccion.filter[usuario|usuario.getIdUsario.equals(cadenaId)].head
+		val usuario = coleccion.filter[usuario|usuario.getIdUsuario.equals(cadenaId)].head
 		return (usuario !== null) ? usuario : throw new ObjectDoesntExists("No existe un usuario con el ID: "+cadenaId)
 	}
 	
