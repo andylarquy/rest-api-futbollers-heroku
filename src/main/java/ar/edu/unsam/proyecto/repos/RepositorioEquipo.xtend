@@ -17,13 +17,10 @@ class RepositorioEquipo extends Repositorio<Equipo> {
 		repoEquipo = null
 	}
 
-	private new() {
-	}
+	private new() {}
 
-
-
-	def searchById(String equipoId) {
-		return coleccion.filter[equipo|equipo.getIdEquipo.equals(equipoId)].head
+	def searchById(Long equipoId) {
+		return coleccion.filter[equipo|equipo.getIdEquipo == equipoId].head
 	}
 
 	def getEquiposDelUsuario(Usuario usuario) {

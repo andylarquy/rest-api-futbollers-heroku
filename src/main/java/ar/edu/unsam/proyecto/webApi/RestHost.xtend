@@ -44,13 +44,12 @@ class RestHost {
 
 	}
 	
-	def getPartidosDelUsuario(String idUsuario) {
+	def getPartidosDelUsuario(Long idUsuario) {
 		val usuarioPosta = repoUsuario.searchById(idUsuario)
-		repoPartido.getPartidosDelUsuario(usuarioPosta)
-
+		usuarioPosta.partidos
 	}
 	
-	def getEquiposDelUsuario(String idUsuario) {
+	def getEquiposDelUsuario(Long idUsuario) {
 		val usuarioPosta = repoUsuario.searchById(idUsuario)
 		repoEquipo.getEquiposDelUsuario(usuarioPosta)
 	}
@@ -60,9 +59,12 @@ class RestHost {
 		repoEquipo.create(equipo)
 	}
 	
-	def crearNuevoPartido(Partido partido) {
+	def crearNuevoPartido(Partido partido, Long idUsuario) {
+		val usuarioPosta = repoUsuario.searchById(idUsuario)
 		partido.validar()
 		repoPartido.create(partido)
+		
+		usuarioPosta.agregarPartido(partido)	
 	}
 	
 	def getCanchas(){
@@ -73,13 +75,18 @@ class RestHost {
 		repoEmpresa.coleccion
 	}
 	
-	def getEmpresaById(String idEmpresa){
+	///////////////////////////////////
+	//ESTO PARECE QUE ESTA REPETIDO...
+	//https://i.imgur.com/gokGIGk.jpg
+	
+	def getEmpresaById(Long idEmpresa){
 		repoEmpresa.getEmpresaById(idEmpresa)
 	}
 	
-	def getCanchasDeLaEmpresaById(String idEmpresa){
+	def getCanchasDeLaEmpresaById(Long idEmpresa){
 		getEmpresaById(idEmpresa).canchas
-	}
+	}	
+	//////////////////////////////////
 	
 	def getPromocionByCodigo(String codigo){
 		

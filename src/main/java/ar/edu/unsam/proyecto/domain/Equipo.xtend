@@ -46,9 +46,6 @@ class Equipo {
 	}
 	
 	def validar(){
-		if (idEquipo === null){
-			throw new Exception('El equipo debe tener un ID')
-		}
 		
 		if (nombre === null){
 			throw new Exception('El equipo debe tener un nombre')

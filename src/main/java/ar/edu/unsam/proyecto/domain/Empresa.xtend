@@ -72,7 +72,7 @@ class Empresa {
 		true
 	}
 	
-	def tieneId(String idBuscado) {
+	def tieneId(Long idBuscado) {
 		idEmpresa.equals(idBuscado)
 	}
 	

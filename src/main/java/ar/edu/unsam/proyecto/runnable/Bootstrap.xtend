@@ -4,21 +4,20 @@ import ar.edu.unsam.proyecto.domain.Cancha
 import ar.edu.unsam.proyecto.domain.Empresa
 import ar.edu.unsam.proyecto.domain.Equipo
 import ar.edu.unsam.proyecto.domain.Partido
+import ar.edu.unsam.proyecto.domain.Promocion
 import ar.edu.unsam.proyecto.domain.Usuario
 import ar.edu.unsam.proyecto.repos.RepositorioCancha
 import ar.edu.unsam.proyecto.repos.RepositorioEmpresa
 import ar.edu.unsam.proyecto.repos.RepositorioEquipo
 import ar.edu.unsam.proyecto.repos.RepositorioPartido
+import ar.edu.unsam.proyecto.repos.RepositorioPromocion
 import ar.edu.unsam.proyecto.repos.RepositorioUsuario
-
-
+import io.github.cdimascio.dotenv.Dotenv
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
-
-import io.github.cdimascio.dotenv.Dotenv
-import ar.edu.unsam.proyecto.domain.Promocion
-import ar.edu.unsam.proyecto.repos.RepositorioPromocion
+import java.util.ArrayList
+import java.util.Arrays
 
 class Bootstrap {
 
@@ -286,12 +285,17 @@ class Bootstrap {
 		repoEmpresa.create(empresaVicenteLopez)
 		repoEmpresa.create(empresaArgentinos)
 		
-		repoPartido.create(partido1)
-		repoPartido.create(partido2)
-		
 		repoPromocion.create(promo1)
 		repoPromocion.create(promo2)
 		repoPromocion.create(promo3)
+		
+		repoPartido.create(partido1)
+		repoPartido.create(partido2)
+		
+		andy.partidos = new ArrayList(Arrays.asList(partido1, partido2))
+		sebaCapo.partidos = new ArrayList(Arrays.asList(partido2))
+		nikoBostero.partidos = new ArrayList(Arrays.asList(partido1))
+		
 
 	}
 

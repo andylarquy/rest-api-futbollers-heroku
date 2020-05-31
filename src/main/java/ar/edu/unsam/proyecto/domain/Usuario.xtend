@@ -52,8 +52,21 @@ class Usuario {
 	@Column()
 	Double lon
 	
+	@JsonView(ViewsPartido.ListView)
 	@ManyToMany
 	List<Partido> partidos 
+	
+	def tieneCredenciales(String email_, String password_) {
+		email.equals(email_) && password.equals(password_)
+	}
+
+	def tieneEsteMail(String email) {
+		this.email.equals(email)
+	}
+	
+	def agregarPartido(Partido partido) {
+		partidos.add(partido)
+	}
 
 	def validar() {
 		if (idUsuario === null){
@@ -89,16 +102,6 @@ class Usuario {
 			throw new Exception('El usuario debe tener un email')
 		}
 		
-	}
-
-	def tieneCredenciales(String email_, String password_) {
-		email.equals(email_) && password.equals(password_)
-	}
-
-	def tieneEsteMail(String email) {
-
-		this.email.equals(email)
-
 	}
 
 }

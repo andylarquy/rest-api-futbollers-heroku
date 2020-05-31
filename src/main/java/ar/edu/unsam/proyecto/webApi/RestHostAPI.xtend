@@ -84,10 +84,10 @@ class RestHostAPI {
 	}
 
 	@Get("/partidos/:idUsuario")
-	def getPartidos() {
+	def getPartidosByIdDelUsuario() {
 
 		try {
-			var partidoParseado = this.parsearObjeto(restHost.getPartidosDelUsuario(idUsuario), ViewsPartido.ListView)
+			var partidoParseado = this.parsearObjeto(restHost.getPartidosDelUsuario(Long.valueOf(idUsuario)), ViewsPartido.ListView)
 			ok(partidoParseado)
 		} catch (ObjectDoesntExists e) {
 			notFound('{"status":404, "message":"' + e.message + '"}')
@@ -96,7 +96,7 @@ class RestHostAPI {
 		}
 	}
 
-	@Post("/partidos")
+	@Post("/partidos/:idUsuario")
 	def postPartidos(@Body String body) {
 		try {
 			// Seteo los adapter de ID a javaObject
@@ -109,12 +109,15 @@ class RestHostAPI {
 			.create()
 
 			val partido = gson.fromJson(body.toString, Partido)
-
+			
+			println("PARTIDO!!!!!:"+partido)
+			println("EQUIPO!!!!!:"+partido.equipo1)
+			
 			println("\n[DEBUG]: El partido " + partido)
-			println("[DEBUG]: Fue parseado con ID: " + partido.getIdPartido)
+			println("[DEBUG]: Fue parseado con ID: " + partido.idPartido)
 			println("[DEBUG]: Y con fecha de reserva: " + partido.fechaDeReserva)
 
-			restHost.crearNuevoPartido(partido)
+			restHost.crearNuevoPartido(partido, Long.valueOf(idUsuario))
 
 			ok('{"status":200, "message":"ok"}')
 		} catch (Exception e) {
@@ -126,7 +129,7 @@ class RestHostAPI {
 	def getEquiposById() {
 
 		try {
-			var partidoParseado = this.parsearObjeto(restHost.getEquiposDelUsuario(idUsuario), ViewsEquipo.ListView)
+			var partidoParseado = this.parsearObjeto(restHost.getEquiposDelUsuario(Long.valueOf(idUsuario)), ViewsEquipo.ListView)
 			ok(partidoParseado)
 		} catch (ObjectDoesntExists e) {
 			notFound('{"status":404, "message":"' + e.message + '"}')
@@ -140,8 +143,10 @@ class RestHostAPI {
 	def postEquipos(@Body String body) {
 
 		try {
-			val gson = new GsonBuilder().registerTypeAdapter(Usuario, new UsuarioAdapter).registerTypeAdapter(List,
-				new UsuarioListAdapter()).create()
+			val gson = new GsonBuilder()
+			.registerTypeAdapter(Usuario, new UsuarioAdapter)
+			.registerTypeAdapter(List, new UsuarioListAdapter())
+			.create()
 
 			val equipo = gson.fromJson(body, Equipo)
 
@@ -179,7 +184,7 @@ class RestHostAPI {
 	@Get("/empresas/:idEmpresa")
 	def getEmpresaById() {
 		try {
-			var empresaParseada = this.parsearObjeto(restHost.getEmpresaById(idEmpresa), ViewsEmpresa.SetupView)
+			var empresaParseada = this.parsearObjeto(restHost.getEmpresaById(Long.valueOf(idEmpresa)), ViewsEmpresa.SetupView)
 			ok(empresaParseada)
 
 		} catch (ObjectDoesntExists e) {
@@ -195,7 +200,7 @@ class RestHostAPI {
 	@Get("/empresas-canchas/:idEmpresa")
 	def getCanchasDeLaEmpresaById() {
 		try {
-			var canchasParseadas = this.parsearObjeto(restHost.getCanchasDeLaEmpresaById(idEmpresa),
+			var canchasParseadas = this.parsearObjeto(restHost.getCanchasDeLaEmpresaById(Long.valueOf(idEmpresa)),
 				ViewsCancha.DefaultView)
 			ok(canchasParseadas)
 
@@ -267,7 +272,7 @@ class RestHostAPI {
 		val repoUsuario = RepositorioUsuario.instance
 
 		override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
-			val idUsuario = json.getAsJsonPrimitive().getAsString()
+			val idUsuario = json.getAsJsonPrimitive().getAsLong()
 			repoUsuario.searchById(idUsuario)
 		}
 	}
@@ -277,7 +282,7 @@ class RestHostAPI {
 
 		override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
 			val idUsuarios = json.getAsJsonArray()
-			val idUsuariosSinQuotes = idUsuarios.map[it.getAsJsonPrimitive().getAsString()]
+			val idUsuariosSinQuotes = idUsuarios.map[it.getAsJsonPrimitive().getAsLong()]
 			idUsuariosSinQuotes.map[repoUsuario.searchById(it)].toList
 		}
 	}
@@ -286,7 +291,7 @@ class RestHostAPI {
 		val repoEquipo = RepositorioEquipo.instance
 
 		override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
-			val idEquipo = json.getAsJsonPrimitive().getAsString()
+			val idEquipo = json.getAsJsonPrimitive().getAsLong()
 			return repoEquipo.searchById(idEquipo)
 		}
 	}
@@ -295,7 +300,7 @@ class RestHostAPI {
 		val repoEmpresa = RepositorioEmpresa.instance
 
 		override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
-			val idEmpresa = json.getAsJsonPrimitive().getAsString()
+			val idEmpresa = json.getAsJsonPrimitive().getAsLong()
 			return repoEmpresa.searchById(idEmpresa)
 		}
 	}
@@ -304,7 +309,7 @@ class RestHostAPI {
 		val repoCancha = RepositorioCancha.instance
 
 		override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
-			val idCancha = json.getAsJsonPrimitive().getAsString()
+			val idCancha = json.getAsJsonPrimitive().getAsLong()
 			return repoCancha.searchById(idCancha)
 		}
 	}

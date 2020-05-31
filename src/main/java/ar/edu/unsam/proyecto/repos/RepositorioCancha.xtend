@@ -19,8 +19,8 @@ class RepositorioCancha extends Repositorio<Cancha> {
 
 	private new() {}
 
-	def searchById(String equipoId) {
-		return coleccion.filter[equipo|equipo.getIdCancha.equals(equipoId)].head
+	def searchById(Long equipoId) {
+		return coleccion.filter[equipo|equipo.getIdCancha == equipoId].head
 	}
 
 	def noExisteCanchaConId(String idCancha) {

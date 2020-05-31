@@ -61,12 +61,8 @@ class Partido {
 
 	def validar() {
 		
-		if (idPartido === null){
-			throw new Exception('El usuario debe tener un ID')
-		}
-		
 		if (fechaDeReserva === null){
-			throw new Exception('El usuario debe tener un ID')
+			throw new Exception('El partido debe tener una fecha de reserva')
 		}
 		
 		equipo1.validar

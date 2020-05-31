@@ -23,11 +23,11 @@ class RepositorioEmpresa extends Repositorio<Empresa> {
 	private new() {
 	}
 
-	def searchById(String cadenaId) {
-		return coleccion.filter[empresa|empresa.getIdEmpresa.equals(cadenaId)].head
+	def searchById(Long cadenaId) {
+		return coleccion.filter[empresa|empresa.getIdEmpresa == cadenaId].head
 	}
 
-	def getEmpresaById(String idEmpresa) {
+	def getEmpresaById(Long idEmpresa) {
 		val empresaBuscada = coleccion.findFirst[it.tieneId(idEmpresa)]
 
 		if (empresaBuscada === null) {
