@@ -1,39 +1,54 @@
 package ar.edu.unsam.proyecto.domain
 
+import ar.edu.unsam.proyecto.exceptions.ObjectAlreadyExists
 import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsPartido
 import com.fasterxml.jackson.annotation.JsonView
-import java.time.LocalDateTime
-import org.eclipse.xtend.lib.annotations.Accessors
-import java.time.Period
-import java.time.LocalDate
 import java.time.Duration
-import ar.edu.unsam.proyecto.exceptions.ObjectAlreadyExists
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.Period
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.Id
+import javax.persistence.ManyToOne
+import org.eclipse.xtend.lib.annotations.Accessors
+import javax.persistence.ManyToMany
 
 @Accessors
+@Entity
 class Partido {
 
 	@JsonView(ViewsPartido.ListView)
-	String id
-
+	@Id@GeneratedValue
+	Long idPartido
+	
+	
+	//TODO - Pensar que hacer con el owner del partido, si existe o no
 	@JsonView(ViewsPartido.DefaultView)
-	Usuario owner
+	transient Usuario owner
 
 	@JsonView(ViewsPartido.ListView)
+	@ManyToOne
 	Equipo equipo1
 
 	@JsonView(ViewsPartido.ListView)
+	@ManyToOne
 	Equipo equipo2
 
 	@JsonView(ViewsPartido.DefaultView)
-	Empresa empresa
+	transient Empresa empresa
 
 	@JsonView(ViewsPartido.DetallesView)
+	@ManyToOne
 	Cancha canchaReservada
 
+	@Column()
 	@JsonView(ViewsPartido.DetallesView)
 	LocalDateTime fechaDeReserva
 	
 	@JsonView(ViewsPartido.DetallesView)
+	@ManyToOne
 	Promocion promocion
 	
 	def precioTotal(){
@@ -46,7 +61,7 @@ class Partido {
 
 	def validar() {
 		
-		if (id === null){
+		if (idPartido === null){
 			throw new Exception('El usuario debe tener un ID')
 		}
 		
@@ -59,13 +74,8 @@ class Partido {
 		owner.validar
 		empresa.validar
 		canchaReservada.validar
-		validarLaFechaEstaDisponible()
 	}
 	
-	//TODO: Hacer validarLaFechaEstaDisponible
-	def validarLaFechaEstaDisponible(){
-		
-	}
 
 	// TODO: Separar en equipo y equipo completo
 	def participaUsuario(Usuario usuario) {

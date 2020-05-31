@@ -43,7 +43,6 @@ class Bootstrap {
 	RepositorioPromocion repoPromocion = RepositorioPromocion.instance
 
 	Usuario sebaCapo = new Usuario() => [
-		id = "U1"
 		nombre = "sebaCapo"
 		password = dotenv.get("PASSWORD")
 		sexo = "M"
@@ -55,7 +54,6 @@ class Bootstrap {
 	]
 
 	Usuario nikoBostero = new Usuario() => [
-		id = "U2"
 		nombre = "nikoBostero"
 		password = dotenv.get("PASSWORD")
 		sexo = "M"
@@ -67,7 +65,6 @@ class Bootstrap {
 	]
 
 	Usuario andy = new Usuario() => [
-		id = "U3"
 		nombre = "andy"
 		password = dotenv.get("PASSWORD")
 		sexo = "M"
@@ -79,7 +76,6 @@ class Bootstrap {
 	]
 
 	Usuario jugador1 = new Usuario() => [
-		id = "U4"
 		nombre = "Jugador 1"
 		password = dotenv.get("PASSWORD")
 		sexo = "M"
@@ -91,7 +87,6 @@ class Bootstrap {
 	]
 
 	Usuario jugador2 = new Usuario() => [
-		id = "U5"
 		nombre = "Jugador 2"
 		password = dotenv.get("PASSWORD")
 		sexo = "F"
@@ -103,7 +98,6 @@ class Bootstrap {
 	]
 
 	Usuario jugador3 = new Usuario() => [
-		id = "U6"
 		nombre = "Jugador 3"
 		password = dotenv.get("PASSWORD")
 		sexo = "M"
@@ -115,7 +109,6 @@ class Bootstrap {
 	]
 
 	Usuario jugador4 = new Usuario() => [
-		id = "U7"
 		nombre = "Jugador 4"
 		password = dotenv.get("PASSWORD")
 		sexo = "F"
@@ -127,7 +120,6 @@ class Bootstrap {
 	]
 
 	Equipo equipazo = new Equipo() => [
-		id = "E1"
 		nombre = "El equipazo"
 		owner = sebaCapo
 		foto = "https://i.imgur.com/hccT1z9.jpg"
@@ -135,7 +127,6 @@ class Bootstrap {
 	]
 
 	Equipo equipoMalo = new Equipo() => [
-		id = "E2"
 		nombre = "El equipo malo"
 		owner = andy
 		foto = "https://i.imgur.com/RhqYpUg.jpg"
@@ -143,7 +134,6 @@ class Bootstrap {
 	]
 
 	Equipo equipoIncompleto = new Equipo() => [
-		id = "E3"
 		nombre = "Equipo incompleto"
 		owner = nikoBostero
 		foto="https://i.imgur.com/lvR3nt3.jpg"
@@ -151,7 +141,6 @@ class Bootstrap {
 	]
 
 	Cancha urquiza1 = new Cancha() => [
-		id = "C1"
 		foto = "https://i.imgur.com/jrziFQc.png"
 		setSuperficie = "sintetico"
 		cantidadJugadores = 10
@@ -159,7 +148,6 @@ class Bootstrap {
 	]
 
 	Cancha urquiza2 = new Cancha() => [
-		id = "C2"
 		foto = "https://i.imgur.com/iUBWJAL.jpg"
 		setSuperficie = "sintetico"
 		cantidadJugadores = 10
@@ -167,7 +155,6 @@ class Bootstrap {
 	]
 
 	Cancha vicLop1 = new Cancha() => [
-		id = "C3"
 		foto = "https://i.imgur.com/J29IXSA.png"
 		setSuperficie = "sintetico"
 		cantidadJugadores = 10
@@ -175,7 +162,6 @@ class Bootstrap {
 	]
 
 	Cancha vicLop2 = new Cancha() => [
-		id = "C4"
 		foto = "https://i.imgur.com/OO24aMM.jpg"
 		setSuperficie = "sintetico"
 		cantidadJugadores = 10
@@ -183,7 +169,6 @@ class Bootstrap {
 	]
 
 	Cancha vicLop3 = new Cancha() => [
-		id = "C5"
 		foto = "https://i.imgur.com/k14oJiW.jpg"
 		setSuperficie = "cemento"
 		cantidadJugadores = 14
@@ -191,7 +176,6 @@ class Bootstrap {
 	]
 
 	Cancha argen1 = new Cancha() => [
-		id = "C6"
 		foto = "https://i.imgur.com/1eIVVny.jpg"
 		setSuperficie = "sintetico"
 		cantidadJugadores = 8
@@ -199,7 +183,6 @@ class Bootstrap {
 	]
 
 	Cancha argen2 = new Cancha() => [
-		id = "C7"
 		foto = "https://i.imgur.com/2yZN1T5.jpg"
 		setSuperficie = "sintetico"
 		cantidadJugadores = 12
@@ -207,7 +190,6 @@ class Bootstrap {
 	]
 
 	Empresa empresaUrquiza = new Empresa => [
-		id = "E1"
 		nombre = "Futbol Urquiza"
 		lat = -34.5748777
 		lon = -58.4903939
@@ -219,7 +201,6 @@ class Bootstrap {
 	]
 
 	Empresa empresaVicenteLopez = new Empresa => [
-		id = "E2"
 		nombre = "Futbol Mitre"
 		lat = -34.5141931
 		lon = -58.5315329
@@ -231,7 +212,6 @@ class Bootstrap {
 	]
 
 	Empresa empresaArgentinos = new Empresa => [
-		id = "E3"
 		nombre = "Argentinos :)"
 		lat = -34.6078057
 		lon = -58.4763221
@@ -243,7 +223,6 @@ class Bootstrap {
 	]
 
 	Partido partido1 = new Partido() => [
-		id = "P1"
 		owner = sebaCapo
 		equipo1 = equipazo
 		equipo2 = equipoMalo
@@ -253,7 +232,6 @@ class Bootstrap {
 	]
 
 	Partido partido2 = new Partido() => [
-		id = "P2"
 		owner = andy
 		equipo1 = equipazo
 		equipo2 = equipoIncompleto
@@ -263,21 +241,18 @@ class Bootstrap {
 	]
 
 	Promocion promo1 = new Promocion() => [
-		idPromocion = "P1"
 		codigo = "cocacola"
 		descripcion = "Con Coca-Cola te hacemos el aguante!"
 		porcentajeDescuento = 25
 	]
 	
 	Promocion promo2 = new Promocion() => [
-		idPromocion = "P2"
 		codigo = "asd"
 		descripcion = "Esta promo es una prueba"
 		porcentajeDescuento = 50
 	]
 	
 	Promocion promo3 = new Promocion() => [
-		idPromocion = "P3"
 		codigo = "nike"
 		descripcion = "Just Do It"
 		porcentajeDescuento = 15
@@ -295,10 +270,11 @@ class Bootstrap {
 		repoUsuarios.create(jugador2)
 		repoUsuarios.create(jugador3)
 		repoUsuarios.create(jugador4)
-
-		repoEquipo.crearNuevoEquipo(equipazo)
-		repoEquipo.crearNuevoEquipo(equipoMalo)
-		repoEquipo.crearNuevoEquipo(equipoIncompleto)
+		
+	
+		repoEquipo.create(equipazo)
+		repoEquipo.create(equipoMalo)
+		repoEquipo.create(equipoIncompleto)
 		
 		repoCancha.create(urquiza1)
 		repoCancha.create(urquiza2)
@@ -312,8 +288,8 @@ class Bootstrap {
 		repoEmpresa.create(empresaVicenteLopez)
 		repoEmpresa.create(empresaArgentinos)
 		
-		repoPartido.crearNuevoPartido(partido1)
-		repoPartido.crearNuevoPartido(partido2)
+		repoPartido.create(partido1)
+		repoPartido.create(partido2)
 		
 		repoPromocion.create(promo1)
 		repoPromocion.create(promo2)

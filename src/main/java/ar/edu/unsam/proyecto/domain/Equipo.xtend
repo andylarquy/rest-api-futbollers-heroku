@@ -4,23 +4,35 @@ import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsEquipo
 import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsPartido
 import com.fasterxml.jackson.annotation.JsonView
 import java.util.List
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.Id
+import javax.persistence.ManyToMany
+import javax.persistence.ManyToOne
 import org.eclipse.xtend.lib.annotations.Accessors
 
 @Accessors
+@Entity
 class Equipo {
 	
-	@JsonView(ViewsEquipo.ListView) 
-	String id
+	@JsonView(ViewsEquipo.ListView)
+	@Id @GeneratedValue  
+	Long idEquipo
 	
+	@Column()
 	@JsonView(ViewsEquipo.ListView, ViewsPartido.ListView) 
 	String nombre
 	
+	@Column()
 	@JsonView(ViewsEquipo.ListView) 
 	String foto
 	
+	@ManyToOne
 	@JsonView(ViewsEquipo.ListView) 
 	Usuario owner
-
+	
+	@ManyToMany
 	@JsonView(ViewsEquipo.ListView) 
 	List<Usuario> integrantes //Capaz conviene que sea un Set para no cagarla
 	
@@ -34,7 +46,7 @@ class Equipo {
 	}
 	
 	def validar(){
-		if (id === null){
+		if (idEquipo === null){
 			throw new Exception('El equipo debe tener un ID')
 		}
 		
@@ -67,7 +79,7 @@ class Equipo {
 	}
 	
 	def idDeIntegrantes() {
-		integrantes.map[id].toList
+		integrantes.map[idEquipo].toList
 	}
 	
 }

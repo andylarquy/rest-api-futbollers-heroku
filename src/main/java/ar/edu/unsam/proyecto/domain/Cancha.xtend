@@ -1,30 +1,40 @@
 package ar.edu.unsam.proyecto.domain
 
-import org.eclipse.xtend.lib.annotations.Accessors
+import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsCancha
 import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsEmpresa
 import com.fasterxml.jackson.annotation.JsonView
-import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsCancha
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.Id
+import org.eclipse.xtend.lib.annotations.Accessors
 
 @Accessors
+@Entity
 class Cancha {
 	
+	@Id @GeneratedValue
 	@JsonView(ViewsEmpresa.SetupView, ViewsCancha.DefaultView)
-	String id
+	Long idCancha
 	
+	@Column()
 	@JsonView(ViewsCancha.DefaultView)
 	int cantidadJugadores
 	
+	@Column()
 	@JsonView(ViewsCancha.DefaultView)
 	String foto
 	
+	@Column()
 	@JsonView(ViewsCancha.DefaultView)
 	String superficie
 	
+	@Column()
 	@JsonView(ViewsCancha.DefaultView)
 	Double precio
 
 	def validar(){
-		if (id === null){
+		if (idCancha === null){
 			throw new Exception('La cancha debe tener un ID')
 		} 
 		

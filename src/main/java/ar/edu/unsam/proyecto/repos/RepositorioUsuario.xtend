@@ -24,17 +24,6 @@ class RepositorioUsuario extends Repositorio<Usuario> {
 
 	private new() {}
 	
-	int idAutoincremental = 1
-
-	def createOrUpdate(Usuario usuario) {
-		usuario.validar
-		if (usuario.id !== null) {
-			this.update(usuario)
-		} else {
-			this.asignarIdUsuario(usuario)
-			this.create(usuario)
-		}
-	}
 	
 	def existeUsuarioConMail(String email){
 		
@@ -42,27 +31,21 @@ class RepositorioUsuario extends Repositorio<Usuario> {
 		
 	}
 
-	def asignarIdUsuario(Usuario usuario) {
-		usuario.id = 'U' + idAutoincremental.toString
-		idAutoincremental++
-	}
-
-	def update(Usuario usuario) {
-		
-		//https://i.imgur.com/S6X48jx.png
-		
-		//searchById(superIndividuo.id).amigos = superIndividuo.amigos
-		println("Tengo actualizar un usuario... no se como hacerlo")
-	}
 
 	def searchById(String cadenaId) {
-		val usuario = coleccion.filter[usuario|usuario.id.equals(cadenaId)].head
+		val usuario = coleccion.filter[usuario|usuario.getIdUsario.equals(cadenaId)].head
 		return (usuario !== null) ? usuario : throw new ObjectDoesntExists("No existe un usuario con el ID: "+cadenaId)
 	}
 	
 	def getUsuarioConCredenciales(String username, String password){
 		coleccion.filter[usuario | usuario.tieneCredenciales(username, password)].head
 	}
+	
+	override entityType() {
+		Usuario
+	}
+	
+	
 
 	
 }

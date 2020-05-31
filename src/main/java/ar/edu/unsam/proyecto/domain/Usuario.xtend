@@ -4,40 +4,54 @@ import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsEquipo
 import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsPartido
 import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsUsuario
 import com.fasterxml.jackson.annotation.JsonView
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.Id
 import org.eclipse.xtend.lib.annotations.Accessors
 
 @Accessors
+@Entity
 class Usuario {
 
 	@JsonView(ViewsUsuario.IdView, ViewsPartido.DefaultView, ViewsEquipo.ListView)
-	String id
+	@Id @GeneratedValue
+	Long idUsario
 
 	@JsonView(ViewsUsuario.DefaultView)
+	@Column()
 	String nombre = ""
-
+	
+	@Column()
 	@JsonView(ViewsUsuario.CredencialesView)
 	String password = ""
 
+	@Column()
 	@JsonView(ViewsUsuario.PerfilView)
 	String foto
 
+	@Column()
 	@JsonView(ViewsUsuario.PerfilView)
 	String sexo
 
+	@Column()
 	@JsonView(ViewsUsuario.PerfilView)
 	String posicion
 
+	@Column()
 	@JsonView(ViewsUsuario.DefaultView)
 	String email
 
 	@JsonView(ViewsUsuario.UbicacionView)
+	@Column()
 	Double lat
 
 	@JsonView(ViewsUsuario.UbicacionView)
+	@Column()
 	Double lon
 
 	def validar() {
-		if (id === null){
+		if (idUsario === null){
 			throw new Exception('El usuario debe tener un ID')
 		}
 		
@@ -45,7 +59,7 @@ class Usuario {
 			throw new Exception('El usuario debe tener un nombre')
 		}
 		
-		if (id === null){
+		if (idUsario === null){
 			throw new Exception('El usuario debe tener un ID')
 		}
 		

@@ -27,37 +27,8 @@ class RepositorioPartido extends Repositorio<Partido> {
 	
 	int idAutoincremental = 1
 
-	def createOrUpdate(Partido partido) {
-		partido.validar
-		if (partido.id !== null) {
-			this.update(partido)
-		} else {
-			this.asignarIdPartido(partido)
-			this.create(partido)
-		}
-	}
-
-	def asignarIdPartido(Partido partido) {
-		partido.id = 'P' + idAutoincremental.toString
-		idAutoincremental++
-	}
-
-	def update(Partido partido) {
-		
-		//https://i.imgur.com/S6X48jx.png
-		
-		//searchById(superIndividuo.id).amigos = superIndividuo.amigos
-		println("Tengo actualizar un partido... no se como hacerlo")
-	}
-	
-	def crearNuevoPartido(Partido partido){
-		this.asignarIdPartido(partido)
-		create(partido)
-		println("[DEBUG]: Se ha creado un nuevo partido con ID: "+partido.id+"\n")
-	}
-
 	def searchById(String cadenaId) {
-		return coleccion.filter[partido|partido.id.equals(cadenaId)].head
+		return coleccion.filter[partido|partido.getIdPartido.equals(cadenaId)].head
 	}
 	
 	def getPartidosDelUsuario(Usuario usuario){
@@ -68,6 +39,9 @@ class RepositorioPartido extends Repositorio<Partido> {
 		coleccion.forEach[it.validarFechaEstaLibre(fecha)]
 	}
 	
+	override entityType() {
+		Partido
+	}
 
 	
 	

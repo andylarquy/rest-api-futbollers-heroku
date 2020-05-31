@@ -1,17 +1,26 @@
 package ar.edu.unsam.proyecto.domain
 
-import com.fasterxml.jackson.annotation.JsonIgnore
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.Id
 import org.eclipse.xtend.lib.annotations.Accessors
 
 @Accessors
+@Entity
 class Promocion {
-	
-	String idPromocion
+
+	@Id @GeneratedValue
+	Long idPromocion
+
+	@Column()
 	String codigo
+	@Column()
 	String descripcion
+	@Column()
 	int porcentajeDescuento
-	
-	def validar(){
+
+	def validar() {
 		true
 	}
 }

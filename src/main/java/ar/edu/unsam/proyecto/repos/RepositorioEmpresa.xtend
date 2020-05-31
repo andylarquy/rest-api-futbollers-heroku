@@ -5,7 +5,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import ar.edu.unsam.proyecto.exceptions.ObjectDoesntExists
 
 @Accessors
-class RepositorioEmpresa extends Repositorio<Empresa>  {
+class RepositorioEmpresa extends Repositorio<Empresa> {
 
 	public static RepositorioEmpresa repoEmpresa
 
@@ -20,46 +20,25 @@ class RepositorioEmpresa extends Repositorio<Empresa>  {
 		repoEmpresa = null
 	}
 
-	private new() {}
-	
-	int idAutoincremental = 1
-
-	def createOrUpdate(Empresa empresa) {
-		empresa.validar
-		if (empresa.id !== null) {
-			this.update(empresa)
-		} else {
-			this.asignarIdEmpresa(empresa)
-			this.create(empresa)
-		}
-	}
-
-	def asignarIdEmpresa(Empresa empresa) {
-		empresa.id = 'E' + idAutoincremental.toString
-		idAutoincremental++
-	}
-
-	def update(Empresa empresa) {
-		
-		//https://i.imgur.com/S6X48jx.png
-		
-		//searchById(superIndividuo.id).amigos = superIndividuo.amigos
-		println("Tengo actualizar un partido... no se como hacerlo")
+	private new() {
 	}
 
 	def searchById(String cadenaId) {
-		return coleccion.filter[empresa|empresa.id.equals(cadenaId)].head
+		return coleccion.filter[empresa|empresa.getIdEmpresa.equals(cadenaId)].head
 	}
-	
-	def getEmpresaById(String idEmpresa){
+
+	def getEmpresaById(String idEmpresa) {
 		val empresaBuscada = coleccion.findFirst[it.tieneId(idEmpresa)]
-		
-		if (empresaBuscada === null){
+
+		if (empresaBuscada === null) {
 			throw new ObjectDoesntExists('No existe una empresa con ese ID')
 		}
-		
+
 		return empresaBuscada
 	}
-	
-	
+
+	override entityType() {
+		Empresa
+	}
+
 }

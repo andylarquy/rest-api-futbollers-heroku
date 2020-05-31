@@ -111,7 +111,7 @@ class RestHostAPI {
 			val partido = gson.fromJson(body.toString, Partido)
 
 			println("\n[DEBUG]: El partido " + partido)
-			println("[DEBUG]: Fue parseado con ID: " + partido.id)
+			println("[DEBUG]: Fue parseado con ID: " + partido.getIdPartido)
 			println("[DEBUG]: Y con fecha de reserva: " + partido.fechaDeReserva)
 
 			restHost.crearNuevoPartido(partido)

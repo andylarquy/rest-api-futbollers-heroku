@@ -56,11 +56,13 @@ class RestHost {
 	}
 	
 	def crearNuevoEquipo(Equipo equipo) {
-		repoEquipo.crearNuevoEquipo(equipo)
+		equipo.validar()
+		repoEquipo.create(equipo)
 	}
 	
 	def crearNuevoPartido(Partido partido) {
-		repoPartido.crearNuevoPartido(partido)
+		partido.validar()
+		repoPartido.create(partido)
 	}
 	
 	def getCanchas(){
