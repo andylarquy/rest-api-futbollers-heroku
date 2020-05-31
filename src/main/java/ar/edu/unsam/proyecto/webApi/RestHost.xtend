@@ -35,13 +35,10 @@ class RestHost {
 	def signUpUsuario(Usuario usuario) {
 
 		if (!repoUsuario.existeUsuarioConMail(usuario.email)){
-
 				repoUsuario.create(usuario)
 		} else {
-
 				throw new IncorrectCredentials("Este mail ya pertenece a un usuario")
 		}
-
 	}
 	
 	def getPartidosDelUsuario(Long idUsuario) {
@@ -63,8 +60,7 @@ class RestHost {
 		val usuarioPosta = repoUsuario.searchById(idUsuario)
 		partido.validar()
 		repoPartido.create(partido)
-		
-		usuarioPosta.agregarPartido(partido)	
+		usuarioPosta.agregarPartido(partido)
 	}
 	
 	def getCanchas(){

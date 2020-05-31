@@ -2,6 +2,8 @@ package ar.edu.unsam.proyecto.repos
 
 import ar.edu.unsam.proyecto.domain.Equipo
 import ar.edu.unsam.proyecto.domain.Usuario
+import java.util.List
+import javax.persistence.criteria.JoinType
 
 class RepositorioEquipo extends Repositorio<Equipo> {
 	public static RepositorioEquipo repoEquipo
@@ -18,6 +20,17 @@ class RepositorioEquipo extends Repositorio<Equipo> {
 	}
 
 	private new() {}
+	
+	def coleccion(){
+		
+		queryTemplate(
+			[criteria, query, from |
+				//from.fetch("owner", JoinType.LEFT)
+				from.fetch("integrantes", JoinType.LEFT)
+				return query
+			], 
+			[query | query.resultList]) as List<Equipo>
+	}
 
 	def searchById(Long equipoId) {
 		return coleccion.filter[equipo|equipo.getIdEquipo == equipoId].head

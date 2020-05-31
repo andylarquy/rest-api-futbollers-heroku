@@ -72,7 +72,7 @@ class Equipo {
 	}
 	
 	def esOwner(Usuario usuario){
-		usuario == owner
+		usuario.idUsuario == owner.idUsuario
 	}
 	
 	def idDeIntegrantes() {

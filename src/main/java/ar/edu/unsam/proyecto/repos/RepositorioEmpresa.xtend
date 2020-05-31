@@ -1,8 +1,10 @@
 package ar.edu.unsam.proyecto.repos
 
 import ar.edu.unsam.proyecto.domain.Empresa
-import org.eclipse.xtend.lib.annotations.Accessors
 import ar.edu.unsam.proyecto.exceptions.ObjectDoesntExists
+import java.util.List
+import javax.persistence.criteria.JoinType
+import org.eclipse.xtend.lib.annotations.Accessors
 
 @Accessors
 class RepositorioEmpresa extends Repositorio<Empresa> {
@@ -20,9 +22,20 @@ class RepositorioEmpresa extends Repositorio<Empresa> {
 		repoEmpresa = null
 	}
 
-	private new() {
+	private new() {}
+	
+	def coleccion(){
+		
+		queryTemplate(
+			[criteria, query, from |
+				from.fetch("canchas", JoinType.LEFT)
+				return query
+			], 
+			[query | query.resultList]) as List<Empresa>
+		
 	}
-
+	
+	
 	def searchById(Long cadenaId) {
 		return coleccion.filter[empresa|empresa.getIdEmpresa == cadenaId].head
 	}

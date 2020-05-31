@@ -110,9 +110,6 @@ class RestHostAPI {
 
 			val partido = gson.fromJson(body.toString, Partido)
 			
-			println("PARTIDO!!!!!:"+partido)
-			println("EQUIPO!!!!!:"+partido.equipo1)
-			
 			println("\n[DEBUG]: El partido " + partido)
 			println("[DEBUG]: Fue parseado con ID: " + partido.idPartido)
 			println("[DEBUG]: Y con fecha de reserva: " + partido.fechaDeReserva)
@@ -248,8 +245,9 @@ class RestHostAPI {
 		}
 	}
 
-	/* Auxiliares para pareo de JSONS (<3 Gracias Java, sos una verga) */
-	/* TODO: Capaz podes mandar todo a un archivo auxiliar y separar esta logica de mierda */
+	/* Auxiliares para pareo de JSONS (<3 Gracias Java, sos malisimo) */
+	
+	/* TODO: Capaz podes mandar todo a un archivo auxiliar y separar esta logica berreta. Por favor te lo pido*/
 	/* Cosas del "JsonIgnore Dinamico" con Jackson*/
 	def <ViewGeneric> parsearObjeto(Object elementoAParsear, Class<ViewGeneric> customView) {
 
@@ -260,7 +258,7 @@ class RestHostAPI {
 		return result
 	}
 
-// GSON ADAPTERS SARASA
+	// GSON ADAPTERS SARASA
 	static class LocalDateAdapter implements JsonDeserializer<LocalDateTime> {
 		override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
 			println(json)

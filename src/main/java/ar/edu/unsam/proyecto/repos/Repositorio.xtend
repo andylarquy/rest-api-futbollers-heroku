@@ -3,6 +3,10 @@ package ar.edu.unsam.proyecto.repos
 import javax.persistence.EntityManagerFactory
 import javax.persistence.Persistence
 import javax.persistence.PersistenceException
+import javax.persistence.TypedQuery
+import javax.persistence.criteria.CriteriaBuilder
+import javax.persistence.criteria.CriteriaQuery
+import javax.persistence.criteria.Root
 import org.eclipse.xtend.lib.annotations.Accessors
 
 @Accessors
@@ -14,18 +18,23 @@ abstract class Repositorio<T> {
 		entityManagerFactory.createEntityManager
 	}
 
-	def coleccion() {
-
-		val entityManager = this.entityManager
+	def queryTemplate((CriteriaBuilder, CriteriaQuery<T>, Root<T>)=>CriteriaQuery<T> consulta,
+		(TypedQuery<T>)=>Object resultType) {
+		val entity = entityManager
 		try {
 			val criteria = entityManager.criteriaBuilder
-			val query = criteria.createQuery(entityType)
+			val query = criteria.createQuery as CriteriaQuery<T>
 			val from = query.from(entityType)
-			query.select(from)
-			val result = entityManager.createQuery(query).resultList
-			result
+
+			query.select(from).distinct(true)
+
+			consulta.apply(criteria, query, from)
+			resultType.apply(entity.createQuery(query))
+			
+		} catch (Exception e) {
+			throw e
 		} finally {
-			entityManager?.close
+			entity.close
 		}
 	}
 

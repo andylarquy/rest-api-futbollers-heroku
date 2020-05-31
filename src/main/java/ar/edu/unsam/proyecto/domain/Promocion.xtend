@@ -15,8 +15,10 @@ class Promocion {
 
 	@Column()
 	String codigo
+	
 	@Column()
 	String descripcion
+	
 	@Column()
 	int porcentajeDescuento
 

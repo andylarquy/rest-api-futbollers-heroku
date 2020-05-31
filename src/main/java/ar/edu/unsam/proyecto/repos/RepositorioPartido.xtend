@@ -2,9 +2,10 @@ package ar.edu.unsam.proyecto.repos
 
 import ar.edu.unsam.proyecto.domain.Partido
 import ar.edu.unsam.proyecto.domain.Usuario
+import java.time.LocalDateTime
+import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.model.annotations.Observable
-import java.time.LocalDateTime
 
 @Observable
 @Accessors
@@ -25,8 +26,22 @@ class RepositorioPartido extends Repositorio<Partido> {
 
 	private new() {}
 	
-	def searchById(String cadenaId) {
-		return coleccion.filter[partido|partido.getIdPartido.equals(cadenaId)].head
+	def coleccion(){
+		
+		queryTemplate(
+			[criteria, query, from |
+				//from.fetch("equipo1", JoinType.LEFT)
+				//from.fetch("equipo2", JoinType.LEFT)
+				//from.fetch("empresa", JoinType.LEFT)
+				//from.fetch("canchaReservada", JoinType.LEFT)
+				//from.fetch("promocion", JoinType.LEFT)
+				return query
+			], 
+			[query | query.resultList]) as List<Partido>
+	}
+	
+	def searchById(Long idPartido) {
+		return coleccion.filter[partido|partido.getIdPartido == idPartido].head
 	}
 	
 	def getPartidosDelUsuario(Usuario usuario){

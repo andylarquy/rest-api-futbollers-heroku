@@ -1,6 +1,7 @@
 package ar.edu.unsam.proyecto.repos
 
 import ar.edu.unsam.proyecto.domain.Promocion
+import java.util.List
 
 class RepositorioPromocion extends Repositorio<Promocion> {
 
@@ -17,7 +18,13 @@ class RepositorioPromocion extends Repositorio<Promocion> {
 		repoPromocion = null
 	}
 
-	private new() {
+	private new() {}
+
+	def coleccion(){
+		
+		queryTemplate(
+			[criteria, query, from |], 
+			[query | query.resultList]) as List<Promocion>
 	}
 
 	def searchById(String promocionId) {

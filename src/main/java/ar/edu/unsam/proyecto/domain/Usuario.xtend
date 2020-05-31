@@ -1,5 +1,6 @@
 package ar.edu.unsam.proyecto.domain
 
+import ar.edu.unsam.proyecto.repos.RepositorioUsuario
 import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsEquipo
 import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsPartido
 import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsUsuario
@@ -10,6 +11,7 @@ import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.ManyToMany
+import javax.persistence.Transient
 import org.eclipse.xtend.lib.annotations.Accessors
 
 @Accessors
@@ -54,7 +56,10 @@ class Usuario {
 	
 	@JsonView(ViewsPartido.ListView)
 	@ManyToMany
-	List<Partido> partidos 
+	List<Partido> partidos
+	
+	@Transient
+	transient RepositorioUsuario repoUsuario = RepositorioUsuario.instance
 	
 	def tieneCredenciales(String email_, String password_) {
 		email.equals(email_) && password.equals(password_)
@@ -66,6 +71,7 @@ class Usuario {
 	
 	def agregarPartido(Partido partido) {
 		partidos.add(partido)
+		repoUsuario.update(this)
 	}
 
 	def validar() {

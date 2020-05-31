@@ -257,9 +257,6 @@ class Bootstrap {
 
 	def runBootstrap() {
 		
-		//Es para suprimir el warning nomas
-		empresaArgentinos = empresaArgentinos
-		
 		repoUsuarios.create(sebaCapo)
 		repoUsuarios.create(nikoBostero)
 		repoUsuarios.create(andy)
@@ -268,7 +265,6 @@ class Bootstrap {
 		repoUsuarios.create(jugador3)
 		repoUsuarios.create(jugador4)
 		
-	
 		repoEquipo.create(equipazo)
 		repoEquipo.create(equipoMalo)
 		repoEquipo.create(equipoIncompleto)
@@ -291,12 +287,20 @@ class Bootstrap {
 		
 		repoPartido.create(partido1)
 		repoPartido.create(partido2)
-		
+
+		//TODO: Pensar, no mandes un update innecesario
 		andy.partidos = new ArrayList(Arrays.asList(partido1, partido2))
 		sebaCapo.partidos = new ArrayList(Arrays.asList(partido2))
 		nikoBostero.partidos = new ArrayList(Arrays.asList(partido1))
 		
-
+		repoUsuarios.update(sebaCapo)
+		repoUsuarios.update(nikoBostero)
+		repoUsuarios.update(andy)
+		repoUsuarios.update(jugador1)
+		repoUsuarios.update(jugador2)
+		repoUsuarios.update(jugador3)
+		repoUsuarios.update(jugador4)
+		
 	}
 
 }
