@@ -30,6 +30,8 @@ import org.uqbar.xtrest.api.annotation.Controller
 import org.uqbar.xtrest.api.annotation.Get
 import org.uqbar.xtrest.api.annotation.Post
 import org.uqbar.xtrest.json.JSONUtils
+import org.json.JSONObject
+import ar.edu.unsam.proyecto.exceptions.ObjectAlreadyExists
 
 @Controller
 class RestHostAPI {
@@ -98,10 +100,13 @@ class RestHostAPI {
 	def postPartidos(@Body String body) {
 		try {
 			// Seteo los adapter de ID a javaObject
-			val gson = new GsonBuilder().registerTypeAdapter(LocalDateTime, new LocalDateAdapter()).
-				registerTypeAdapter(Usuario, new UsuarioAdapter()).registerTypeAdapter(Equipo, new EquiposAdapter()).
-				registerTypeAdapter(Empresa, new EmpresaAdapter()).registerTypeAdapter(Cancha, new CanchaAdapter()).
-				create()
+			val gson = new GsonBuilder()
+			.registerTypeAdapter(LocalDateTime, new LocalDateAdapter())
+			.registerTypeAdapter(Usuario, new UsuarioAdapter())
+			.registerTypeAdapter(Equipo, new EquiposAdapter())
+			.registerTypeAdapter(Empresa, new EmpresaAdapter())
+			.registerTypeAdapter(Cancha, new CanchaAdapter())
+			.create()
 
 			val partido = gson.fromJson(body.toString, Partido)
 
@@ -215,6 +220,24 @@ class RestHostAPI {
 		} catch (ObjectDoesntExists e) {
 			notFound('{"status":404, "message":"' + e.message + '"}')
 
+		} catch (Exception e) {
+			badRequest('{"status":400, "message":"' + e.message + '"}')
+		}
+	}
+	
+	@Post("/validar-fecha")
+	def validarFechaCancha(@Body String body){
+		try{
+			val jsonBody = new JSONObject(body)
+			val fecha = jsonBody.getString("fecha")
+			val fechaPosta = LocalDateTime.parse(fecha)
+	
+			restHost.validarFechaCancha(fechaPosta)
+			ok('{"status":200, "message":"ok"}')
+		
+		} catch (ObjectAlreadyExists e) {
+			badRequest('{"status":400, "message":"' + e.message + '"}')
+			
 		} catch (Exception e) {
 			badRequest('{"status":400, "message":"' + e.message + '"}')
 		}

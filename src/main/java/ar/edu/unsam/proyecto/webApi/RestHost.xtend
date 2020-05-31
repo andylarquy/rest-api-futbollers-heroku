@@ -12,6 +12,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import ar.edu.unsam.proyecto.repos.RepositorioEmpresa
 import ar.edu.unsam.proyecto.repos.RepositorioPromocion
 import ar.edu.unsam.proyecto.exceptions.ObjectDoesntExists
+import java.time.LocalDateTime
 
 @Accessors
 class RestHost {
@@ -81,8 +82,11 @@ class RestHost {
 	def getPromocionByCodigo(String codigo){
 		
 		val promocion = repoPromociones.searchByCodigo(codigo)
-		promocion !== null ? return promocion : throw new ObjectDoesntExists('No existe ese codigo promocional')
-		
+		promocion !== null ? return promocion : throw new ObjectDoesntExists('No existe ese codigo promocional')	
+	}
+	
+	def validarFechaCancha(LocalDateTime fecha){
+		repoPartido.validarFechaCancha(fecha)
 	}
 
 }

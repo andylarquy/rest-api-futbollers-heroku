@@ -4,6 +4,10 @@ import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsPartido
 import com.fasterxml.jackson.annotation.JsonView
 import java.time.LocalDateTime
 import org.eclipse.xtend.lib.annotations.Accessors
+import java.time.Period
+import java.time.LocalDate
+import java.time.Duration
+import ar.edu.unsam.proyecto.exceptions.ObjectAlreadyExists
 
 @Accessors
 class Partido {
@@ -66,6 +70,20 @@ class Partido {
 	// TODO: Separar en equipo y equipo completo
 	def participaUsuario(Usuario usuario) {
 		usuario == owner || equipo1.participaUsuario(usuario) || equipo2.participaUsuario(usuario)
+	}
+	
+	def validarFechaEstaLibre(LocalDateTime fecha) {
+		if(sonLaMismaFecha(fechaDeReserva.toLocalDate, fecha.toLocalDate) && laDiferenciaEsMenorAUnaHora(fechaDeReserva, fecha)){
+			throw new ObjectAlreadyExists('Ya existe una reserva para esa fecha y hora')
+		} 
+	}
+
+	def sonLaMismaFecha(LocalDate fecha1, LocalDate fecha2){
+		Period.between(fecha1, fecha2).days == 0
+	}
+	
+	def laDiferenciaEsMenorAUnaHora(LocalDateTime fecha1, LocalDateTime fecha2){
+		Math.abs(Duration.between(fecha1, fecha2).toMinutes) < 60
 	}
 
 }

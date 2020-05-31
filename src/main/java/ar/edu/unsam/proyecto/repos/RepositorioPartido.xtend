@@ -4,6 +4,7 @@ import ar.edu.unsam.proyecto.domain.Partido
 import ar.edu.unsam.proyecto.domain.Usuario
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.model.annotations.Observable
+import java.time.LocalDateTime
 
 @Observable
 @Accessors
@@ -61,8 +62,13 @@ class RepositorioPartido extends Repositorio<Partido> {
 	
 	def getPartidosDelUsuario(Usuario usuario){
 		coleccion.filter[it.participaUsuario(usuario)].toList
-		
 	}
+	
+	def validarFechaCancha(LocalDateTime fecha){
+		coleccion.forEach[it.validarFechaEstaLibre(fecha)]
+	}
+	
+
 	
 	
 }
