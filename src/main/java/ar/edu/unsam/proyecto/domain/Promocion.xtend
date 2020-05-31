@@ -7,12 +7,9 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class Promocion {
 	
 	String idPromocion
-	
-	int porcentajeDescuento
 	String codigo
-	
-	@JsonIgnore
 	String descripcion
+	int porcentajeDescuento
 	
 	def validar(){
 		true

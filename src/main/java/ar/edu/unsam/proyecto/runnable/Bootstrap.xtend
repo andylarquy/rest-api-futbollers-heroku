@@ -249,7 +249,7 @@ class Bootstrap {
 		equipo2 = equipoMalo
 		empresa = empresaUrquiza
 		canchaReservada = urquiza1
-		fechaDeReserva = LocalDateTime.of(LocalDate.of(2020, 5, 27), LocalTime.of(20, 00))
+		fechaDeReserva = LocalDateTime.of(LocalDate.of(2020, 12, 25), LocalTime.of(20, 00))
 	]
 
 	Partido partido2 = new Partido() => [
@@ -265,15 +265,22 @@ class Bootstrap {
 	Promocion promo1 = new Promocion() => [
 		idPromocion = "P1"
 		codigo = "cocacola"
-		descripcion = "Aguante Coca-Cola"
+		descripcion = "Con Coca-Cola te hacemos el aguante!"
 		porcentajeDescuento = 25
 	]
 	
 	Promocion promo2 = new Promocion() => [
 		idPromocion = "P2"
 		codigo = "asd"
-		descripcion = "[DEBUG]"
+		descripcion = "Esta promo es una prueba"
 		porcentajeDescuento = 50
+	]
+	
+	Promocion promo3 = new Promocion() => [
+		idPromocion = "P3"
+		codigo = "nike"
+		descripcion = "Just Do It"
+		porcentajeDescuento = 15
 	]
 
 	def runBootstrap() {
@@ -310,6 +317,7 @@ class Bootstrap {
 		
 		repoPromocion.create(promo1)
 		repoPromocion.create(promo2)
+		repoPromocion.create(promo3)
 
 	}
 
