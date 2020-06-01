@@ -64,6 +64,7 @@ class RestHostAPI {
 		} catch (IncorrectCredentials e) {
 			forbidden('{"status":401, "message":"' + e.message + '"}')
 		} catch (Exception e) {
+			println(e)
 			badRequest('{"status":400, "message":"' + e.message + '"}')
 		}
 	}
@@ -123,7 +124,7 @@ class RestHostAPI {
 	}
 
 	@Get("/equipos/:idUsuario")
-	def getEquiposById() {
+	def getEquiposDelUsuarioById() {
 
 		try {
 			var partidoParseado = this.parsearObjeto(restHost.getEquiposDelUsuario(Long.valueOf(idUsuario)), ViewsEquipo.ListView)

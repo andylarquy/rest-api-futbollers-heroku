@@ -13,6 +13,7 @@ import ar.edu.unsam.proyecto.repos.RepositorioEmpresa
 import ar.edu.unsam.proyecto.repos.RepositorioPromocion
 import ar.edu.unsam.proyecto.exceptions.ObjectDoesntExists
 import java.time.LocalDateTime
+import javax.persistence.NoResultException
 
 @Accessors
 class RestHost {
@@ -28,8 +29,11 @@ class RestHost {
 	}
 	
 	def loguearUsuario(String email, String password){
-		val usuario = repoUsuario.getUsuarioConCredenciales(email, password)
-		usuario === null ? throw new IncorrectCredentials("Credenciales Invalidas") : return usuario
+		try{			
+			return repoUsuario.getUsuarioConCredenciales(email, password)
+		}catch(NoResultException e){
+			throw new IncorrectCredentials("Credenciales Invalidas")
+		}
 	}
 	
 	def signUpUsuario(Usuario usuario) {

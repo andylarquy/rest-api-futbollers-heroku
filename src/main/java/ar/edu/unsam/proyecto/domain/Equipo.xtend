@@ -3,7 +3,6 @@ package ar.edu.unsam.proyecto.domain
 import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsEquipo
 import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsPartido
 import com.fasterxml.jackson.annotation.JsonView
-import java.util.List
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -11,6 +10,7 @@ import javax.persistence.Id
 import javax.persistence.ManyToMany
 import javax.persistence.ManyToOne
 import org.eclipse.xtend.lib.annotations.Accessors
+import java.util.Set
 
 @Accessors
 @Entity
@@ -34,7 +34,7 @@ class Equipo {
 	
 	@ManyToMany
 	@JsonView(ViewsEquipo.ListView) 
-	List<Usuario> integrantes //Capaz conviene que sea un Set para no cagarla
+	Set<Usuario> integrantes //Capaz conviene que sea un Set para no cagarla
 	
 	def agregarIntegrante(Usuario integrante){
 		integrantes.add(integrante)

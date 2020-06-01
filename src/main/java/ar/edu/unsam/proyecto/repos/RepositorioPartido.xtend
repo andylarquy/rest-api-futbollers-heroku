@@ -6,6 +6,8 @@ import java.time.LocalDateTime
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.model.annotations.Observable
+import javax.persistence.criteria.JoinType
+import java.util.ArrayList
 
 @Observable
 @Accessors
@@ -45,7 +47,30 @@ class RepositorioPartido extends Repositorio<Partido> {
 	}
 	
 	def getPartidosDelUsuario(Usuario usuario){
-		coleccion.filter[it.participaUsuario(usuario)].toList
+		
+		queryTemplate(
+			[criteria, query, from |
+		
+				val criteriosWhere = new ArrayList()
+				
+				//PRIMER JOIN: PARTIDO -> EQUIPOS
+				val tablaEquipo1 = from.joinSet("equipo1", JoinType.INNER)
+				val tablaEquipo2 = from.joinSet("equipo2", JoinType.INNER)
+		
+				//SEGUNDO JOIN: EQUIPO -> INTEGRANTES
+				val integrantesEquipo1 = tablaEquipo1.joinSet("integrantes", JoinType.INNER)
+				val integrantesEquipo2 = tablaEquipo2.joinSet("integrantes", JoinType.INNER)
+				
+				criteriosWhere.add(criteria.equal(integrantesEquipo1.get("idUsuario"), usuario.idUsuario))
+				criteriosWhere.add(criteria.equal(integrantesEquipo2.get("idUsuario"), usuario.idUsuario))
+				
+				query.where(criteriosWhere)
+				
+				return query
+			],
+		
+		[query | query.resultList]) as List<Partido>
+		
 	}
 	
 	def validarFechaCancha(LocalDateTime fecha){

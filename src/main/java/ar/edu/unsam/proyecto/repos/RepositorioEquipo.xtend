@@ -33,11 +33,30 @@ class RepositorioEquipo extends Repositorio<Equipo> {
 	}
 
 	def searchById(Long equipoId) {
-		return coleccion.filter[equipo|equipo.getIdEquipo == equipoId].head
+		
+		queryTemplate(
+			[criteria, query, from |
+				query.where(criteria.equal(from.get("idEquipo"), equipoId))
+				return query
+			],
+		
+			[query | query.singleResult]) as Equipo
+		
 	}
 
 	def getEquiposDelUsuario(Usuario usuario) {
-		coleccion.filter[it.participaUsuario(usuario)].toList
+		queryTemplate(
+			[criteria, query, from |
+				
+				from.fetch("integrantes", JoinType.LEFT)
+				val tablaIntegrantes = from.joinSet("integrantes", JoinType.INNER)
+				query.where(criteria.equal(tablaIntegrantes.get("idUsuario"), usuario.idUsuario))
+		
+				return query
+			],
+		
+			[query | query.resultList]) as List<Equipo>
+		
 	}
 	
 	

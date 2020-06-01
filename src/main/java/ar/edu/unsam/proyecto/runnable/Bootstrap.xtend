@@ -18,6 +18,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.util.ArrayList
 import java.util.Arrays
+import java.util.HashSet
 
 class Bootstrap {
 
@@ -122,21 +123,21 @@ class Bootstrap {
 		nombre = "El equipazo"
 		owner = sebaCapo
 		foto = "https://i.imgur.com/hccT1z9.jpg"
-		integrantes = #[sebaCapo, nikoBostero, andy, jugador1, jugador2]
+		integrantes = new HashSet(Arrays.asList(sebaCapo, nikoBostero, andy, jugador1, jugador2))
 	]
 
 	Equipo equipoMalo = new Equipo() => [
 		nombre = "El equipo malo"
 		owner = andy
 		foto = "https://i.imgur.com/RhqYpUg.jpg"
-		integrantes = #[jugador1, jugador2, jugador3, jugador4, andy]
+		integrantes = new HashSet(Arrays.asList(jugador1, jugador2, jugador3, jugador4, andy))
 	]
 
 	Equipo equipoIncompleto = new Equipo() => [
 		nombre = "Equipo incompleto"
 		owner = nikoBostero
 		foto="https://i.imgur.com/lvR3nt3.jpg"
-		integrantes = #[sebaCapo, nikoBostero, andy]
+		integrantes = new HashSet(Arrays.asList(sebaCapo, nikoBostero, andy))
 	]
 
 	Cancha urquiza1 = new Cancha() => [

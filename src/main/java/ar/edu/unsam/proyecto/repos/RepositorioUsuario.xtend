@@ -45,8 +45,16 @@ class RepositorioUsuario extends Repositorio<Usuario> {
 		return (usuario !== null) ? usuario : throw new ObjectDoesntExists("No existe un usuario con el ID: "+idUsuario)
 	}
 	
-	def getUsuarioConCredenciales(String username, String password){
-		coleccion.filter[usuario | usuario.tieneCredenciales(username, password)].head
+	def getUsuarioConCredenciales(String email, String password){
+	
+	queryTemplate([criteria, query, from |
+
+			query.where(
+				criteria.equal(from.get("email"), email),
+				criteria.equal(from.get("password"), password)
+			)
+		], [query | query.singleResult]) as Usuario
+		
 	}
 	
 	override entityType() {
