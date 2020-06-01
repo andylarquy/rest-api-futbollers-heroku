@@ -68,7 +68,7 @@ class Equipo {
 	}
 	
 	def participaUsuario(Usuario usuario){
-		esOwner(usuario) || integrantes.contains(usuario)
+		esOwner(usuario) || integrantes.exists[integrante | integrante.idUsuario.equals(usuario.idUsuario)]
 	}
 	
 	def esOwner(Usuario usuario){
