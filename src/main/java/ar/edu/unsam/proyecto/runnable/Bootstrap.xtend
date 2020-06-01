@@ -257,49 +257,49 @@ class Bootstrap {
 
 	def runBootstrap() {
 		
-		repoUsuarios.create(sebaCapo)
-		repoUsuarios.create(nikoBostero)
-		repoUsuarios.create(andy)
-		repoUsuarios.create(jugador1)
-		repoUsuarios.create(jugador2)
-		repoUsuarios.create(jugador3)
-		repoUsuarios.create(jugador4)
-		
-		repoEquipo.create(equipazo)
-		repoEquipo.create(equipoMalo)
-		repoEquipo.create(equipoIncompleto)
-		
-		repoCancha.create(urquiza1)
-		repoCancha.create(urquiza2)
-		repoCancha.create(vicLop1)
-		repoCancha.create(vicLop2)
-		repoCancha.create(vicLop3)
-		repoCancha.create(argen1)
-		repoCancha.create(argen2)
-
-		repoEmpresa.create(empresaUrquiza)
-		repoEmpresa.create(empresaVicenteLopez)
-		repoEmpresa.create(empresaArgentinos)
-		
-		repoPromocion.create(promo1)
-		repoPromocion.create(promo2)
-		repoPromocion.create(promo3)
-		
-		repoPartido.create(partido1)
-		repoPartido.create(partido2)
-
-		//TODO: Pensar, no mandes un update innecesario
-		andy.partidos = new ArrayList(Arrays.asList(partido1, partido2))
-		sebaCapo.partidos = new ArrayList(Arrays.asList(partido2))
-		nikoBostero.partidos = new ArrayList(Arrays.asList(partido1))
-		
-		repoUsuarios.update(sebaCapo)
-		repoUsuarios.update(nikoBostero)
-		repoUsuarios.update(andy)
-		repoUsuarios.update(jugador1)
-		repoUsuarios.update(jugador2)
-		repoUsuarios.update(jugador3)
-		repoUsuarios.update(jugador4)
+//		repoUsuarios.create(sebaCapo)
+//		repoUsuarios.create(nikoBostero)
+//		repoUsuarios.create(andy)
+//		repoUsuarios.create(jugador1)
+//		repoUsuarios.create(jugador2)
+//		repoUsuarios.create(jugador3)
+//		repoUsuarios.create(jugador4)
+//		
+//		repoEquipo.create(equipazo)
+//		repoEquipo.create(equipoMalo)
+//		repoEquipo.create(equipoIncompleto)
+//		
+//		repoCancha.create(urquiza1)
+//		repoCancha.create(urquiza2)
+//		repoCancha.create(vicLop1)
+//		repoCancha.create(vicLop2)
+//		repoCancha.create(vicLop3)
+//		repoCancha.create(argen1)
+//		repoCancha.create(argen2)
+//
+//		repoEmpresa.create(empresaUrquiza)
+//		repoEmpresa.create(empresaVicenteLopez)
+//		repoEmpresa.create(empresaArgentinos)
+//		
+//		repoPromocion.create(promo1)
+//		repoPromocion.create(promo2)
+//		repoPromocion.create(promo3)
+//		
+//		repoPartido.create(partido1)
+//		repoPartido.create(partido2)
+//
+//		//TODO: Pensar, no mandes un update innecesario
+//		andy.partidos = new ArrayList(Arrays.asList(partido1, partido2))
+//		sebaCapo.partidos = new ArrayList(Arrays.asList(partido2))
+//		nikoBostero.partidos = new ArrayList(Arrays.asList(partido1))
+//		
+//		repoUsuarios.update(sebaCapo)
+//		repoUsuarios.update(nikoBostero)
+//		repoUsuarios.update(andy)
+//		repoUsuarios.update(jugador1)
+//		repoUsuarios.update(jugador2)
+//		repoUsuarios.update(jugador3)
+//		repoUsuarios.update(jugador4)
 		
 	}
 
