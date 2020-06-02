@@ -46,7 +46,7 @@ class Bootstrap {
 		nombre = "sebaCapo"
 		password = dotenv.get("PASSWORD")
 		sexo = "M"
-		posicion = "DC"
+		posicion = "Delantero"
 		foto = "https://i.imgur.com/gF6Q26G.jpg"
 		email = dotenv.get("EMAIL_SEBA")
 		lat = -34.5677486
@@ -57,7 +57,7 @@ class Bootstrap {
 		nombre = "nikoBostero"
 		password = dotenv.get("PASSWORD")
 		sexo = "M"
-		posicion = "ED"
+		posicion = "Delantero"
 		foto = "https://i.imgur.com/a0UL9YQ.png"
 		email = dotenv.get("EMAIL_NIKO")
 		lat = -34.6344499
@@ -68,7 +68,7 @@ class Bootstrap {
 		nombre = "andy"
 		password = dotenv.get("PASSWORD")
 		sexo = "M"
-		posicion = "DFI"
+		posicion = "Defensor"
 		foto = "https://i.imgur.com/tBUGRSa.jpg"
 		email = dotenv.get("EMAIL_ANDY")
 		lat = -34.6016244
@@ -79,7 +79,7 @@ class Bootstrap {
 		nombre = "Jugador 1"
 		password = dotenv.get("PASSWORD")
 		sexo = "M"
-		posicion = "MC"
+		posicion = "Mediocampista"
 		foto = "https://i.imgur.com/DyYpkmS.jpg"
 		email = "elmaildelnabo1@sarasa.com"
 		lat = -34.6029831
@@ -90,7 +90,7 @@ class Bootstrap {
 		nombre = "Jugador 2"
 		password = dotenv.get("PASSWORD")
 		sexo = "F"
-		posicion = "EI"
+		posicion = "Arquero"
 		foto = "https://i.imgur.com/AofDmoH.jpg"
 		email = "elmaildelnabo2@sarasa.com"
 		lat = -34.5768884
@@ -101,7 +101,7 @@ class Bootstrap {
 		nombre = "Jugador 3"
 		password = dotenv.get("PASSWORD")
 		sexo = "M"
-		posicion = "MC"
+		posicion = "Mediocampista"
 		foto = "https://i.imgur.com/mUPUwOS.jpg"
 		email = "elmaildelnabo3@sarasa.com"
 		lat = -34.6029831
@@ -112,7 +112,7 @@ class Bootstrap {
 		nombre = "Jugador 4"
 		password = dotenv.get("PASSWORD")
 		sexo = "F"
-		posicion = "EI"
+		posicion = "Arquero"
 		foto = "https://i.imgur.com/kzeiAar.jpg"
 		email = "elmaildelnabo4@sarasa.com"
 		lat = -34.5768884
@@ -237,6 +237,14 @@ class Bootstrap {
 		canchaReservada = vicLop2
 		fechaDeReserva = LocalDateTime.of(LocalDate.of(2020, 4, 24), LocalTime.of(17, 00))
 	]
+	
+	Partido partido3 = new Partido() => [
+		equipo1 = equipazo
+		equipo2 = equipoIncompleto
+		empresa = empresaArgentinos
+		canchaReservada = argen1
+		fechaDeReserva = LocalDateTime.of(LocalDate.of(2020, 12, 5), LocalTime.of(23, 00))
+	]
 
 	Promocion promo1 = new Promocion() => [
 		codigo = "cocacola"
@@ -288,11 +296,29 @@ class Bootstrap {
 //		
 //		repoPartido.create(partido1)
 //		repoPartido.create(partido2)
+//		repoPartido.create(partido3)
 //
 //		//TODO: Pensar, no mandes un update innecesario
 //		andy.partidos = new ArrayList(Arrays.asList(partido1, partido2))
 //		sebaCapo.partidos = new ArrayList(Arrays.asList(partido2))
 //		nikoBostero.partidos = new ArrayList(Arrays.asList(partido1))
+//		
+//		andy.crearAmistad(sebaCapo)
+//		andy.crearAmistad(nikoBostero)
+//		andy.crearAmistad(jugador1)
+//		andy.crearAmistad(jugador2)
+//		andy.crearAmistad(jugador3)
+//		andy.crearAmistad(jugador4)
+//		
+//		nikoBostero.crearAmistad(sebaCapo)
+//		nikoBostero.crearAmistad(jugador1)
+//		nikoBostero.crearAmistad(jugador2)
+//		nikoBostero.crearAmistad(jugador3)
+//		
+//		sebaCapo.crearAmistad(sebaCapo)
+//		sebaCapo.crearAmistad(jugador1)
+//		sebaCapo.crearAmistad(jugador2)
+//		sebaCapo.crearAmistad(jugador4)
 //		
 //		repoUsuarios.update(sebaCapo)
 //		repoUsuarios.update(nikoBostero)

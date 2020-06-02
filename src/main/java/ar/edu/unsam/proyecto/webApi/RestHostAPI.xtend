@@ -6,6 +6,7 @@ import ar.edu.unsam.proyecto.domain.Equipo
 import ar.edu.unsam.proyecto.domain.Partido
 import ar.edu.unsam.proyecto.domain.Usuario
 import ar.edu.unsam.proyecto.exceptions.IncorrectCredentials
+import ar.edu.unsam.proyecto.exceptions.ObjectAlreadyExists
 import ar.edu.unsam.proyecto.exceptions.ObjectDoesntExists
 import ar.edu.unsam.proyecto.repos.RepositorioCancha
 import ar.edu.unsam.proyecto.repos.RepositorioEmpresa
@@ -25,13 +26,12 @@ import com.google.gson.JsonElement
 import java.lang.reflect.Type
 import java.time.LocalDateTime
 import java.util.List
+import org.json.JSONObject
 import org.uqbar.xtrest.api.annotation.Body
 import org.uqbar.xtrest.api.annotation.Controller
 import org.uqbar.xtrest.api.annotation.Get
 import org.uqbar.xtrest.api.annotation.Post
 import org.uqbar.xtrest.json.JSONUtils
-import org.json.JSONObject
-import ar.edu.unsam.proyecto.exceptions.ObjectAlreadyExists
 
 @Controller
 class RestHostAPI {
@@ -82,6 +82,22 @@ class RestHostAPI {
 		} catch (Exception e) {
 			badRequest('{"status":400, "message":"' + e.message + '"}')
 		}
+	}
+	
+	@Get("/usuario/:idUsuario/amigos")
+	def amigosDelUsuarioById(){
+		
+		try{
+			val amigosDelUsuarioParseados = this.parsearObjeto(restHost.getAmigosDelUsuario(Long.valueOf(idUsuario)), ViewsUsuario.PerfilView)
+			
+			ok(amigosDelUsuarioParseados)
+		}catch (Exception e) {
+			badRequest('{"status":400, "message":"' + e.message + '"}')
+			throw e
+		}
+		
+		
+		
 	}
 
 	@Get("/partidos/:idUsuario")
@@ -234,6 +250,8 @@ class RestHostAPI {
 			val jsonBody = new JSONObject(body)
 			val fecha = jsonBody.getString("fecha")
 			val fechaPosta = LocalDateTime.parse(fecha)
+			
+			println(fechaPosta)
 	
 			restHost.validarFechaCancha(fechaPosta)
 			ok('{"status":200, "message":"ok"}')

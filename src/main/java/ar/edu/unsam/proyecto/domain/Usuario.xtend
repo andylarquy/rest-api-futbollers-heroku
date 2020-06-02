@@ -5,11 +5,14 @@ import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsEquipo
 import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsPartido
 import ar.edu.unsam.proyecto.webApi.jsonViews.ViewsUsuario
 import com.fasterxml.jackson.annotation.JsonView
+import java.util.HashSet
 import java.util.List
+import java.util.Set
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
+import javax.persistence.JoinTable
 import javax.persistence.ManyToMany
 import javax.persistence.Transient
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -57,6 +60,10 @@ class Usuario {
 	@JsonView(ViewsPartido.ListView)
 	@ManyToMany
 	List<Partido> partidos
+	
+	@JoinTable(name="Amistades")
+	@ManyToMany
+	Set <Usuario> amigos = new HashSet
 	
 	@Transient
 	transient RepositorioUsuario repoUsuario = RepositorioUsuario.instance
@@ -108,6 +115,15 @@ class Usuario {
 			throw new Exception('El usuario debe tener un email')
 		}
 		
+	}
+	
+	def agregarAmigo(Usuario usuario){		
+			amigos.add(usuario)
+	}
+	
+	def crearAmistad(Usuario usuario){
+		usuario.agregarAmigo(this)
+		this.agregarAmigo(usuario)
 	}
 
 }

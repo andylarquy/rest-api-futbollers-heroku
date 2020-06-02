@@ -61,4 +61,15 @@ class RepositorioUsuario extends Repositorio<Usuario> {
 		Usuario
 	}
 	
+	def getAmigosDelUsuario(Long idUsuario){
+		val usuario = queryTemplate([criteria, query, from |
+			from.fetch("amigos", JoinType.LEFT)	
+			query.where(criteria.equal(from.get("idUsuario"), idUsuario))
+			return query
+		], 
+		
+		[query | query.singleResult]) as Usuario
+		
+		usuario.amigos
+	}
 }

@@ -97,5 +97,9 @@ class RestHost {
 	def validarFechaCancha(LocalDateTime fecha){
 		repoPartido.validarFechaCancha(fecha)
 	}
+	
+	def getAmigosDelUsuario(Long idUsuario) {
+		repoUsuario.getAmigosDelUsuario(idUsuario)
+	}
 
 }
