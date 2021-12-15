@@ -107,7 +107,7 @@
 		<dependency>
 			<groupId>io.github.cdimascio</groupId>
 			<artifactId>java-dotenv</artifactId>
-			<version>5.1.4</version>
+			<version>5.2.2</version>
 		</dependency>
 		
 		<dependency>
@@ -142,7 +142,7 @@
 			<url>http://maven.uqbar.org/releases</url>
 		</repository>
 		<repository>
-			<snapshots />
+			<snapshots/>
 			<id>uqbar-wiki.org-snapshots</id>
 			<name>uqbar-wiki.org-snapshots</name>
 			<url>http://maven.uqbar.org/snapshots</url>
